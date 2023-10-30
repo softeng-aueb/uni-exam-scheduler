@@ -1,66 +1,107 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>150</x><y>30</y><w>150</w><h>150</h></coordinates><panel_attributes>Classroom
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>Relation</id><coordinates><x>240</x><y>20</y><w>190</w><h>130</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..1
+r1=προηγούμενο
+group=group-0</panel_attributes><additional_attributes>90;50;90;10;10;10;10;110;60;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>300</x><y>70</y><w>130</w><h>90</h></coordinates><panel_attributes>ΑκαδημαϊκόΈτος
 --
-name: string
-building: string
-general_capacity: int
-exam_capacity: int
-covid_capacity: int
-surface: float
-max_supervisors: float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>680</x><y>300</y><w>160</w><h>120</h></coordinates><panel_attributes>Supervisor
+ονομασία: string
+ενεργό: boolean
+group=group-0</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>540</x><y>200</y><w>170</w><h>80</h></coordinates><panel_attributes> ΕξεταστικήΠερίοδος
 --
-academic_id: string
-name: string
+εξάμηνο: Εξάμηνο
+ημερομηνίαΈναρξης: Date
+περίοδος: Περίοδος</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>940</x><y>150</y><w>140</w><h>170</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+Εξάμηνο
+--
+1ο
+2ο
+3ο
+4ο
+5ο
+6ο
+7ο
+8ο
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>110</y><w>160</w><h>140</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=3
+περιλαμβάνει</panel_attributes><additional_attributes>10;10;120;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>940</x><y>330</y><w>140</w><h>100</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+Περίοδος
+--
+Χειμερινή
+Εαρινή
+Σεπτέμβριος
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>10</x><y>340</y><w>190</w><h>120</h></coordinates><panel_attributes>Επόπτης
+--
+όνομα: string
+επώνυμο: string
+επιβλέποντας: string
+τηλέφωνο: string
 email: string
-role: SupervisorRole
-supervisor: string
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>600</y><w>140</w><h>90</h></coordinates><panel_attributes>Subjects
+κατηγορία: ΚατηγορίαΕπόπτη
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>940</x><y>10</y><w>140</w><h>130</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+ΚατηγορίαΕπόπτη
 --
-subject_id: string
-title : string
-semester: Semester</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>300</y><w>190</w><h>140</h></coordinates><panel_attributes>Examination
---
-date: Date
-period: Period
-examiner: string
-duration: float
-attendance_registrations: int
-attendance: int
-/attendance_calculated: float
+ΕΔΙΠ
+ΕΤΕΠ
+ΥποψήφιοςΔιδάκτορας
+Αποσπασμένος
+Εξωτερικός
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>690</x><y>580</y><w>160</w><h>80</h></coordinates><panel_attributes>Constraint
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>360</y><w>160</w><h>110</h></coordinates><panel_attributes>Εξέταση
 --
-num_of_supervisions: int
-time_constarints: Date[]
-
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>170</y><w>50</w><h>150</h></coordinates><panel_attributes>lt=-
-m1=1..*
-m2=*</panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>430</y><w>50</w><h>190</h></coordinates><panel_attributes>lt=-
-m1=1
-m2=1..*</panel_attributes><additional_attributes>10;170;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>350</y><w>160</w><h>40</h></coordinates><panel_attributes>lt=-
-m1=1
-m2=*</panel_attributes><additional_attributes>10;10;140;10</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>410</y><w>40</w><h>190</h></coordinates><panel_attributes>lt=-
-m1=1
-m2=*</panel_attributes><additional_attributes>10;10;10;170</additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>340</y><w>100</w><h>30</h></coordinates><panel_attributes>Assignment
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>520</x><y>350</y><w>180</w><h>40</h></coordinates><panel_attributes>lt=-
+ώραΈναρξης: Date
+ώραΛήξης: Date
+απαιτούμενοιΕπόπτες: int
+/συνολικέςΔηλώσεις: int/
+/συνολικέςΠροσελεύσεις: int/</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>760</x><y>200</y><w>160</w><h>140</h></coordinates><panel_attributes>Αίθουσα
+--
+όνομα: string
+κτίριο: string
+όροφος: int
+γενικήΧωρητικότητα: int
+εξετΧωριτηκότητα: int
+covidΧωρητικότητα: int
+maxΠλήθοςΕποπτών: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>710</x><y>330</y><w>160</w><h>90</h></coordinates><panel_attributes>lt=-
 m1=*
-m2=1</panel_attributes><additional_attributes>10;10;160;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>720</x><y>10</y><w>120</w><h>120</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
-SupervisorRole
+m2=1..*</panel_attributes><additional_attributes>10;60;120;60;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>270</y><w>40</w><h>110</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>290</x><y>360</y><w>180</w><h>80</h></coordinates><panel_attributes>Εποπτεία
 --
-EDIP
-DETACHED
-ESPA
-EDEP
-YD</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>860</x><y>10</y><w>120</w><h>90</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
-Period
+παρουσία: boolean
+επικεφαλήςΕπόπτης: boolean
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>390</y><w>120</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>400</y><w>120</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>710</y><w>150</w><h>110</h></coordinates><panel_attributes>Μάθημα
 --
-REGULAR
-REPEAT</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>860</x><y>130</y><w>120</w><h>90</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
-Semester
+τίτλος: string
+κωδικός: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>460</y><w>40</w><h>270</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;250;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>900</x><y>710</y><w>150</w><h>110</h></coordinates><panel_attributes>ΑκαδημαϊκόΤμήμα
 --
-WINTER
-SPRING</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>40</y><w>120</w><h>100</h></coordinates><panel_attributes>Address
+ονομασία: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>780</y><w>220</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=*</panel_attributes><additional_attributes>200;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>710</x><y>420</y><w>130</w><h>130</h></coordinates><panel_attributes>lt=-
+m1=*
+m2=1</panel_attributes><additional_attributes>100;110;100;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>530</y><w>150</w><h>80</h></coordinates><panel_attributes>ΣυμμετοχήΤμήματος
 --
-street: string
-number: int
-city: string
-ZC.: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>90</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element></diagram>
+δηλώσεις: int
+προσελεύσεις: int
+κύριοΤμήμα: boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>600</y><w>120</w><h>160</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>100;130;10;130;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>260</x><y>230</y><w>180</w><h>80</h></coordinates><panel_attributes>ΥποχρέωσηΕποπτειών
+--
+πλήθοςΕποπτειών: int
+κατηγορία: ΚατηγορίαΕπόπτη
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>240</y><w>130</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=*
+m2=1
+αφορά</panel_attributes><additional_attributes>10;20;110;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>20</x><y>120</y><w>150</w><h>110</h></coordinates><panel_attributes>ΑκαδημαϊκόΤμήμα
+--
+ονομασία: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>80</x><y>220</y><w>40</w><h>140</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>220</y><w>150</w><h>90</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*
+ορίζει</panel_attributes><additional_attributes>10;10;10;60;130;60</additional_attributes></element></diagram>

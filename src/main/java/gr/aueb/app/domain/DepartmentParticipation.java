@@ -19,11 +19,11 @@ public class DepartmentParticipation {
     @Column(name = "isLeadDepartment", nullable = false)
     private Boolean isLeadDepartment;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "examination_id")
     private Examination examination;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "department_id")
     private Department department;
 
@@ -60,12 +60,12 @@ public class DepartmentParticipation {
         this.attendance = attendance;
     }
 
-    public Boolean getIsLeadDepartment() {
+    public Boolean getLeadDepartment() {
         return isLeadDepartment;
     }
 
-    public void setIsLeadDepartment(Boolean isLeadDepartment) {
-        isLeadDepartment = isLeadDepartment;
+    public void setLeadDepartment(Boolean leadDepartment) {
+        isLeadDepartment = leadDepartment;
     }
 
     public Examination getExamination() {

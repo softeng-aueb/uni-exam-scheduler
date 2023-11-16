@@ -11,25 +11,25 @@ public class SupervisionRule {
     private Integer id;
 
     @Column(name = "num_of_supervisions", nullable = false)
-    private Integer numOfSupervisions;
+    private Integer num_of_supervisions;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "supervisor_category", nullable = false)
-    private SupervisorCategory supervisorCategory;
+    private SupervisorCategory supervisor_category;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "examinationPeriod_id")
     private ExaminationPeriod examinationPeriod;
 
     protected SupervisionRule(){};
 
-    public SupervisionRule(Integer numOfSupervisions, SupervisorCategory supervisorCategory, Department department, ExaminationPeriod examinationPeriod) {
-        this.numOfSupervisions = numOfSupervisions;
-        this.supervisorCategory = supervisorCategory;
+    public SupervisionRule(Integer num_of_supervisions, SupervisorCategory supervisor_category, Department department, ExaminationPeriod examinationPeriod) {
+        this.num_of_supervisions = num_of_supervisions;
+        this.supervisor_category = supervisor_category;
         this.department = department;
         this.examinationPeriod = examinationPeriod;
     }
@@ -42,20 +42,20 @@ public class SupervisionRule {
         this.id = id;
     }
 
-    public Integer getNumOfSupervisions() {
-        return numOfSupervisions;
+    public Integer getNum_of_supervisions() {
+        return num_of_supervisions;
     }
 
-    public void setNumOfSupervisions(Integer numOfSupervisions) {
-        this.numOfSupervisions = numOfSupervisions;
+    public void setNum_of_supervisions(Integer num_of_supervisions) {
+        this.num_of_supervisions = num_of_supervisions;
     }
 
-    public SupervisorCategory getSupervisorCategory() {
-        return supervisorCategory;
+    public SupervisorCategory getSupervisor_category() {
+        return supervisor_category;
     }
 
-    public void setSupervisorCategory(SupervisorCategory supervisorCategory) {
-        this.supervisorCategory = supervisorCategory;
+    public void setSupervisor_category(SupervisorCategory supervisor_category) {
+        this.supervisor_category = supervisor_category;
     }
 
     public Department getDepartment() {

@@ -1,6 +1,8 @@
 package gr.aueb.app.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "academicYears")
@@ -19,6 +21,9 @@ public class AcademicYear {
     @OneToOne
     @JoinColumn(name = "academicYear_id")
     private AcademicYear previousYear;
+
+    @OneToMany(mappedBy = "academicYear", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ExaminationPeriod> examinationPeriods = new HashSet<>();
 
     protected AcademicYear(){};
 
@@ -58,5 +63,13 @@ public class AcademicYear {
 
     public void setPreviousYear(AcademicYear previousYear) {
         this.previousYear = previousYear;
+    }
+
+    public Set<ExaminationPeriod> getExaminationPeriods() {
+        return examinationPeriods;
+    }
+
+    public void setExaminationPeriods(Set<ExaminationPeriod> examinationPeriods) {
+        this.examinationPeriods = examinationPeriods;
     }
 }

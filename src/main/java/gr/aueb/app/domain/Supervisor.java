@@ -29,9 +29,9 @@ public class Supervisor {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "supervisor_category", nullable = false)
-    private SupervisorCategory supervisorCategory;
+    private SupervisorCategory supervisor_category;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
@@ -40,13 +40,13 @@ public class Supervisor {
 
     protected Supervisor(){};
 
-    public Supervisor(String name, String surname, String supervisor, String telephone, String email, SupervisorCategory supervisorCategory, Department department) {
+    public Supervisor(String name, String surname, String supervisor, String telephone, String email, SupervisorCategory supervisor_category, Department department) {
         this.name = name;
         this.surname = surname;
         this.supervisor = supervisor;
         this.telephone = telephone;
         this.email = email;
-        this.supervisorCategory = supervisorCategory;
+        this.supervisor_category = supervisor_category;
         this.department = department;
     }
 
@@ -78,7 +78,7 @@ public class Supervisor {
         return supervisor;
     }
 
-    public void setSupervisor(String supervisor) {
+    public void setSsupervisor(String supervisor) {
         this.supervisor = supervisor;
     }
 
@@ -98,12 +98,12 @@ public class Supervisor {
         this.email = email;
     }
 
-    public SupervisorCategory getSupervisorCategory() {
-        return supervisorCategory;
+    public SupervisorCategory getSupervisor_category() {
+        return supervisor_category;
     }
 
-    public void setSupervisorCategory(SupervisorCategory supervisor_category) {
-        this.supervisorCategory = supervisor_category;
+    public void setSupervisor_category(SupervisorCategory supervisor_category) {
+        this.supervisor_category = supervisor_category;
     }
 
     public Department getDepartment() {
@@ -127,8 +127,7 @@ public class Supervisor {
         this.supervisions.add(supervision);
     }
 
-    public void removeSupervision(Supervision supervision) {
-        supervision.setSupervisor(null);
-        this.supervisions.remove(supervision);
+    public void removeSupervision(Integer supervisionId) {
+        this.supervisions.removeIf(supervision -> supervision.getId().equals(supervisionId));
     }
 }

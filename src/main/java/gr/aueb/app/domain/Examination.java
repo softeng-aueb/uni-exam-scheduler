@@ -14,19 +14,19 @@ public class Examination {
     private Integer id;
 
     @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
+    private LocalDate start_date;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
+    private LocalDate end_date;
 
     @Column(name = "required_supervisors", nullable = false)
-    private Integer requiredSupervisors;
+    private Integer required_supervisors;
 
     @Transient
-    private Integer totalDeclaration;
+    private Integer total_declaration;
 
     @Transient
-    private Integer totalAttendance;
+    private Integer total_attendance;
 
     @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<DepartmentParticipation> departmentParticipations = new HashSet<>();
@@ -34,7 +34,7 @@ public class Examination {
     @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Supervision> supervisions = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
@@ -43,17 +43,19 @@ public class Examination {
             joinColumns = @JoinColumn(name = "examination_id"),
             inverseJoinColumns = @JoinColumn(name = "classroom_id")
     )
-    private Set<Classroom> classrooms;
+    private Set<Classroom> classrooms = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "examinationPeriod_id")
     private ExaminationPeriod examinationPeriod;
 
     protected Examination(){};
 
-    public Examination(LocalDate startDate, LocalDate endDate, Subject subject, Set<Classroom> classrooms, ExaminationPeriod examinationPeriod) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public Examination(LocalDate start_date, LocalDate end_date, Integer required_supervisors, Set<DepartmentParticipation> departmentParticipations, Subject subject, Set<Classroom> classrooms, ExaminationPeriod examinationPeriod) {
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.required_supervisors = required_supervisors;
+        this.departmentParticipations = departmentParticipations;
         this.subject = subject;
         this.classrooms = classrooms;
         this.examinationPeriod = examinationPeriod;
@@ -67,28 +69,28 @@ public class Examination {
         this.id = id;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getStart_date() {
+        return start_date;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setStart_date(LocalDate start_date) {
+        this.start_date = start_date;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDate getEnd_date() {
+        return end_date;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEnd_date(LocalDate end_date) {
+        this.end_date = end_date;
     }
 
-    public Integer getRequiredSupervisors() {
-        return requiredSupervisors;
+    public Integer getRequired_supervisors() {
+        return required_supervisors;
     }
 
-    public void setRequiredSupervisors(Integer requiredSupervisors) {
-        this.requiredSupervisors = requiredSupervisors;
+    public void setRequired_supervisors(Integer required_supervisors) {
+        this.required_supervisors = required_supervisors;
     }
 
     public Set<DepartmentParticipation> getDepartmentParticipations() {
@@ -131,13 +133,13 @@ public class Examination {
         this.examinationPeriod = examinationPeriod;
     }
 
-    public Integer getTotalDeclaration() {
+    public Integer getTotal_declaration() {
         return departmentParticipations.stream()
                 .map(DepartmentParticipation::getDeclaration)
                 .reduce(0, Integer::sum);
     }
 
-    public Integer getTotalAttendance() {
+    public Integer getTotal_attendance() {
         return departmentParticipations.stream()
                 .map(DepartmentParticipation::getAttendance)
                 .reduce(0, Integer::sum);
@@ -148,18 +150,7 @@ public class Examination {
         this.supervisions.add(supervision);
     }
 
-    public void removeSupervision(Supervision supervision) {
-        supervision.setExamination(null);
-        supervisions.remove(supervision);
-    }
-
-    public void addDepartmentParticipation(DepartmentParticipation departmentParticipation) {
-        departmentParticipation.setExamination(this);
-        this.departmentParticipations.add(departmentParticipation);
-    }
-
-    public void removeDepartmentParticipation(DepartmentParticipation departmentParticipation) {
-        departmentParticipation.setExamination(null);
-        departmentParticipations.remove(departmentParticipation);
+    public void removeSupervision(Integer supervisionId) {
+        this.supervisions.removeIf(supervision -> supervision.getId().equals(supervisionId));
     }
 }

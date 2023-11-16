@@ -16,23 +16,16 @@ public class Subject {
     private String title;
 
     @Column(name = "subject_code", nullable = false)
-    private String subjectCode;
+    private String subject_code;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "subjects_departments",
-            joinColumns = @JoinColumn(name = "subject_id"),
-            inverseJoinColumns = @JoinColumn(name = "department_id")
-    )
+    @ManyToMany(mappedBy = "subjects")
     private Set<Department> departments = new HashSet<>();
 
-    protected Subject(){}
+    public Subject(){}
 
-    public Subject(String title, String subjectCode) {
+    protected Subject(String title, String subject_code) {
         this.title = title;
-        this.subjectCode = subjectCode;
+        this.subject_code = subject_code;
     }
 
     public Integer getId() {
@@ -51,12 +44,12 @@ public class Subject {
         this.title = title;
     }
 
-    public String getSubjectCode() {
-        return subjectCode;
+    public String getSubject_code() {
+        return subject_code;
     }
 
-    public void setSubjectCode(String subjectCode) {
-        this.subjectCode = subjectCode;
+    public void setSubject_code(String subject_code) {
+        this.subject_code = subject_code;
     }
 
     public Set<Department> getDepartments() {
@@ -65,13 +58,5 @@ public class Subject {
 
     public void setDepartments(Set<Department> departments) {
         this.departments = departments;
-    }
-
-    public void addDepartment(Department department) {
-        departments.add(department);
-    }
-
-    public void removeDepartment(Department department) {
-        departments.remove(department);
     }
 }

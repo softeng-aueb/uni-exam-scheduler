@@ -32,12 +32,11 @@ public class ExaminationPeriod {
 
     protected ExaminationPeriod(){};
 
-    public ExaminationPeriod(Semester semester, LocalDate start_date, Period period, AcademicYear academicYear, Set<SupervisionRule> supervisionRules) {
+    public ExaminationPeriod(Semester semester, LocalDate start_date, Period period, AcademicYear academicYear) {
         this.semester = semester;
         this.start_date = start_date;
         this.period = period;
         this.academicYear = academicYear;
-        this.supervisionRules = supervisionRules;
     }
 
     public Integer getId() {
@@ -93,7 +92,8 @@ public class ExaminationPeriod {
         this.supervisionRules.add(supervisionRule);
     }
 
-    public void removeSupervisionRule(Integer supervisionRuleId) {
-        this.supervisionRules.removeIf(supervisionRule -> supervisionRule.getId().equals(supervisionRuleId));
+    public void removeSupervisionRule(SupervisionRule supervisionRule) {
+        supervisionRule.setExaminationPeriod(null);
+        supervisionRules.remove(supervisionRule);
     }
 }

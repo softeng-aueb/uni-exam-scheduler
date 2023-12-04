@@ -29,7 +29,7 @@ public class Examination {
     private Integer total_attendance;
 
     @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<DepartmentParticipation> departmentParticipations = new HashSet<>();
+    private Set<DepartmentParticipation> departmentParticipations;
 
     @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Supervision> supervisions = new HashSet<>();
@@ -43,7 +43,7 @@ public class Examination {
             joinColumns = @JoinColumn(name = "examination_id"),
             inverseJoinColumns = @JoinColumn(name = "classroom_id")
     )
-    private Set<Classroom> classrooms = new HashSet<>();
+    private Set<Classroom> classrooms;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "examinationPeriod_id")
@@ -150,7 +150,8 @@ public class Examination {
         this.supervisions.add(supervision);
     }
 
-    public void removeSupervision(Integer supervisionId) {
-        this.supervisions.removeIf(supervision -> supervision.getId().equals(supervisionId));
+    public void removeSupervision(Supervision supervision) {
+        supervision.setExamination(null);
+        supervisions.remove(supervision);
     }
 }

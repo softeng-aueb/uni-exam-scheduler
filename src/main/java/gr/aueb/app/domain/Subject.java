@@ -21,9 +21,9 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects")
     private Set<Department> departments = new HashSet<>();
 
-    public Subject(){}
+    protected Subject(){}
 
-    protected Subject(String title, String subject_code) {
+    public Subject(String title, String subject_code) {
         this.title = title;
         this.subject_code = subject_code;
     }

@@ -26,7 +26,13 @@ public class Department {
     private Set<Subject> subjects = new HashSet<>();
 
     @OneToMany(mappedBy = "department")
-    private Set<Supervisor> supervisors;
+    private Set<Supervisor> supervisors = new HashSet<>();
+
+    protected Department(){};
+
+    public Department(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;

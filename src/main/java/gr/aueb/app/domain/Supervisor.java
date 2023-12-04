@@ -78,7 +78,7 @@ public class Supervisor {
         return supervisor;
     }
 
-    public void setSsupervisor(String supervisor) {
+    public void setSupervisor(String supervisor) {
         this.supervisor = supervisor;
     }
 
@@ -127,7 +127,8 @@ public class Supervisor {
         this.supervisions.add(supervision);
     }
 
-    public void removeSupervision(Integer supervisionId) {
-        this.supervisions.removeIf(supervision -> supervision.getId().equals(supervisionId));
+    public void removeSupervision(Supervision supervision) {
+        supervision.setSupervisor(null);
+        this.supervisions.remove(supervision);
     }
 }

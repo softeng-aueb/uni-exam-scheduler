@@ -72,4 +72,14 @@ public class AcademicYear {
     public void setExaminationPeriods(Set<ExaminationPeriod> examinationPeriods) {
         this.examinationPeriods = examinationPeriods;
     }
+
+    public void addExaminationPeriod(ExaminationPeriod examinationPeriod) {
+        examinationPeriod.setAcademicYear(this);
+        this.examinationPeriods.add(examinationPeriod);
+    }
+
+    public void removeExaminationPeriod(ExaminationPeriod examinationPeriod) {
+        examinationPeriod.setAcademicYear(null);
+        examinationPeriods.remove(examinationPeriod);
+    }
 }

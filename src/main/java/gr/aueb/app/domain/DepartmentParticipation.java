@@ -60,12 +60,12 @@ public class DepartmentParticipation {
         this.attendance = attendance;
     }
 
-    public Boolean getLeadDepartment() {
+    public Boolean getIsLeadDepartment() {
         return isLeadDepartment;
     }
 
-    public void setLeadDepartment(Boolean leadDepartment) {
-        isLeadDepartment = leadDepartment;
+    public void setIsLeadDepartment(Boolean isLeadDepartment) {
+        isLeadDepartment = isLeadDepartment;
     }
 
     public Examination getExamination() {

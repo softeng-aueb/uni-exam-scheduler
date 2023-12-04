@@ -22,7 +22,7 @@ public class SupervisorTest {
         assertEquals("O'Reily", supervisor.getSupervisor());
         assertEquals("123456789", supervisor.getTelephone());
         assertEquals("john.doe@example.com", supervisor.getEmail());
-        assertEquals(SupervisorCategory.EDIP, supervisor.getSupervisorCategory());
+        assertEquals(SupervisorCategory.EDIP, supervisor.getSupervisor_category());
         assertNotNull(supervisor.getDepartment());
         assertNotNull(supervisor.getSupervisions());
         assertTrue(supervisor.getSupervisions().isEmpty());
@@ -37,7 +37,7 @@ public class SupervisorTest {
         supervisor.setSupervisor("Roland");
         supervisor.setTelephone("987654321");
         supervisor.setEmail("jane.smith@example.com");
-        supervisor.setSupervisorCategory(SupervisorCategory.ETEP);
+        supervisor.setSupervisor_category(SupervisorCategory.ETEP);
         supervisor.setDepartment(newDepartment);
         supervisor.setSupervisions(null);
 
@@ -47,7 +47,7 @@ public class SupervisorTest {
         assertEquals("Roland", supervisor.getSupervisor());
         assertEquals("987654321", supervisor.getTelephone());
         assertEquals("jane.smith@example.com", supervisor.getEmail());
-        assertEquals(SupervisorCategory.ETEP, supervisor.getSupervisorCategory());
+        assertEquals(SupervisorCategory.ETEP, supervisor.getSupervisor_category());
         assertEquals(newDepartment, supervisor.getDepartment());
         assertNull(supervisor.getSupervisions());
     }

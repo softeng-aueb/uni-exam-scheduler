@@ -19,10 +19,10 @@ public class ClassroomTest {
         assertEquals("E16", classroom.getName());
         assertEquals("Main", classroom.getBuilding());
         assertEquals(5, classroom.getFloor());
-        assertEquals(80, classroom.getGeneralCapacity());
-        assertEquals(50, classroom.getExamCapacity());
-        assertEquals(35, classroom.getCovidCapacity());
-        assertEquals(3, classroom.getMaxNumSupervisors());
+        assertEquals(80, classroom.getGeneral_capacity());
+        assertEquals(50, classroom.getExam_capacity());
+        assertEquals(35, classroom.getCovid_capacity());
+        assertEquals(3, classroom.getMax_num_supervisors());
     }
 
     @Test
@@ -31,18 +31,18 @@ public class ClassroomTest {
         classroom.setName("C3");
         classroom.setBuilding("Troias");
         classroom.setFloor(3);
-        classroom.setGeneralCapacity(100);
-        classroom.setExamCapacity(70);
-        classroom.setCovidCapacity(45);
-        classroom.setMaxNumSupervisors(5);
+        classroom.setGeneral_capacity(100);
+        classroom.setExam_capacity(70);
+        classroom.setCovid_capacity(45);
+        classroom.setMax_num_supervisors(5);
 
         assertEquals(16, classroom.getId());
         assertEquals("C3", classroom.getName());
         assertEquals("Troias", classroom.getBuilding());
         assertEquals(3, classroom.getFloor());
-        assertEquals(100, classroom.getGeneralCapacity());
-        assertEquals(70, classroom.getExamCapacity());
-        assertEquals(45, classroom.getCovidCapacity());
-        assertEquals(5, classroom.getMaxNumSupervisors());
+        assertEquals(100, classroom.getGeneral_capacity());
+        assertEquals(70, classroom.getExam_capacity());
+        assertEquals(45, classroom.getCovid_capacity());
+        assertEquals(5, classroom.getMax_num_supervisors());
     }
 }

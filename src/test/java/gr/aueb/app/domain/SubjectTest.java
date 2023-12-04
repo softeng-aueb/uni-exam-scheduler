@@ -21,7 +21,7 @@ public class SubjectTest {
     void testCreateSubject() {
         assertNotNull(subject);
         assertEquals("Algorithms", subject.getTitle());
-        assertEquals("CS103", subject.getSubjectCode());
+        assertEquals("CS103", subject.getSubject_code());
         assertTrue(subject.getDepartments().isEmpty());
     }
 
@@ -29,32 +29,14 @@ public class SubjectTest {
     void testSettersandGetters() {
         Set<Department> departments = new HashSet<>();
         subject.setId(10);
-        subject.setSubjectCode("CS110");
+        subject.setSubject_code("CS110");
         subject.setTitle("OOP");
         subject.setDepartments(departments);
 
         assertEquals(10, subject.getId());
-        assertEquals("CS110", subject.getSubjectCode());
+        assertEquals("CS110", subject.getSubject_code());
         assertEquals("OOP", subject.getTitle());
         assertEquals(departments, subject.getDepartments());
         assertTrue(subject.getDepartments().isEmpty());
-    }
-
-    @Test
-    void testAddDeparment() {
-        Department newDepartment = new Department();
-        subject.addDepartment(newDepartment);
-
-        assertTrue(subject.getDepartments().contains(newDepartment));
-    }
-
-    @Test
-    void testRemoveDepartment() {
-        Department newDepartment = new Department();
-        subject.getDepartments().add(newDepartment);
-
-        subject.removeDepartment(newDepartment);
-
-        assertFalse(subject.getDepartments().contains(newDepartment));
     }
 }

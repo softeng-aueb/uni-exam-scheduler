@@ -19,27 +19,27 @@ public class Classroom {
     private Integer floor;
 
     @Column(name = "general_capacity", nullable = false)
-    private Integer general_capacity;
+    private Integer generalCapacity;
 
     @Column(name = "exam_capacity", nullable = false)
-    private Integer exam_capacity;
+    private Integer examCapacity;
 
     @Column(name = "covid_capacity", nullable = false)
-    private Integer covid_capacity;
+    private Integer covidCapacity;
 
     @Column(name = "max_num_supervisors", nullable = false)
-    private Integer max_num_supervisors;
+    private Integer maxNumSupervisors;
 
     protected Classroom() {}
 
-    public Classroom(String name, String building, Integer floor, Integer general_capacity, Integer exam_capacity, Integer covid_capacity, Integer max_num_supervisors) {
+    public Classroom(String name, String building, Integer floor, Integer generalCapacity, Integer examCapacity, Integer covidCapacity, Integer maxNumSupervisors) {
         this.name = name;
         this.building = building;
         this. floor = floor;
-        this.general_capacity = general_capacity;
-        this.exam_capacity = exam_capacity;
-        this.covid_capacity = covid_capacity;
-        this.max_num_supervisors = max_num_supervisors;
+        this.generalCapacity = generalCapacity;
+        this.examCapacity = examCapacity;
+        this.covidCapacity = covidCapacity;
+        this.maxNumSupervisors = maxNumSupervisors;
     }
 
     public Integer getId() {
@@ -74,35 +74,35 @@ public class Classroom {
         this.floor = floor;
     }
 
-    public Integer getGeneral_capacity() {
-        return general_capacity;
+    public Integer getGeneralCapacity() {
+        return generalCapacity;
     }
 
-    public void setGeneral_capacity(Integer general_capacity) {
-        this.general_capacity = general_capacity;
+    public void setGeneralCapacity(Integer generalCapacity) {
+        this.generalCapacity = generalCapacity;
     }
 
-    public Integer getExam_capacity() {
-        return exam_capacity;
+    public Integer getExamCapacity() {
+        return examCapacity;
     }
 
-    public void setExam_capacity(Integer exam_capacity) {
-        this.exam_capacity = exam_capacity;
+    public void setExamCapacity(Integer examCapacity) {
+        this.examCapacity = examCapacity;
     }
 
-    public Integer getCovid_capacity() {
-        return covid_capacity;
+    public Integer getCovidCapacity() {
+        return covidCapacity;
     }
 
-    public void setCovid_capacity(Integer covid_capacity) {
-        this.covid_capacity = covid_capacity;
+    public void setCovidCapacity(Integer covidCapacity) {
+        this.covidCapacity = covidCapacity;
     }
 
-    public Integer getMax_num_supervisors() {
-        return max_num_supervisors;
+    public Integer getMaxNumSupervisors() {
+        return maxNumSupervisors;
     }
 
-    public void setMax_num_supervisors(Integer max_num_supervisors) {
-        this.max_num_supervisors = max_num_supervisors;
+    public void setMaxNumSupervisors(Integer maxNumSupervisors) {
+        this.maxNumSupervisors = maxNumSupervisors;
     }
 }

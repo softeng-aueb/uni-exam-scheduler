@@ -14,22 +14,22 @@ public class Examination {
     private Integer id;
 
     @Column(name = "start_date", nullable = false)
-    private LocalDate start_date;
+    private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDate end_date;
+    private LocalDate endDate;
 
     @Column(name = "required_supervisors", nullable = false)
-    private Integer required_supervisors;
+    private Integer requiredSupervisors;
 
     @Transient
-    private Integer total_declaration;
+    private Integer totalDeclaration;
 
     @Transient
-    private Integer total_attendance;
+    private Integer totalAttendance;
 
     @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<DepartmentParticipation> departmentParticipations;
+    private Set<DepartmentParticipation> departmentParticipations = new HashSet<>();
 
     @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Supervision> supervisions = new HashSet<>();
@@ -51,11 +51,9 @@ public class Examination {
 
     protected Examination(){};
 
-    public Examination(LocalDate start_date, LocalDate end_date, Integer required_supervisors, Set<DepartmentParticipation> departmentParticipations, Subject subject, Set<Classroom> classrooms, ExaminationPeriod examinationPeriod) {
-        this.start_date = start_date;
-        this.end_date = end_date;
-        this.required_supervisors = required_supervisors;
-        this.departmentParticipations = departmentParticipations;
+    public Examination(LocalDate startDate, LocalDate endDate, Subject subject, Set<Classroom> classrooms, ExaminationPeriod examinationPeriod) {
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.subject = subject;
         this.classrooms = classrooms;
         this.examinationPeriod = examinationPeriod;
@@ -69,28 +67,28 @@ public class Examination {
         this.id = id;
     }
 
-    public LocalDate getStart_date() {
-        return start_date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStart_date(LocalDate start_date) {
-        this.start_date = start_date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDate getEnd_date() {
-        return end_date;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setEnd_date(LocalDate end_date) {
-        this.end_date = end_date;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public Integer getRequired_supervisors() {
-        return required_supervisors;
+    public Integer getRequiredSupervisors() {
+        return requiredSupervisors;
     }
 
-    public void setRequired_supervisors(Integer required_supervisors) {
-        this.required_supervisors = required_supervisors;
+    public void setRequiredSupervisors(Integer requiredSupervisors) {
+        this.requiredSupervisors = requiredSupervisors;
     }
 
     public Set<DepartmentParticipation> getDepartmentParticipations() {
@@ -133,13 +131,13 @@ public class Examination {
         this.examinationPeriod = examinationPeriod;
     }
 
-    public Integer getTotal_declaration() {
+    public Integer getTotalDeclaration() {
         return departmentParticipations.stream()
                 .map(DepartmentParticipation::getDeclaration)
                 .reduce(0, Integer::sum);
     }
 
-    public Integer getTotal_attendance() {
+    public Integer getTotalAttendance() {
         return departmentParticipations.stream()
                 .map(DepartmentParticipation::getAttendance)
                 .reduce(0, Integer::sum);
@@ -153,5 +151,15 @@ public class Examination {
     public void removeSupervision(Supervision supervision) {
         supervision.setExamination(null);
         supervisions.remove(supervision);
+    }
+
+    public void addDepartmentParticipation(DepartmentParticipation departmentParticipation) {
+        departmentParticipation.setExamination(this);
+        this.departmentParticipations.add(departmentParticipation);
+    }
+
+    public void removeDepartmentParticipation(DepartmentParticipation departmentParticipation) {
+        departmentParticipation.setExamination(null);
+        departmentParticipations.remove(departmentParticipation);
     }
 }

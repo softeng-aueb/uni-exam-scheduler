@@ -29,7 +29,7 @@ public class Supervisor {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "supervisor_category", nullable = false)
-    private SupervisorCategory supervisor_category;
+    private SupervisorCategory supervisorCategory;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
@@ -40,13 +40,13 @@ public class Supervisor {
 
     protected Supervisor(){};
 
-    public Supervisor(String name, String surname, String supervisor, String telephone, String email, SupervisorCategory supervisor_category, Department department) {
+    public Supervisor(String name, String surname, String supervisor, String telephone, String email, SupervisorCategory supervisorCategory, Department department) {
         this.name = name;
         this.surname = surname;
         this.supervisor = supervisor;
         this.telephone = telephone;
         this.email = email;
-        this.supervisor_category = supervisor_category;
+        this.supervisorCategory = supervisorCategory;
         this.department = department;
     }
 
@@ -98,12 +98,12 @@ public class Supervisor {
         this.email = email;
     }
 
-    public SupervisorCategory getSupervisor_category() {
-        return supervisor_category;
+    public SupervisorCategory getSupervisorCategory() {
+        return supervisorCategory;
     }
 
-    public void setSupervisor_category(SupervisorCategory supervisor_category) {
-        this.supervisor_category = supervisor_category;
+    public void setSupervisorCategory(SupervisorCategory supervisor_category) {
+        this.supervisorCategory = supervisor_category;
     }
 
     public Department getDepartment() {

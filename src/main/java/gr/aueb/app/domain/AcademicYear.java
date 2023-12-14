@@ -22,9 +22,6 @@ public class AcademicYear {
     @JoinColumn(name = "academicYear_id")
     private AcademicYear previousYear;
 
-    @OneToMany(mappedBy = "academicYear", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<ExaminationPeriod> examinationPeriods = new HashSet<>();
-
     protected AcademicYear(){};
 
     public AcademicYear(String name, Boolean isActive, AcademicYear previousYear) {
@@ -63,23 +60,5 @@ public class AcademicYear {
 
     public void setPreviousYear(AcademicYear previousYear) {
         this.previousYear = previousYear;
-    }
-
-    public Set<ExaminationPeriod> getExaminationPeriods() {
-        return examinationPeriods;
-    }
-
-    public void setExaminationPeriods(Set<ExaminationPeriod> examinationPeriods) {
-        this.examinationPeriods = examinationPeriods;
-    }
-
-    public void addExaminationPeriod(ExaminationPeriod examinationPeriod) {
-        examinationPeriod.setAcademicYear(this);
-        this.examinationPeriods.add(examinationPeriod);
-    }
-
-    public void removeExaminationPeriod(ExaminationPeriod examinationPeriod) {
-        examinationPeriod.setAcademicYear(null);
-        examinationPeriods.remove(examinationPeriod);
     }
 }

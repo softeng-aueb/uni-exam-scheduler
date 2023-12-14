@@ -2,8 +2,6 @@ package gr.aueb.app.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "examinationPeriods")
@@ -17,7 +15,7 @@ public class ExaminationPeriod {
     private Semester semester;
 
     @Column(name = "start_date", nullable = false)
-    private LocalDate start_date;
+    private LocalDate startDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "period", nullable = false)
@@ -27,14 +25,11 @@ public class ExaminationPeriod {
     @JoinColumn(name = "academicYear_id")
     private AcademicYear academicYear;
 
-    @OneToMany(mappedBy = "examinationPeriod", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<SupervisionRule> supervisionRules = new HashSet<>();
-
     protected ExaminationPeriod(){};
 
-    public ExaminationPeriod(Semester semester, LocalDate start_date, Period period, AcademicYear academicYear) {
+    public ExaminationPeriod(Semester semester, LocalDate startDate, Period period, AcademicYear academicYear) {
         this.semester = semester;
-        this.start_date = start_date;
+        this.startDate = startDate;
         this.period = period;
         this.academicYear = academicYear;
     }
@@ -55,12 +50,12 @@ public class ExaminationPeriod {
         this.semester = semester;
     }
 
-    public LocalDate getStart_date() {
-        return start_date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStart_date(LocalDate start_date) {
-        this.start_date = start_date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public Period getPeriod() {
@@ -77,23 +72,5 @@ public class ExaminationPeriod {
 
     public void setAcademicYear(AcademicYear academicYear) {
         this.academicYear = academicYear;
-    }
-
-    public Set<SupervisionRule> getSupervisionRules() {
-        return supervisionRules;
-    }
-
-    public void setSupervisionRules(Set<SupervisionRule> supervisionRules) {
-        this.supervisionRules = supervisionRules;
-    }
-
-    public void addSupervisionRule(SupervisionRule supervisionRule) {
-        supervisionRule.setExaminationPeriod(this);
-        this.supervisionRules.add(supervisionRule);
-    }
-
-    public void removeSupervisionRule(SupervisionRule supervisionRule) {
-        supervisionRule.setExaminationPeriod(null);
-        supervisionRules.remove(supervisionRule);
     }
 }

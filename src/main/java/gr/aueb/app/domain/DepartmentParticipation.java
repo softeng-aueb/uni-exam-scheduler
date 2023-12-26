@@ -19,11 +19,11 @@ public class DepartmentParticipation {
     @Column(name = "isLeadDepartment", nullable = false)
     private Boolean isLeadDepartment;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "examination_id")
     private Examination examination;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "department_id")
     private Department department;
 

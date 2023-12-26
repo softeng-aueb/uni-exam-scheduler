@@ -31,7 +31,7 @@ public class Supervisor {
     @Column(name = "supervisor_category", nullable = false)
     private SupervisorCategory supervisorCategory;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "department_id")
     private Department department;
 

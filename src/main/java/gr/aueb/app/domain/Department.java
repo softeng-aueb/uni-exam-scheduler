@@ -1,8 +1,6 @@
 package gr.aueb.app.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "departments")
@@ -15,7 +13,7 @@ public class Department {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    protected Department(){};
+    protected Department(){}
 
     public Department(String name) {
         this.name = name;

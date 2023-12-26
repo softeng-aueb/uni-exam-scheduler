@@ -21,7 +21,7 @@ public class ExaminationPeriod {
     @Column(name = "period", nullable = false)
     private Period period;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "academicYear_id")
     private AcademicYear academicYear;
 

@@ -34,7 +34,7 @@ public class Examination {
     @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Supervision> supervisions = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
@@ -45,7 +45,7 @@ public class Examination {
     )
     private Set<Classroom> classrooms;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "examinationPeriod_id")
     private ExaminationPeriod examinationPeriod;
 

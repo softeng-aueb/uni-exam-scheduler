@@ -1,0 +1,85 @@
+package gr.aueb.app.representation;
+
+import gr.aueb.app.domain.Classroom;
+import gr.aueb.app.domain.Examination;
+import gr.aueb.app.domain.ExaminationPeriod;
+import gr.aueb.app.domain.Subject;
+import gr.aueb.app.persistence.ClassroomRepository;
+import gr.aueb.app.persistence.ExaminationPeriodRepository;
+import gr.aueb.app.persistence.SubjectRepository;
+import org.mapstruct.*;
+
+import javax.inject.Inject;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Mapper(componentModel = "cdi",
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+        uses = {ClassroomMapper.class, ExaminationPeriodMapper.class, SubjectMapper.class})
+public abstract class ExaminationMapper {
+    @Inject
+    SubjectRepository subjectRepository;
+
+    @Inject
+    ExaminationPeriodRepository examinationPeriodRepository;
+
+    @Inject
+    ClassroomRepository classroomRepository;
+
+    public abstract ExaminationRepresentation toRepresentation(Examination examination);
+    public abstract List<ExaminationRepresentation> toRepresentationList(List<Examination> examinations);
+
+    @Mapping(target = "endDate", source = "representation.endDate", qualifiedByName = "mapLocalDate")
+    @Mapping(target = "startDate", source = "representation.startDate", qualifiedByName = "mapLocalDate")
+    public abstract Examination toModel(ExaminationRepresentation representation);
+
+    @AfterMapping
+    protected void connectToSubject(ExaminationRepresentation representation,
+                                    @MappingTarget Examination examination) {
+        if (representation.subject != null || representation.subject.id != null) {
+            Subject subject = subjectRepository.findById(Integer.valueOf(representation.subject.id));
+            if (subject == null) {
+                throw new RuntimeException();
+            }
+            examination.setSubject(subject);
+        }
+    }
+
+    @AfterMapping
+    protected void connectToExaminationPeriod(ExaminationRepresentation representation,
+                                    @MappingTarget Examination examination) {
+        if (representation.examinationPeriod != null || representation.examinationPeriod.id != null) {
+            ExaminationPeriod examinationPeriod = examinationPeriodRepository.findById(Integer.valueOf(representation.examinationPeriod.id));
+            if (examinationPeriod == null) {
+                throw new RuntimeException();
+            }
+            examination.setExaminationPeriod(examinationPeriod);
+        }
+    }
+
+    @AfterMapping
+    protected void connectToClassrooms(ExaminationRepresentation representation,
+                                 @MappingTarget Examination examination) {
+
+        if (representation.classrooms != null && representation.classrooms.size() != 0) {
+            Set<Classroom> classroomSet = new HashSet<>();
+            representation.classrooms.forEach((classroom) -> {
+                if(classroom != null){
+                    Classroom classroomModel = classroomRepository.findById(Integer.valueOf(classroom.id));
+                    classroomSet.add(classroomModel);
+                }
+            });
+            examination.setClassrooms(classroomSet);
+        }
+    }
+
+    @Named("mapLocalDate")
+    public LocalDate mapLocalDate(String dateStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+        LocalDate localDate = LocalDate.parse(dateStr, formatter);
+        return localDate;
+    }
+}

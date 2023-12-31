@@ -10,7 +10,7 @@ public class Supervision {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "isPresent", nullable = false)
+    @Column(name = "isPresent")
     private Boolean isPresent;
 
     @Column(name = "isLead", nullable = false)

@@ -39,7 +39,7 @@ public class Examination {
     private Subject subject;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "examination_classroom",
+    @JoinTable(name = "examinations_classrooms",
             joinColumns = @JoinColumn(name = "examination_id"),
             inverseJoinColumns = @JoinColumn(name = "classroom_id")
     )

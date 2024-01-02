@@ -10,5 +10,5 @@ public class ExaminationPeriodRepresentation {
     public Semester semester;
     public String startDate;
     public Period period;
-    public String academicYear;
+    public AcademicYearRepresentation academicYear;
 }

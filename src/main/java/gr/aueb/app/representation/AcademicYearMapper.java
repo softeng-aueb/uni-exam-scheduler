@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "cdi",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
-public class AcademicYearMapper {
-    public String toString(AcademicYear academicYear) { return academicYear == null ? null : academicYear.getName(); }
+public abstract class AcademicYearMapper {
+//    public String toString(AcademicYear academicYear) { return academicYear == null ? null : academicYear.getName(); }
+    public abstract AcademicYearRepresentation toRepresentation(AcademicYear academicYear);
 }

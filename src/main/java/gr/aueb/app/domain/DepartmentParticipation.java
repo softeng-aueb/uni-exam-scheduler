@@ -3,7 +3,7 @@ package gr.aueb.app.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "departmentsParticipations")
+@Table(name = "departmentParticipations")
 public class DepartmentParticipation {
 
     @Id

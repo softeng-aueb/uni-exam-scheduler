@@ -11,6 +11,7 @@ public class ExaminationPeriod {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "semester", nullable = false)
     private Semester semester;
 

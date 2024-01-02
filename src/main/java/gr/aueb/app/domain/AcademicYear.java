@@ -17,7 +17,7 @@ public class AcademicYear {
     private Boolean isActive;
 
     @OneToOne
-    @JoinColumn(name = "academicYear_id")
+    @JoinColumn(name = "previousYear_id")
     private AcademicYear previousYear;
 
     protected AcademicYear(){};

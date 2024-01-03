@@ -11,10 +11,10 @@ public class Supervision {
     private Integer id;
 
     @Column(name = "isPresent")
-    private Boolean isPresent;
+    private Boolean isPresent = true;
 
     @Column(name = "isLead", nullable = false)
-    private Boolean isLead;
+    private Boolean isLead = false;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "examination_id")
@@ -26,8 +26,7 @@ public class Supervision {
 
     protected Supervision(){};
 
-    public Supervision(Boolean isLead, Examination examination, Supervisor supervisor) {
-        this.isLead = isLead;
+    public Supervision(Examination examination, Supervisor supervisor) {
         this.examination = examination;
         this.supervisor = supervisor;
     }
@@ -40,20 +39,20 @@ public class Supervision {
         this.id = id;
     }
 
-    public Boolean getPresent() {
+    public Boolean getIsPresent() {
         return isPresent;
     }
 
-    public void setPresent(Boolean present) {
-        isPresent = present;
+    public void setIsPresent(Boolean isPresent) {
+        this.isPresent = isPresent;
     }
 
-    public Boolean getLead() {
+    public Boolean getIsLead() {
         return isLead;
     }
 
-    public void setLead(Boolean lead) {
-        isLead = lead;
+    public void setIsLead(Boolean isLead) {
+        this.isLead = isLead;
     }
 
     public Examination getExamination() {

@@ -3,10 +3,7 @@ package gr.aueb.app.representation;
 import gr.aueb.app.domain.*;
 import gr.aueb.app.persistence.DepartmentRepository;
 import gr.aueb.app.persistence.ExaminationRepository;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -23,6 +20,7 @@ public abstract class DepartmentParticipationMapper {
 
     public abstract DepartmentParticipationRepresentation toRepresentation(DepartmentParticipation departmentParticipation);
     public abstract List<DepartmentParticipationRepresentation> toRepresentationList(List<DepartmentParticipation> departmentParticipations);
+    @Mapping(target = "id", ignore = true)
     public abstract DepartmentParticipation toModel(DepartmentParticipationRepresentation representation);
 
     @AfterMapping

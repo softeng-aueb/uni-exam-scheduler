@@ -34,6 +34,9 @@ public abstract class ExaminationMapper {
 
     @Mapping(target = "endDate", source = "representation.endDate", qualifiedByName = "mapLocalDate")
     @Mapping(target = "startDate", source = "representation.startDate", qualifiedByName = "mapLocalDate")
+    @Mapping(target = "totalDeclaration", ignore = true)
+    @Mapping(target = "totalAttendance", ignore = true)
+    @Mapping(target = "id", ignore = true)
     public abstract Examination toModel(ExaminationRepresentation representation);
 
     @AfterMapping

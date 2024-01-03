@@ -24,7 +24,7 @@ insert into departments (id, name) values (3001, 'CS');
 insert into departments (id, name) values (3002, 'Business');
 insert into departments (id, name) values (3003, 'Economics');
 insert into departments (id, name) values (3004, 'Accounting');
-insert into departments (id, name) values (3005, 'Martketing');
+insert into departments (id, name) values (3005, 'Marketing');
 
 insert into subjects (id, title, subject_code) values(4001, 'Intro to Programming', 'CS105');
 insert into subjects (id, title, subject_code) values(4002, 'Accounting and Finance 101', 'AF101');
@@ -37,7 +37,7 @@ insert into subjects_departments (subject_id, department_id) values (4002, 3005)
 
 insert into examinationPeriods (id, semester, start_date, period, academicYear_id) values (5001, 'FIRST', '2023-01-01', 'WINTER', 1002);
 insert into examinationPeriods (id, semester, start_date, period, academicYear_id) values (5002, 'FOURTH', '2024-06-10', 'SPRING', 1003);
-insert into examinationPeriods (id, semester, start_date, period, academicYear_id) values (5003, 'FOURTH', '2023-09-03', 'SEPTEMBER', 1003);
+insert into examinationPeriods (id, semester, start_date, period, academicYear_id) values (5003, 'FOURTH', '2024-09-03', 'SEPTEMBER', 1003);
 
 insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6001, 6, 'EDIP', 3001, 5001);
 insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6002, 4, 'ETEP', 3001, 5001);
@@ -77,3 +77,6 @@ insert into departmentParticipations (id, declaration, attendance, isLeadDepartm
 insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9005, 20, 0, true, 8003, 3001);
 insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9006, 20, 0, false, 8003, 3003);
 insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9007, 110, 0, true, 8004, 3005);
+
+insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10001, true, true, 8001, 7001);
+insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10002, false, false, 8003, 7004);

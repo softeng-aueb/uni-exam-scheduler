@@ -10,13 +10,14 @@ public class SupervisionTest {
 
     @BeforeEach
     void setUp() {
-        supervision = new Supervision(true, new Examination(), new Supervisor());
+        supervision = new Supervision(new Examination(), new Supervisor());
     }
 
     @Test
     void testCreateSupervision() {
         assertNotNull(supervision);
-        assertTrue(supervision.getLead());
+        assertTrue(supervision.getIsPresent());
+        assertFalse(supervision.getIsLead());
         assertNotNull(supervision.getExamination());
         assertNotNull(supervision.getSupervisor());
     }
@@ -28,13 +29,13 @@ public class SupervisionTest {
         supervision.setSupervisor(supervisor);
         supervision.setExamination(examination);
         supervision.setId(1);
-        supervision.setLead(false);
-        supervision.setPresent(true);
+        supervision.setIsLead(true);
+        supervision.setIsPresent(false);
 
         assertEquals(1, supervision.getId());
         assertEquals(supervisor, supervision.getSupervisor());
         assertEquals(examination, supervision.getExamination());
-        assertFalse(supervision.getLead());
-        assertTrue(supervision.getPresent());
+        assertTrue(supervision.getIsLead());
+        assertFalse(supervision.getIsPresent());
     }
 }

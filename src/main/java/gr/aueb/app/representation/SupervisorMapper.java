@@ -18,7 +18,7 @@ public abstract class SupervisorMapper {
     public abstract SupervisorRepresentation toRepresentation(Supervisor supervisor);
     public abstract List<SupervisorRepresentation> toRepresentationList(List<Supervisor> supervisors);
 
-//    @Mapping(target = "supervisions", ignore = true)
+    @Mapping(target = "id", ignore = true)
     public abstract Supervisor toModel(SupervisorRepresentation representation);
 
     @AfterMapping

@@ -54,7 +54,7 @@ public class SupervisorTest {
 
     @Test
     void testAddSupervision() {
-        Supervision supervision = new Supervision(false, new Examination(), null);
+        Supervision supervision = new Supervision(new Examination(), null);
         supervisor.addSupervision(supervision);
 
         assertTrue(supervisor.getSupervisions().contains(supervision));
@@ -63,7 +63,7 @@ public class SupervisorTest {
 
     @Test
     void testRemoveSupervision() {
-        Supervision supervision = new Supervision(false, new Examination(), supervisor);
+        Supervision supervision = new Supervision(new Examination(), supervisor);
         supervisor.getSupervisions().add(supervision);
         supervisor.removeSupervision(supervision);
 

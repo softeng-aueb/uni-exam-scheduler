@@ -14,7 +14,7 @@ public class DepartmentParticipation {
     private Integer declaration;
 
     @Column(name = "attendance", nullable = false)
-    private Integer attendance;
+    private Integer attendance = 0;
 
     @Column(name = "isLeadDepartment", nullable = false)
     private Boolean isLeadDepartment;

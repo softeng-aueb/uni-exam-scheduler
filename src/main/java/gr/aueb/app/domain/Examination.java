@@ -20,7 +20,7 @@ public class Examination {
     private LocalDate endDate;
 
     @Column(name = "required_supervisors", nullable = false)
-    private Integer requiredSupervisors;
+    private Integer requiredSupervisors = 0;
 
     @Transient
     private Integer totalDeclaration;

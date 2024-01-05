@@ -1,5 +1,6 @@
 package gr.aueb.app.persistence;
 
+import gr.aueb.app.domain.Examination;
 import gr.aueb.app.domain.ExaminationPeriod;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -7,6 +8,7 @@ import io.quarkus.panache.common.Parameters;
 
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.NoResultException;
+import java.util.List;
 
 @RequestScoped
 public class ExaminationPeriodRepository implements PanacheRepositoryBase<ExaminationPeriod, Integer> {
@@ -18,6 +20,14 @@ public class ExaminationPeriodRepository implements PanacheRepositoryBase<Examin
         } catch(NoResultException ex) {
             return null;
         }
+    }
 
+    public List<ExaminationPeriod> findAllInSameYear(Integer academicYearId) {
+        try {
+            return find("select ep from ExaminationPeriod ep where ep.academicYear.id =:academicYear",
+                    Parameters.with("academicYear", academicYearId)).list();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }

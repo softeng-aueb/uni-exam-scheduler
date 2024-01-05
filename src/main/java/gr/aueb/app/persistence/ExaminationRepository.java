@@ -1,14 +1,12 @@
 package gr.aueb.app.persistence;
 
 import gr.aueb.app.domain.Examination;
-import gr.aueb.app.domain.ExaminationPeriod;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.NoResultException;
-import java.time.LocalDate;
 import java.util.List;
 
 @RequestScoped

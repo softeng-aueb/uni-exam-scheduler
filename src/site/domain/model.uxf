@@ -81,16 +81,14 @@ m1=1
 m2=*</panel_attributes><additional_attributes>10;250;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>900</x><y>710</y><w>150</w><h>110</h></coordinates><panel_attributes>ΑκαδημαϊκόΤμήμα
 --
 ονομασία: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>780</y><w>220</w><h>40</h></coordinates><panel_attributes>lt=-
-m1=1..*
-m2=*</panel_attributes><additional_attributes>200;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>710</x><y>420</y><w>130</w><h>130</h></coordinates><panel_attributes>lt=-
-m1=*
-m2=1</panel_attributes><additional_attributes>100;110;100;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>530</y><w>150</w><h>80</h></coordinates><panel_attributes>ΣυμμετοχήΤμήματος
+m1=1
+m2=*</panel_attributes><additional_attributes>200;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>520</y><w>150</w><h>80</h></coordinates><panel_attributes>ΣυμμετοχήΤμήματος
 --
 δηλώσεις: int
 προσελεύσεις: int
-κύριοΤμήμα: boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>600</y><w>120</w><h>160</h></coordinates><panel_attributes>lt=-
+κύριοΤμήμα: boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>590</y><w>120</w><h>170</h></coordinates><panel_attributes>lt=-
 m1=1
-m2=*</panel_attributes><additional_attributes>100;130;10;130;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>260</x><y>230</y><w>180</w><h>80</h></coordinates><panel_attributes>ΥποχρέωσηΕποπτειών
+m2=*</panel_attributes><additional_attributes>100;140;10;140;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>260</x><y>230</y><w>180</w><h>80</h></coordinates><panel_attributes>ΥποχρέωσηΕποπτειών
 --
 πλήθοςΕποπτειών: int
 κατηγορία: ΚατηγορίαΕπόπτη
@@ -104,4 +102,12 @@ m1=1
 m2=*</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>220</y><w>150</w><h>90</h></coordinates><panel_attributes>lt=-
 m1=1
 m2=*
-ορίζει</panel_attributes><additional_attributes>10;10;10;60;130;60</additional_attributes></element></diagram>
+ορίζει</panel_attributes><additional_attributes>10;10;10;60;130;60</additional_attributes></element><element><id>Relation</id><coordinates><x>670</x><y>590</y><w>110</w><h>140</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;120;90;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>520</y><w>170</w><h>80</h></coordinates><panel_attributes> ΕξεταστικήΠερίοδος
+--
+εξάμηνο: Εξάμηνο
+ημερομηνίαΈναρξης: Date
+περίοδος: Περίοδος</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>550</y><w>140</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>120;10;10;10</additional_attributes></element></diagram>

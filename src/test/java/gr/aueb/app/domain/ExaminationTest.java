@@ -12,15 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ExaminationTest {
 
     private Examination examination;
-    private Subject subject;
+    private Course course;
     private ExaminationPeriod examinationPeriod;
 
     @BeforeEach
     void setup() {
-        subject = new Subject("Algorithms", "CS101");
+        course = new Course("Algorithms", "CS101");
         AcademicYear academicYear = new AcademicYear("2023-2024", true, new AcademicYear());
         examinationPeriod = new ExaminationPeriod(Semester.THIRD, LocalDate.now(), Period.WINTER, academicYear);
-        examination = new Examination(LocalDate.now(), LocalDate.of(2023, 12, 20), subject, new HashSet<>(), examinationPeriod);
+        examination = new Examination(LocalDate.now(), LocalDate.of(2023, 12, 20), course, new HashSet<>(), examinationPeriod);
     }
 
     @Test
@@ -29,14 +29,14 @@ public class ExaminationTest {
         assertEquals(LocalDate.now(), examination.getStartDate());
         assertEquals(LocalDate.of(2023, 12, 20), examination.getEndDate());
         assertNotNull(examination.getDepartmentParticipations());
-        assertEquals(subject, examination.getSubject());
+        assertEquals(course, examination.getCourse());
         assertNotNull(examination.getClassrooms());
         assertEquals(examinationPeriod, examination.getExaminationPeriod());
     }
 
     @Test
     void testSettersAndGetters() {
-        Subject newSubject = new Subject();
+        Course newCourse = new Course();
         ExaminationPeriod newExaminationPeriod = new ExaminationPeriod();
         Set<Classroom> classroomSet = new HashSet<>();
         Set<DepartmentParticipation> departmentParticipationSet = new HashSet<>();
@@ -45,7 +45,7 @@ public class ExaminationTest {
         examination.setStartDate(LocalDate.of(2023, 12, 10));
         examination.setEndDate(LocalDate.of(2023, 12, 30));
         examination.setRequiredSupervisors(8);
-        examination.setSubject(newSubject);
+        examination.setSubject(newCourse);
         examination.setExaminationPeriod(newExaminationPeriod);
         examination.setClassrooms(classroomSet);
         examination.setDepartmentParticipations(departmentParticipationSet);
@@ -55,7 +55,7 @@ public class ExaminationTest {
         assertEquals(LocalDate.of(2023, 12, 10), examination.getStartDate());
         assertEquals(LocalDate.of(2023, 12, 30), examination.getEndDate());
         assertEquals(8, examination.getRequiredSupervisors());
-        assertEquals(newSubject, examination.getSubject());
+        assertEquals(newCourse, examination.getCourse());
         assertEquals(newExaminationPeriod, examination.getExaminationPeriod());
         assertEquals(classroomSet, examination.getClassrooms());
         assertEquals(departmentParticipationSet, examination.getDepartmentParticipations());

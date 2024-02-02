@@ -73,7 +73,7 @@ public class SupervisionServiceTest {
         assertNotNull(createdSupervision);
         assertNotNull(createdSupervision.getId());
         assertEquals(8001, createdSupervision.getExamination().getId());
-        assertEquals("Intro to Programming", createdSupervision.getExamination().getSubject().getTitle());
+        assertEquals("Intro to Programming", createdSupervision.getExamination().getCourse().getTitle());
         assertTrue(createdSupervision.getIsPresent());
         assertFalse(createdSupervision.getIsLead());
         assertEquals("Mark", createdSupervision.getSupervisor().getName());

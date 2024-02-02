@@ -12,7 +12,7 @@ public class ExaminationRepresentation {
     public String endDate;
     public Integer totalDeclaration;
     public Integer totalAttendance;
-    public SubjectRepresentation subject;
+    public CourseRepresentation course;
     public List<ClassroomRepresentation> classrooms = new ArrayList<ClassroomRepresentation>();
     public ExaminationPeriodRepresentation examinationPeriod;
 }

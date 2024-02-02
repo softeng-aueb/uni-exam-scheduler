@@ -3,7 +3,7 @@ package gr.aueb.app.application;
 import gr.aueb.app.domain.*;
 import gr.aueb.app.persistence.ClassroomRepository;
 import gr.aueb.app.persistence.ExaminationPeriodRepository;
-import gr.aueb.app.persistence.SubjectRepository;
+import gr.aueb.app.persistence.CourseRepository;
 import gr.aueb.app.representation.*;
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
@@ -26,7 +26,7 @@ public class ExaminationServiceTest {
     ClassroomRepository classroomRepository;
 
     @Inject
-    SubjectRepository subjectRepository;
+    CourseRepository courseRepository;
 
     @Inject
     ExaminationService examinationService;
@@ -38,7 +38,7 @@ public class ExaminationServiceTest {
     ClassroomMapper classroomMapper;
 
     @Inject
-    SubjectMapper subjectMapper;
+    CourseMapper courseMapper;
 
     @Test
     @TestTransaction
@@ -61,12 +61,12 @@ public class ExaminationServiceTest {
         Classroom classroom = classroomRepository.findById(2001);
         ClassroomRepresentation classroomRepresentation = classroomMapper.toRepresentation(classroom);
 
-        Subject subject = subjectRepository.findById(4001);
-        SubjectRepresentation subjectRepresentation = subjectMapper.toRepresentation(subject);
+        Course course = courseRepository.findById(4001);
+        CourseRepresentation courseRepresentation = courseMapper.toRepresentation(course);
 
         representation.startDate = "2024-09-05";
         representation.endDate = "2024-09-05";
-        representation.subject = subjectRepresentation;
+        representation.course = courseRepresentation;
         representation.examinationPeriod = examinationPeriodRepresentation;
         representation.classrooms.add(classroomRepresentation);
 
@@ -77,7 +77,7 @@ public class ExaminationServiceTest {
         assertNotNull(createdExamination);
         assertNotNull(createdExamination.getId());
         assertEquals(LocalDate.of(2024, 9, 5), createdExamination.getStartDate());
-        assertEquals("CS105", createdExamination.getSubject().getSubjectCode());
+        assertEquals("CS105", createdExamination.getCourse().getCourseCode());
         assertEquals(Period.SEPTEMBER, createdExamination.getExaminationPeriod().getPeriod());
         assertEquals(1, createdExamination.getClassrooms().size());
     }
@@ -90,7 +90,7 @@ public class ExaminationServiceTest {
         assertNotNull(foundExamination);
         assertEquals(8002, foundExamination.getId());
         assertEquals(8, foundExamination.getRequiredSupervisors());
-        assertEquals(4002, foundExamination.getSubject().getId());
+        assertEquals(4002, foundExamination.getCourse().getId());
         assertEquals(5001, foundExamination.getExaminationPeriod().getId());
         assertEquals(90, foundExamination.getTotalDeclaration());
     }

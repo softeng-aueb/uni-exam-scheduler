@@ -3,10 +3,10 @@ package gr.aueb.app.representation;
 import gr.aueb.app.domain.Classroom;
 import gr.aueb.app.domain.Examination;
 import gr.aueb.app.domain.ExaminationPeriod;
-import gr.aueb.app.domain.Subject;
+import gr.aueb.app.domain.Course;
 import gr.aueb.app.persistence.ClassroomRepository;
 import gr.aueb.app.persistence.ExaminationPeriodRepository;
-import gr.aueb.app.persistence.SubjectRepository;
+import gr.aueb.app.persistence.CourseRepository;
 import org.mapstruct.*;
 
 import javax.inject.Inject;
@@ -18,10 +18,10 @@ import java.util.Set;
 
 @Mapper(componentModel = "cdi",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        uses = {ClassroomMapper.class, ExaminationPeriodMapper.class, SubjectMapper.class})
+        uses = {ClassroomMapper.class, ExaminationPeriodMapper.class, CourseMapper.class})
 public abstract class ExaminationMapper {
     @Inject
-    SubjectRepository subjectRepository;
+    CourseRepository courseRepository;
 
     @Inject
     ExaminationPeriodRepository examinationPeriodRepository;
@@ -42,12 +42,12 @@ public abstract class ExaminationMapper {
     @AfterMapping
     protected void connectToSubject(ExaminationRepresentation representation,
                                     @MappingTarget Examination examination) {
-        if (representation.subject != null || representation.subject.id != null) {
-            Subject subject = subjectRepository.findById(Integer.valueOf(representation.subject.id));
-            if (subject == null) {
+        if (representation.course != null || representation.course.id != null) {
+            Course course = courseRepository.findById(Integer.valueOf(representation.course.id));
+            if (course == null) {
                 throw new RuntimeException();
             }
-            examination.setSubject(subject);
+            examination.setSubject(course);
         }
     }
 

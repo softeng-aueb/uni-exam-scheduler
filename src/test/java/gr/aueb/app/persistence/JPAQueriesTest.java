@@ -47,7 +47,7 @@ public class JPAQueriesTest {
     @TestTransaction
     public void implicitJoin() {
         int EXPECTED_AUCTIONS_WITH_CATEGORY = 3;
-        Query query = em.createQuery("select e from Examination e where e.subject.subjectCode like 'CS%'");
+        Query query = em.createQuery("select e from Examination e where e.course.courseCode like 'CS%'");
         List<Examination> results = query.getResultList();
         Assertions.assertEquals(EXPECTED_AUCTIONS_WITH_CATEGORY,results.size());
     }

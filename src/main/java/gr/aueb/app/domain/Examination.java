@@ -35,8 +35,8 @@ public class Examination {
     private Set<Supervision> supervisions = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-    @JoinColumn(name = "subject_id")
-    private Subject subject;
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "examinations_classrooms",
@@ -51,10 +51,10 @@ public class Examination {
 
     protected Examination(){};
 
-    public Examination(LocalDate startDate, LocalDate endDate, Subject subject, Set<Classroom> classrooms, ExaminationPeriod examinationPeriod) {
+    public Examination(LocalDate startDate, LocalDate endDate, Course course, Set<Classroom> classrooms, ExaminationPeriod examinationPeriod) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.subject = subject;
+        this.course = course;
         this.classrooms = classrooms;
         this.examinationPeriod = examinationPeriod;
     }
@@ -107,12 +107,12 @@ public class Examination {
         this.supervisions = supervisions;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubject(Course course) {
+        this.course = course;
     }
 
     public Set<Classroom> getClassrooms() {

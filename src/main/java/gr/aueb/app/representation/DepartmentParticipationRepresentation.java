@@ -7,6 +7,7 @@ public class DepartmentParticipationRepresentation {
     public Integer id;
     public Integer declaration;
     public Boolean isLeadDepartment;
-    public ExaminationRepresentation examination;
+    public CourseRepresentation course;
     public DepartmentRepresentation department;
+    public ExaminationPeriodRepresentation examinationPeriod;
 }

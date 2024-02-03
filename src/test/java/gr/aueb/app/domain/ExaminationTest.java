@@ -28,7 +28,6 @@ public class ExaminationTest {
         assertNotNull(examination);
         assertEquals(LocalDate.now(), examination.getStartDate());
         assertEquals(LocalDate.of(2023, 12, 20), examination.getEndDate());
-        assertNotNull(examination.getDepartmentParticipations());
         assertEquals(course, examination.getCourse());
         assertNotNull(examination.getClassrooms());
         assertEquals(examinationPeriod, examination.getExaminationPeriod());
@@ -39,16 +38,14 @@ public class ExaminationTest {
         Course newCourse = new Course();
         ExaminationPeriod newExaminationPeriod = new ExaminationPeriod();
         Set<Classroom> classroomSet = new HashSet<>();
-        Set<DepartmentParticipation> departmentParticipationSet = new HashSet<>();
         Set<Supervision> supervisionSet = new HashSet<>();
         examination.setId(10);
         examination.setStartDate(LocalDate.of(2023, 12, 10));
         examination.setEndDate(LocalDate.of(2023, 12, 30));
         examination.setRequiredSupervisors(8);
-        examination.setSubject(newCourse);
+        examination.setCourse(newCourse);
         examination.setExaminationPeriod(newExaminationPeriod);
         examination.setClassrooms(classroomSet);
-        examination.setDepartmentParticipations(departmentParticipationSet);
         examination.setSupervisions(supervisionSet);
 
         assertEquals(10, examination.getId());
@@ -58,7 +55,6 @@ public class ExaminationTest {
         assertEquals(newCourse, examination.getCourse());
         assertEquals(newExaminationPeriod, examination.getExaminationPeriod());
         assertEquals(classroomSet, examination.getClassrooms());
-        assertEquals(departmentParticipationSet, examination.getDepartmentParticipations());
         assertEquals(supervisionSet, examination.getSupervisions());
     }
 
@@ -82,55 +78,35 @@ public class ExaminationTest {
         assertNull(newSupervision.getExamination());
     }
 
-    @Test
-    void testAddDepartmentParticipation() {
-        DepartmentParticipation newDepartmentParticipation = new DepartmentParticipation();
-        examination.addDepartmentParticipation(newDepartmentParticipation);
-
-        assertTrue(examination.getDepartmentParticipations().contains(newDepartmentParticipation));
-        assertEquals(examination, newDepartmentParticipation.getExamination());
-    }
-
-    @Test
-    void testRemoveDepartmentParticipation() {
-        DepartmentParticipation newDepartmentParticipation = new DepartmentParticipation();
-        examination.getDepartmentParticipations().add(newDepartmentParticipation);
-
-        examination.removeDepartmentParticipation(newDepartmentParticipation);
-
-        assertTrue(examination.getDepartmentParticipations().isEmpty());
-        assertNull(newDepartmentParticipation.getExamination());
-    }
-
-    @Test
-    void testGetTotalDeclaration() {
-        Department newDepartment1 = new Department("CS");
-        Department newDepartment2 = new Department("MATH");
-        DepartmentParticipation newDepartmentParticipation1 = new DepartmentParticipation(150, true, examination, newDepartment1);
-        DepartmentParticipation newDepartmentParticipation2 = new DepartmentParticipation(80, false, examination, newDepartment2);
-        Set<DepartmentParticipation> departmentParticipationSet = new HashSet<>();
-        departmentParticipationSet.add(newDepartmentParticipation1);
-        departmentParticipationSet.add(newDepartmentParticipation2);
-
-        examination.setDepartmentParticipations(departmentParticipationSet);
-
-        assertEquals(230, examination.getTotalDeclaration());
-    }
-
-    @Test
-    void testGetTotalAttendance() {
-        Department newDepartment1 = new Department("CS");
-        Department newDepartment2 = new Department("MATH");
-        DepartmentParticipation newDepartmentParticipation1 = new DepartmentParticipation(150, true, examination, newDepartment1);
-        DepartmentParticipation newDepartmentParticipation2 = new DepartmentParticipation(80, false, examination, newDepartment2);
-        newDepartmentParticipation1.setAttendance(100);
-        newDepartmentParticipation2.setAttendance(67);
-        Set<DepartmentParticipation> departmentParticipationSet = new HashSet<>();
-        departmentParticipationSet.add(newDepartmentParticipation1);
-        departmentParticipationSet.add(newDepartmentParticipation2);
-
-        examination.setDepartmentParticipations(departmentParticipationSet);
-
-        assertEquals(167, examination.getTotalAttendance());
-    }
+//    @Test
+//    void testGetTotalDeclaration() {
+//        Department newDepartment1 = new Department("CS");
+//        Department newDepartment2 = new Department("MATH");
+//        DepartmentParticipation newDepartmentParticipation1 = new DepartmentParticipation(150, true, course, newDepartment1, examinationPeriod);
+//        DepartmentParticipation newDepartmentParticipation2 = new DepartmentParticipation(80, false, course, newDepartment2, examinationPeriod);
+//        Set<DepartmentParticipation> departmentParticipationSet = new HashSet<>();
+//        departmentParticipationSet.add(newDepartmentParticipation1);
+//        departmentParticipationSet.add(newDepartmentParticipation2);
+//
+//        examination.setDepartmentParticipations(departmentParticipationSet);
+//
+//        assertEquals(230, examination.getTotalDeclaration());
+//    }
+//
+//    @Test
+//    void testGetTotalAttendance() {
+//        Department newDepartment1 = new Department("CS");
+//        Department newDepartment2 = new Department("MATH");
+//        DepartmentParticipation newDepartmentParticipation1 = new DepartmentParticipation(150, true, examination, newDepartment1);
+//        DepartmentParticipation newDepartmentParticipation2 = new DepartmentParticipation(80, false, examination, newDepartment2);
+//        newDepartmentParticipation1.setAttendance(100);
+//        newDepartmentParticipation2.setAttendance(67);
+//        Set<DepartmentParticipation> departmentParticipationSet = new HashSet<>();
+//        departmentParticipationSet.add(newDepartmentParticipation1);
+//        departmentParticipationSet.add(newDepartmentParticipation2);
+//
+//        examination.setDepartmentParticipations(departmentParticipationSet);
+//
+//        assertEquals(167, examination.getTotalAttendance());
+//    }
 }

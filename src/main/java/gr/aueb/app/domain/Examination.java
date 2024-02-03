@@ -29,16 +29,13 @@ public class Examination {
     private Integer totalAttendance;
 
     @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<DepartmentParticipation> departmentParticipations = new HashSet<>();
-
-    @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Supervision> supervisions = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST })
     @JoinTable(name = "examinations_classrooms",
             joinColumns = @JoinColumn(name = "examination_id"),
             inverseJoinColumns = @JoinColumn(name = "classroom_id")
@@ -91,14 +88,6 @@ public class Examination {
         this.requiredSupervisors = requiredSupervisors;
     }
 
-    public Set<DepartmentParticipation> getDepartmentParticipations() {
-        return departmentParticipations;
-    }
-
-    public void setDepartmentParticipations(Set<DepartmentParticipation> departmentParticipations) {
-        this.departmentParticipations = departmentParticipations;
-    }
-
     public Set<Supervision> getSupervisions() {
         return supervisions;
     }
@@ -111,7 +100,7 @@ public class Examination {
         return course;
     }
 
-    public void setSubject(Course course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 
@@ -132,15 +121,17 @@ public class Examination {
     }
 
     public Integer getTotalDeclaration() {
-        return departmentParticipations.stream()
-                .map(DepartmentParticipation::getDeclaration)
-                .reduce(0, Integer::sum);
+//        return departmentParticipations.stream()
+//                .map(DepartmentParticipation::getDeclaration)
+//                .reduce(0, Integer::sum);
+        return totalDeclaration;
     }
 
     public Integer getTotalAttendance() {
-        return departmentParticipations.stream()
-                .map(DepartmentParticipation::getAttendance)
-                .reduce(0, Integer::sum);
+//        return departmentParticipations.stream()
+//                .map(DepartmentParticipation::getAttendance)
+//                .reduce(0, Integer::sum);
+        return totalAttendance;
     }
 
     public void addSupervision(Supervision supervision) {
@@ -151,15 +142,5 @@ public class Examination {
     public void removeSupervision(Supervision supervision) {
         supervision.setExamination(null);
         supervisions.remove(supervision);
-    }
-
-    public void addDepartmentParticipation(DepartmentParticipation departmentParticipation) {
-        departmentParticipation.setExamination(this);
-        this.departmentParticipations.add(departmentParticipation);
-    }
-
-    public void removeDepartmentParticipation(DepartmentParticipation departmentParticipation) {
-        departmentParticipation.setExamination(null);
-        departmentParticipations.remove(departmentParticipation);
     }
 }

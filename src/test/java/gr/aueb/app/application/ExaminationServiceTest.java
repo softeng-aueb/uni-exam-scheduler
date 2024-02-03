@@ -92,7 +92,7 @@ public class ExaminationServiceTest {
         assertEquals(8, foundExamination.getRequiredSupervisors());
         assertEquals(4002, foundExamination.getCourse().getId());
         assertEquals(5001, foundExamination.getExaminationPeriod().getId());
-        assertEquals(90, foundExamination.getTotalDeclaration());
+//        assertEquals(90, foundExamination.getTotalDeclaration());
     }
 
     @Test

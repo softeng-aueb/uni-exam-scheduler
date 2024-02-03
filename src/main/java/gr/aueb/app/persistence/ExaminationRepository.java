@@ -13,8 +13,7 @@ import java.util.List;
 public class ExaminationRepository implements PanacheRepositoryBase<Examination, Integer> {
     public Examination findWithDetails(Integer id) {
         PanacheQuery<Examination> query = find("select e from Examination e " +
-                "left join fetch e.subject " +
-                "left join fetch e.departmentParticipations " +
+                "left join fetch e.course " +
                 "left join fetch e.supervisions " +
                 "left join fetch e.classrooms " +
                 "left join fetch e.examinationPeriod " +

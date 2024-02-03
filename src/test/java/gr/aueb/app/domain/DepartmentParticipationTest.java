@@ -10,7 +10,7 @@ public class DepartmentParticipationTest {
     private DepartmentParticipation departmentParticipation;
     @BeforeEach
     void setup() {
-        departmentParticipation = new DepartmentParticipation(150, true, new Examination(), new Department());
+        departmentParticipation = new DepartmentParticipation(150, true, new Course(), new Department(), new ExaminationPeriod());
     }
 
     @Test
@@ -18,25 +18,29 @@ public class DepartmentParticipationTest {
         assertNotNull(departmentParticipation);
         assertEquals(150, departmentParticipation.getDeclaration());
         assertTrue(departmentParticipation.getIsLeadDepartment());
-        assertNotNull(departmentParticipation.getExamination());
+        assertNotNull(departmentParticipation.getCourse());
         assertNotNull(departmentParticipation.getDepartment());
+        assertNotNull(departmentParticipation.getExaminationPeriod());
     }
 
     @Test
     void testSettersAndGetters() {
-        Examination newExamination = new Examination();
+        Course newCourse = new Course();
+        ExaminationPeriod newExaminationPeriod = new ExaminationPeriod();
         Department newDepartment = new Department();
         departmentParticipation.setId(3);
         departmentParticipation.setDeclaration(200);
         departmentParticipation.setAttendance(170);
         departmentParticipation.setIsLeadDepartment(false);
+        departmentParticipation.setCourse(newCourse);
         departmentParticipation.setDepartment(newDepartment);
-        departmentParticipation.setExamination(newExamination);
+        departmentParticipation.setExaminationPeriod(newExaminationPeriod);
 
         assertEquals(3, departmentParticipation.getId());
         assertEquals(200, departmentParticipation.getDeclaration());
         assertEquals(170, departmentParticipation.getAttendance());
-        assertEquals(newExamination, departmentParticipation.getExamination());
+        assertEquals(newCourse, departmentParticipation.getCourse());
         assertEquals(newDepartment, departmentParticipation.getDepartment());
+        assertEquals(newExaminationPeriod, departmentParticipation.getExaminationPeriod());
     }
 }

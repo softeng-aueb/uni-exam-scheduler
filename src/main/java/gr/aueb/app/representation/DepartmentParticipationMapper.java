@@ -1,8 +1,7 @@
 package gr.aueb.app.representation;
 
 import gr.aueb.app.domain.*;
-import gr.aueb.app.persistence.DepartmentRepository;
-import gr.aueb.app.persistence.ExaminationRepository;
+import gr.aueb.app.persistence.*;
 import org.mapstruct.*;
 
 import javax.inject.Inject;
@@ -13,10 +12,13 @@ import java.util.List;
         uses = {ExaminationMapper.class, DepartmentMapper.class})
 public abstract class DepartmentParticipationMapper {
     @Inject
-    ExaminationRepository examinationRepository;
+    CourseRepository courseRepository;
 
     @Inject
     DepartmentRepository departmentRepository;
+
+    @Inject
+    ExaminationPeriodRepository examinationPeriodRepository;
 
     public abstract DepartmentParticipationRepresentation toRepresentation(DepartmentParticipation departmentParticipation);
     public abstract List<DepartmentParticipationRepresentation> toRepresentationList(List<DepartmentParticipation> departmentParticipations);
@@ -24,14 +26,14 @@ public abstract class DepartmentParticipationMapper {
     public abstract DepartmentParticipation toModel(DepartmentParticipationRepresentation representation);
 
     @AfterMapping
-    protected void connectToExamination(DepartmentParticipationRepresentation representation,
+    protected void connectToCourse(DepartmentParticipationRepresentation representation,
                                         @MappingTarget DepartmentParticipation departmentParticipation) {
-        if (representation.examination != null || representation.examination.id != null) {
-            Examination examination = examinationRepository.findById(Integer.valueOf(representation.examination.id));
-            if (examination == null) {
+        if (representation.course != null || representation.course.id != null) {
+            Course course = courseRepository.findById(Integer.valueOf(representation.course.id));
+            if (course == null) {
                 throw new RuntimeException();
             }
-            departmentParticipation.setExamination(examination);
+            departmentParticipation.setCourse(course);
         }
     }
 
@@ -44,6 +46,18 @@ public abstract class DepartmentParticipationMapper {
                 throw new RuntimeException();
             }
             departmentParticipation.setDepartment(department);
+        }
+    }
+
+    @AfterMapping
+    protected void connectToExaminationPeriod(DepartmentParticipationRepresentation representation,
+                                   @MappingTarget DepartmentParticipation departmentParticipation) {
+        if (representation.examinationPeriod != null || representation.examinationPeriod.id != null) {
+            ExaminationPeriod examinationPeriod = examinationPeriodRepository.findById(Integer.valueOf(representation.examinationPeriod.id));
+            if (examinationPeriod == null) {
+                throw new RuntimeException();
+            }
+            departmentParticipation.setExaminationPeriod(examinationPeriod);
         }
     }
 }

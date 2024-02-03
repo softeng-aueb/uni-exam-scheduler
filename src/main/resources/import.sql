@@ -63,13 +63,13 @@ insert into examinations_classrooms (examination_id, classroom_id) values (8005,
 insert into examinations_classrooms (examination_id, classroom_id) values (8005, 2004);
 insert into examinations_classrooms (examination_id, classroom_id) values (8006, 2003);
 
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9001, 120, 100, true, 8001, 3001);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9002, 30, 20, false, 8001, 3003);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9003, 50, 38, true, 8002, 3002);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9004, 40, 27, false, 8002, 3004);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9005, 20, 0, true, 8003, 3001);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9006, 20, 0, false, 8003, 3003);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, examination_id, department_id) values (9007, 110, 0, true, 8004, 3005);
+insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9001, 120, 100, true, 4001, 3001, 5001);
+insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9002, 30, 20, false, 4001, 3003, 5001);
+insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9003, 50, 38, true, 4002, 3002, 5001);
+insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9004, 40, 27, false, 4002, 3004, 5001);
+insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9005, 20, 0, true, 4001, 3001, 5002);
+insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9006, 20, 0, false, 4001, 3003, 5002);
+insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9007, 110, 0, true, 4002, 3005, 5002);
 
 insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10001, true, true, 8001, 7001);
 insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10002, false, false, 8003, 7004);

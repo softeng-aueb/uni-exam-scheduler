@@ -40,14 +40,14 @@ public abstract class ExaminationMapper {
     public abstract Examination toModel(ExaminationRepresentation representation);
 
     @AfterMapping
-    protected void connectToSubject(ExaminationRepresentation representation,
+    protected void connectToCourse(ExaminationRepresentation representation,
                                     @MappingTarget Examination examination) {
         if (representation.course != null || representation.course.id != null) {
             Course course = courseRepository.findById(Integer.valueOf(representation.course.id));
             if (course == null) {
                 throw new RuntimeException();
             }
-            examination.setSubject(course);
+            examination.setCourse(course);
         }
     }
 

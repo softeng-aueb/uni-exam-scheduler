@@ -1,11 +1,8 @@
 package gr.aueb.app.application;
 
-import gr.aueb.app.domain.Department;
-import gr.aueb.app.domain.DepartmentParticipation;
-import gr.aueb.app.domain.Examination;
-import gr.aueb.app.persistence.DepartmentParticipationRepository;
-import gr.aueb.app.persistence.DepartmentRepository;
-import gr.aueb.app.persistence.ExaminationRepository;
+
+import gr.aueb.app.domain.*;
+import gr.aueb.app.persistence.*;
 import gr.aueb.app.representation.*;
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
@@ -27,6 +24,11 @@ public class DepartmentParticipationServiceTest {
     @Inject
     DepartmentParticipationRepository departmentParticipationRepository;
 
+    @Inject
+    CourseRepository courseRepository;
+
+    @Inject
+    CourseMapper courseMapper;
 
     @Inject
     DepartmentRepository departmentRepository;
@@ -35,10 +37,10 @@ public class DepartmentParticipationServiceTest {
     DepartmentMapper departmentMapper;
 
     @Inject
-    ExaminationRepository examinationRepository;
+    ExaminationPeriodRepository examinationPeriodRepository;
 
     @Inject
-    ExaminationMapper examinationMapper;
+    ExaminationPeriodMapper examinationPeriodMapper;
 
     @Test
     @TestTransaction
@@ -46,16 +48,20 @@ public class DepartmentParticipationServiceTest {
     public void testCreateDepartmentParticipation() {
         DepartmentParticipationRepresentation representation = new DepartmentParticipationRepresentation();
 
+        Course course = courseRepository.findById(4002);
+        CourseRepresentation courseRepresentation = courseMapper.toRepresentation(course);
+
         Department department = departmentRepository.findById(3005);
         DepartmentRepresentation departmentRepresentation = departmentMapper.toRepresentation(department);
 
-        Examination examination = examinationRepository.findById(8006);
-        ExaminationRepresentation examinationRepresentation = examinationMapper.toRepresentation(examination);
+        ExaminationPeriod examinationPeriod = examinationPeriodRepository.findById(5003);
+        ExaminationPeriodRepresentation examinationPeriodRepresentation = examinationPeriodMapper.toRepresentation(examinationPeriod);
 
         representation.isLeadDepartment = true;
         representation.declaration = 160;
+        representation.course = courseRepresentation;
         representation.department = departmentRepresentation;
-        representation.examination = examinationRepresentation;
+        representation.examinationPeriod = examinationPeriodRepresentation;
 
         DepartmentParticipation createdDepartmentParticipation = departmentParticipationService.create(representation);
         List<DepartmentParticipation> departmentParticipations = departmentParticipationRepository.listAll();
@@ -64,8 +70,9 @@ public class DepartmentParticipationServiceTest {
         assertNotNull(createdDepartmentParticipation.getId());
         assertEquals(160, createdDepartmentParticipation.getDeclaration());
         assertTrue(createdDepartmentParticipation.getIsLeadDepartment());
+        assertEquals("AF101", createdDepartmentParticipation.getCourse().getCourseCode());
         assertEquals("Marketing", createdDepartmentParticipation.getDepartment().getName());
-        assertEquals(LocalDate.of(2024, 9, 7), createdDepartmentParticipation.getExamination().getStartDate());
+        assertEquals(LocalDate.of(2024, 9, 3), createdDepartmentParticipation.getExaminationPeriod().getStartDate());
         assertEquals(8, departmentParticipations.size());
     }
 

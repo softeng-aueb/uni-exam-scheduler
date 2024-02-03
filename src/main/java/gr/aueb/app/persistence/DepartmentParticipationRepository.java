@@ -11,7 +11,11 @@ import javax.persistence.NoResultException;
 @RequestScoped
 public class DepartmentParticipationRepository implements PanacheRepositoryBase<DepartmentParticipation, Integer> {
     public DepartmentParticipation findWithDetails(Integer id) {
-        PanacheQuery<DepartmentParticipation> query = find("select sr from DepartmentParticipation dp left join fetch dp.examination left join fetch dp.department where dp.id = :id", Parameters.with("id", id).map());
+        PanacheQuery<DepartmentParticipation> query = find("select dp from DepartmentParticipation dp" +
+                "left join fetch dp.course" +
+                "left join fetch dp.department" +
+                "left join fetch dp.examinationPeriod" +
+                "where dp.id = :id", Parameters.with("id", id).map());
         try {
             return query.singleResult();
         } catch(NoResultException ex) {

@@ -64,8 +64,9 @@ public class ExaminationServiceTest {
         Course course = courseRepository.findById(4001);
         CourseRepresentation courseRepresentation = courseMapper.toRepresentation(course);
 
-        representation.startDate = "2024-09-05";
-        representation.endDate = "2024-09-05";
+        representation.date = "2024-09-05";
+        representation.startTime = "11:00";
+        representation.endTime = "13:00";
         representation.course = courseRepresentation;
         representation.examinationPeriod = examinationPeriodRepresentation;
         representation.classrooms.add(classroomRepresentation);
@@ -76,7 +77,7 @@ public class ExaminationServiceTest {
         assertEquals(7, foundExaminations.size());
         assertNotNull(createdExamination);
         assertNotNull(createdExamination.getId());
-        assertEquals(LocalDate.of(2024, 9, 5), createdExamination.getStartDate());
+        assertEquals(LocalDate.of(2024, 9, 5), createdExamination.getDate());
         assertEquals("CS105", createdExamination.getCourse().getCourseCode());
         assertEquals(Period.SEPTEMBER, createdExamination.getExaminationPeriod().getPeriod());
         assertEquals(1, createdExamination.getClassrooms().size());

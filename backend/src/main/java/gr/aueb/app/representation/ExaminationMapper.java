@@ -11,6 +11,7 @@ import org.mapstruct.*;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
@@ -32,8 +33,9 @@ public abstract class ExaminationMapper {
     public abstract ExaminationRepresentation toRepresentation(Examination examination);
     public abstract List<ExaminationRepresentation> toRepresentationList(List<Examination> examinations);
 
-    @Mapping(target = "endDate", source = "representation.endDate", qualifiedByName = "mapLocalDate")
-    @Mapping(target = "startDate", source = "representation.startDate", qualifiedByName = "mapLocalDate")
+    @Mapping(target = "date", source = "representation.date", qualifiedByName = "mapLocalDate")
+    @Mapping(target = "startTime", source = "representation.startTime", qualifiedByName = "mapLocalTime")
+    @Mapping(target = "endTime", source = "representation.endTime", qualifiedByName = "mapLocalTime")
     @Mapping(target = "totalDeclaration", ignore = true)
     @Mapping(target = "totalAttendance", ignore = true)
     @Mapping(target = "id", ignore = true)
@@ -84,5 +86,11 @@ public abstract class ExaminationMapper {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
         LocalDate localDate = LocalDate.parse(dateStr, formatter);
         return localDate;
+    }
+
+    @Named("mapLocalTime")
+    public LocalTime mapLocalTime(String timeStr) {
+        LocalTime localTime = LocalTime.parse(timeStr);
+        return localTime;
     }
 }

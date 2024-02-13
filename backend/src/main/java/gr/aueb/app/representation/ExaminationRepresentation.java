@@ -8,8 +8,9 @@ import java.util.List;
 @RegisterForReflection
 public class ExaminationRepresentation {
     public Integer id;
-    public String startDate;
-    public String endDate;
+    public String date;
+    public String startTime;
+    public String endTime;
     public Integer totalDeclaration;
     public Integer totalAttendance;
     public CourseRepresentation course;

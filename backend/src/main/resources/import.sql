@@ -46,12 +46,12 @@ insert into supervisors (id, name, surname, supervisor, telephone, email, superv
 insert into supervisors (id, name, surname, supervisor, telephone, email, supervisor_category, department_id) values (7005, 'Phin', 'Stark', 'Dr. L', '123456789', 'ps@email.com', 'ETEP', 3002);
 insert into supervisors (id, name, surname, supervisor, telephone, email, supervisor_category, department_id) values (7006, 'Dennis', 'Parker', 'Dr. M', '123456789', 'dp@email.com', 'PHD', 3001);
 
-insert into examinations (id, start_date, end_date, required_supervisors, course_id, examinationPeriod_id) values (8001, '2023-01-03', '2023-01-03', 10, 4001, 5001);
-insert into examinations (id, start_date, end_date, required_supervisors, course_id, examinationPeriod_id) values (8002, '2023-01-05', '2023-01-05', 8, 4002, 5001);
-insert into examinations (id, start_date, end_date, required_supervisors, course_id, examinationPeriod_id) values (8003, '2024-06-10', '2024-06-10', 0, 4001, 5002);
-insert into examinations (id, start_date, end_date, required_supervisors, course_id, examinationPeriod_id) values (8004, '2024-06-15', '2024-06-15', 0, 4002, 5002);
-insert into examinations (id, start_date, end_date, required_supervisors, course_id, examinationPeriod_id) values (8005, '2024-09-03', '2024-09-03', 0, 4001, 5003);
-insert into examinations (id, start_date, end_date, required_supervisors, course_id, examinationPeriod_id) values (8006, '2024-09-07', '2024-09-07', 0, 4002, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8001, '2023-01-03', '11:30', '13:30', 10, 4001, 5001);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8002, '2023-01-05', '12:30', '14:30', 8, 4002, 5001);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8003, '2024-06-10', '13:30', '15:30', 0, 4001, 5002);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8004, '2024-06-15', '14:30', '16:30', 0, 4002, 5002);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8005, '2024-09-03', '15:30', '17:30', 0, 4001, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8006, '2024-09-07', '16:30', '18:30', 0, 4002, 5003);
 
 insert into examinations_classrooms (examination_id, classroom_id) values (8001, 2001);
 insert into examinations_classrooms (examination_id, classroom_id) values (8001, 2002);

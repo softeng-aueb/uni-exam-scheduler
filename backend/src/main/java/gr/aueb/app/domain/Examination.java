@@ -2,6 +2,8 @@ package gr.aueb.app.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,11 +15,14 @@ public class Examination {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
-    @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime;
+
+    @Column(name = "end_time", nullable = false)
+    private LocalTime endTime;
 
     @Column(name = "required_supervisors", nullable = false)
     private Integer requiredSupervisors = 0;
@@ -48,9 +53,10 @@ public class Examination {
 
     protected Examination(){};
 
-    public Examination(LocalDate startDate, LocalDate endDate, Course course, Set<Classroom> classrooms, ExaminationPeriod examinationPeriod) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public Examination(LocalDate date, LocalTime startTime, LocalTime endTime, Course course, Set<Classroom> classrooms, ExaminationPeriod examinationPeriod) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.course = course;
         this.classrooms = classrooms;
         this.examinationPeriod = examinationPeriod;
@@ -64,20 +70,28 @@ public class Examination {
         this.id = id;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public Integer getRequiredSupervisors() {
@@ -134,9 +148,23 @@ public class Examination {
         return totalAttendance;
     }
 
-    public void addSupervision(Supervision supervision) {
-        supervision.setExamination(this);
-        this.supervisions.add(supervision);
+    public Supervision addSupervision(Supervisor supervisor) {
+        // check if there are available slots
+        if (this.getRequiredSupervisors() > (this.getSupervisions().size() + 1)) {
+            return null;
+        }
+
+        // check if supervisor is already on the list
+        if (this.getSupervisions().stream().anyMatch(supervision -> supervision.getSupervisor().equals(supervisor))) {
+            return null;
+        }
+
+        // check if supervisor has overlapping supervision
+
+
+        Supervision newSupervision = new Supervision(this, supervisor);
+        this.supervisions.add(newSupervision);
+        return newSupervision;
     }
 
     public void removeSupervision(Supervision supervision) {

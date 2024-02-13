@@ -35,7 +35,7 @@ public class JPAQueriesTest {
     @TestTransaction
     public void restrictionQuery() {
         int EXPECTED_NUMBER_CONTAINING_TERM = 2;
-        Query query = em.createQuery("select e from Examination e where e.startDate >= :start and e.startDate < :end")
+        Query query = em.createQuery("select e from Examination e where e.date >= :start and e.date < :end")
                 .setParameter("start", LocalDate.of(2023, 1, 1))
                 .setParameter("end", LocalDate.of(2023, 2, 1));
         List<Examination> results = query.getResultList();

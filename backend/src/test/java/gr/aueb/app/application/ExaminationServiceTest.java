@@ -103,4 +103,16 @@ public class ExaminationServiceTest {
         List<Examination> foundExaminations = examinationService.findAllInSamePeriod(5003);
         assertEquals(2, foundExaminations.size());
     }
+
+    @Test
+    @TestTransaction
+    @Transactional
+    public void testAddSupervision() {
+        Examination examination1 = examinationService.addSupervision(8001, 7002);
+        Examination examination2 = examinationService.addSupervision(8004, 7003);
+
+        assertNotNull(examination1);
+        assertEquals(2, examination1.getSupervisions().size());
+        assertNull(examination2);
+    }
 }

@@ -1,7 +1,11 @@
 package gr.aueb.app.application;
 
 import gr.aueb.app.domain.Examination;
+import gr.aueb.app.domain.Supervision;
+import gr.aueb.app.domain.Supervisor;
 import gr.aueb.app.persistence.ExaminationRepository;
+import gr.aueb.app.persistence.SupervisionRepository;
+import gr.aueb.app.persistence.SupervisorRepository;
 import gr.aueb.app.representation.ExaminationMapper;
 import gr.aueb.app.representation.ExaminationRepresentation;
 
@@ -16,6 +20,12 @@ public class ExaminationService {
 
     @Inject
     ExaminationRepository examinationRepository;
+
+    @Inject
+    SupervisionRepository supervisionRepository;
+
+    @Inject
+    SupervisorRepository supervisorRepository;
 
     @Inject
     ExaminationMapper examinationMapper;
@@ -60,5 +70,21 @@ public class ExaminationService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Transactional
+    public Examination addSupervision(Integer examinationId, Integer supervisorId) {
+        Examination foundExamination = examinationRepository.findById(examinationId);
+        if(foundExamination ==  null) throw new NotFoundException();
+        Supervisor foundSupervisor = supervisorRepository.findById(supervisorId);
+        if(foundSupervisor ==  null) throw new NotFoundException();
+        List<Supervision> foundSupervisions = supervisionRepository.findAllInSameSupervisorAndDay(supervisorId, foundExamination.getDate());
+
+        Supervision addedSupervision = foundExamination.addSupervision(foundSupervisor, foundSupervisions);
+        if(addedSupervision == null) {
+            return null;
+        }
+        examinationRepository.getEntityManager().merge(foundExamination);
+        return foundExamination;
     }
 }

@@ -35,9 +35,6 @@ public class Supervisor {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToMany(mappedBy = "supervisor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Supervision> supervisions = new HashSet<>();
-
     protected Supervisor(){};
 
     public Supervisor(String name, String surname, String supervisor, String telephone, String email, SupervisorCategory supervisorCategory, Department department) {
@@ -112,23 +109,5 @@ public class Supervisor {
 
     public void setDepartment(Department department) {
         this.department = department;
-    }
-
-    public Set<Supervision> getSupervisions() {
-        return supervisions;
-    }
-
-    public void setSupervisions(Set<Supervision> supervisions) {
-        this.supervisions = supervisions;
-    }
-
-    public void addSupervision(Supervision supervision) {
-        supervision.setSupervisor(this);
-        this.supervisions.add(supervision);
-    }
-
-    public void removeSupervision(Supervision supervision) {
-        supervision.setSupervisor(null);
-        this.supervisions.remove(supervision);
     }
 }

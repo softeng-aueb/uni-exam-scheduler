@@ -9,6 +9,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequestScoped
@@ -93,6 +94,16 @@ public class SupervisionService {
             supervision.setIsLead(isLead);
             supervisionRepository.getEntityManager().merge(supervision);
             return supervision;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Transactional
+    public List<Supervision> findAllInSameSupervisorAndDay(Integer supevisorId, LocalDate date) {
+        try {
+            List<Supervision> supervisions = supervisionRepository.findAllInSameSupervisorAndDay(supevisorId, date);
+            return supervisions;
         } catch (Exception e) {
             throw e;
         }

@@ -24,8 +24,6 @@ public class SupervisorTest {
         assertEquals("john.doe@example.com", supervisor.getEmail());
         assertEquals(SupervisorCategory.EDIP, supervisor.getSupervisorCategory());
         assertNotNull(supervisor.getDepartment());
-        assertNotNull(supervisor.getSupervisions());
-        assertTrue(supervisor.getSupervisions().isEmpty());
     }
 
     @Test
@@ -39,7 +37,6 @@ public class SupervisorTest {
         supervisor.setEmail("jane.smith@example.com");
         supervisor.setSupervisorCategory(SupervisorCategory.ETEP);
         supervisor.setDepartment(newDepartment);
-        supervisor.setSupervisions(null);
 
         assertEquals(42, supervisor.getId());
         assertEquals("Jane", supervisor.getName());
@@ -49,25 +46,5 @@ public class SupervisorTest {
         assertEquals("jane.smith@example.com", supervisor.getEmail());
         assertEquals(SupervisorCategory.ETEP, supervisor.getSupervisorCategory());
         assertEquals(newDepartment, supervisor.getDepartment());
-        assertNull(supervisor.getSupervisions());
-    }
-
-    @Test
-    void testAddSupervision() {
-        Supervision supervision = new Supervision(new Examination(), null);
-        supervisor.addSupervision(supervision);
-
-        assertTrue(supervisor.getSupervisions().contains(supervision));
-        assertEquals(supervisor, supervision.getSupervisor());
-    }
-
-    @Test
-    void testRemoveSupervision() {
-        Supervision supervision = new Supervision(new Examination(), supervisor);
-        supervisor.getSupervisions().add(supervision);
-        supervisor.removeSupervision(supervision);
-
-        assertTrue(supervisor.getSupervisions().isEmpty());
-        assertNull(supervision.getSupervisor());
     }
 }

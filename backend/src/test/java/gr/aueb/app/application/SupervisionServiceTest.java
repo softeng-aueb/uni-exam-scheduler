@@ -100,7 +100,7 @@ public class SupervisionServiceTest {
         assertEquals(8004, updatedSupervision.getExamination().getId());
         assertFalse(updatedSupervision.getIsLead());
         assertEquals("George", updatedSupervision.getSupervisor().getName());
-        assertEquals(LocalDate.of(2024, 06, 15), updatedSupervision.getExamination().getStartDate());
+        assertEquals(LocalDate.of(2024, 06, 15), updatedSupervision.getExamination().getDate());
     }
 
     @Test
@@ -154,5 +154,14 @@ public class SupervisionServiceTest {
         assertThrows(NotFoundException.class, () -> {
             supervisionService.changeLeadStatus(9999, true);
         });
+    }
+
+    @Test
+    @TestTransaction
+    @Transactional
+    public void testFindAllInSameSupervisorAndDay() {
+        List<Supervision> foundSupervisions = supervisionService.findAllInSameSupervisorAndDay(7004, LocalDate.of(2024, 06, 10));
+        assertNotNull(foundSupervisions);
+        assertEquals(2, foundSupervisions.size());
     }
 }

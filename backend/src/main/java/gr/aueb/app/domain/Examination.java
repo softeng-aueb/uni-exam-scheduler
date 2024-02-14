@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -148,9 +149,9 @@ public class Examination {
         return totalAttendance;
     }
 
-    public Supervision addSupervision(Supervisor supervisor) {
+    public Supervision addSupervision(Supervisor supervisor, List<Supervision> supervisorSupervisions) {
         // check if there are available slots
-        if (this.getRequiredSupervisors() > (this.getSupervisions().size() + 1)) {
+        if (this.getRequiredSupervisors() < (this.getSupervisions().size() + 1)) {
             return null;
         }
 
@@ -160,7 +161,9 @@ public class Examination {
         }
 
         // check if supervisor has overlapping supervision
-
+       if (this.hasOverlap(supervisorSupervisions)) {
+           return null;
+       }
 
         Supervision newSupervision = new Supervision(this, supervisor);
         this.supervisions.add(newSupervision);
@@ -170,5 +173,24 @@ public class Examination {
     public void removeSupervision(Supervision supervision) {
         supervision.setExamination(null);
         supervisions.remove(supervision);
+    }
+
+    private boolean hasOverlap(List<Supervision> supervisionList) {
+        LocalTime examStartTime = this.getStartTime();
+        LocalTime examEndTime = this.getEndTime();
+
+        return supervisionList.stream()
+                .anyMatch(supervision -> {
+                    LocalTime superExamStartTime = supervision.getExamination().getStartTime();
+                    LocalTime superExamEndTime = supervision.getExamination().getEndTime();
+
+                    boolean isStartTimeOverlap = (examStartTime.isBefore(superExamEndTime) || examStartTime.equals(superExamEndTime))
+                            && (examEndTime.isAfter(superExamStartTime) || examEndTime.equals(superExamStartTime));
+
+                    boolean isEndTimeOverlap = (examEndTime.isAfter(superExamStartTime) || examEndTime.equals(superExamStartTime))
+                            && (examStartTime.isBefore(superExamEndTime) || examStartTime.equals(superExamEndTime));
+
+                    return isStartTimeOverlap || isEndTimeOverlap;
+                });
     }
 }

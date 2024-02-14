@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,10 +67,28 @@ public class ExaminationTest {
     @Test
     void testAddSupervision() {
         Supervisor newSupervisor = new Supervisor();
-        examination.addSupervision(newSupervisor);
+        List<Supervision> supervisions = new ArrayList<>();
+        // not enough space
+        Supervision newSupervision = examination.addSupervision(newSupervisor, supervisions);
 
-//        assertTrue(examination.getSupervisions().contains(newSupervision));
-//        assertEquals(examination, newSupervision.getExamination());
+        examination.setRequiredSupervisors(2);
+        // supervision added
+        Supervision newSupervision1 = examination.addSupervision(newSupervisor, supervisions);
+        // supervisor already in
+        Supervision newSupervision2 = examination.addSupervision(newSupervisor, supervisions);
+        // supervisions overlap
+        Supervisor newSupervisor1 = new Supervisor();
+        Examination newExamination = new Examination();
+        newExamination.setStartTime(LocalTime.of(10, 0));
+        newExamination.setEndTime(LocalTime.of(12, 0));
+        Supervision overlapSupervision = new Supervision(newExamination, newSupervisor1);
+        supervisions.add(overlapSupervision);
+        Supervision newSupervision3 = examination.addSupervision(newSupervisor1, supervisions);
+
+        assertNull(newSupervision);
+        assertTrue(examination.getSupervisions().contains(newSupervision1));
+        assertNull(newSupervision2);
+        assertNull(newSupervision3);
     }
 
     @Test

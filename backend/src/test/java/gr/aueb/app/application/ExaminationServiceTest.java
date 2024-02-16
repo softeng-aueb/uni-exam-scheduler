@@ -46,7 +46,7 @@ public class ExaminationServiceTest {
     public void testFindAllExaminations() {
         List<Examination> foundExaminations = examinationService.findAll();
         assertNotNull(foundExaminations);
-        assertEquals(6, foundExaminations.size());
+        assertEquals(7, foundExaminations.size());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ExaminationServiceTest {
         Examination createdExamination = examinationService.create(representation);
         List<Examination> foundExaminations = examinationService.findAll();
 
-        assertEquals(7, foundExaminations.size());
+        assertEquals(8, foundExaminations.size());
         assertNotNull(createdExamination);
         assertNotNull(createdExamination.getId());
         assertEquals(LocalDate.of(2024, 9, 5), createdExamination.getDate());
@@ -108,11 +108,20 @@ public class ExaminationServiceTest {
     @TestTransaction
     @Transactional
     public void testAddSupervision() {
-        Examination examination1 = examinationService.addSupervision(8001, 7002);
-        Examination examination2 = examinationService.addSupervision(8004, 7003);
+        Supervision supervision1 = examinationService.addSupervision(8001, 7002);
+        Supervision supervision2 = examinationService.addSupervision(8004, 7003);
 
-        assertNotNull(examination1);
-        assertEquals(2, examination1.getSupervisions().size());
-        assertNull(examination2);
+        assertNotNull(supervision1);
+        assertEquals(2, supervision1.getExamination().getSupervisions().size());
+        assertNull(supervision2);
+    }
+
+    @Test
+    @TestTransaction
+    @Transactional
+    public void testRemoveSupervision() {
+        examinationService.removeSupervision(8001, 10001);
+        Examination foundExamination = examinationService.findOne(8001);
+        assertEquals(0, foundExamination.getSupervisions().size());
     }
 }

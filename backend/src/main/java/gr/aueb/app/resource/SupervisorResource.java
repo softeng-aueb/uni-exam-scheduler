@@ -56,7 +56,7 @@ public class SupervisorResource {
 
     @POST
     @Transactional
-    public Response create (SupervisorRepresentation representation) {
+    public Response create(SupervisorRepresentation representation) {
         // TODO check if toModel makes the validation we want
         try {
             Supervisor createdSupervisor = supervisorService.create(representation);
@@ -67,23 +67,4 @@ public class SupervisorResource {
         }
     }
 
-//    @PUT
-//    @Path("/{id}")
-//    @Transactional
-//    public Response update(@PathParam("id") Integer id,
-//                           UserRepresentation representation) {
-//        User u = userRepository.findById(id);
-//        if(u == null){
-//            throw new NotFoundException();
-//        }
-//        // representation.id = id;
-//
-//
-//        User user = userMapper.toModel(representation);
-//
-//        user.setId(u.getId());
-//        userRepository.getEntityManager().merge(user);
-//
-//        return Response.noContent().build();
-//    }
 }

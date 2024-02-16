@@ -73,7 +73,7 @@ public class ExaminationService {
     }
 
     @Transactional
-    public Examination addSupervision(Integer examinationId, Integer supervisorId) {
+    public Supervision addSupervision(Integer examinationId, Integer supervisorId) {
         Examination foundExamination = examinationRepository.findById(examinationId);
         if(foundExamination ==  null) throw new NotFoundException();
         Supervisor foundSupervisor = supervisorRepository.findById(supervisorId);
@@ -85,6 +85,18 @@ public class ExaminationService {
             return null;
         }
         examinationRepository.getEntityManager().merge(foundExamination);
-        return foundExamination;
+        return addedSupervision;
+    }
+
+    @Transactional
+    public void removeSupervision(Integer examinationId, Integer supervisionId) {
+        Examination foundExamination = examinationRepository.findById(examinationId);
+        if(foundExamination ==  null) throw new NotFoundException();
+        Supervision foundSupervision = supervisionRepository.findById(supervisionId);
+        if(foundSupervision ==  null) throw new NotFoundException();
+
+        foundExamination.removeSupervision(foundSupervision);
+        supervisionRepository.deleteById(supervisionId);
+        examinationRepository.getEntityManager().merge(foundExamination);
     }
 }

@@ -52,6 +52,7 @@ insert into examinations (id, date, start_time, end_time, required_supervisors, 
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8004, '2024-06-15', '14:30', '16:30', 0, 4002, 5002);
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8005, '2024-09-03', '15:30', '17:30', 0, 4001, 5003);
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8006, '2024-09-07', '16:30', '18:30', 0, 4002, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8007, '2024-06-10', '18:30', '12:30', 5, 4001, 5001);
 
 insert into examinations_classrooms (examination_id, classroom_id) values (8001, 2001);
 insert into examinations_classrooms (examination_id, classroom_id) values (8001, 2002);
@@ -73,3 +74,4 @@ insert into departmentParticipations (id, declaration, attendance, isLeadDepartm
 
 insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10001, true, true, 8001, 7001);
 insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10002, false, false, 8003, 7004);
+insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10003, false, false, 8007, 7004);

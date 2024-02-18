@@ -24,10 +24,10 @@ public class JPAQueriesTest {
     @Test
     @TestTransaction
     public void simpleQuery() {
-        int EXPECTED_AUCTIONS_NUMBER = 6;
+        int EXPECTED_EXAMINATIONS_NUMBER = 7;
         Query query = em.createQuery("select e from Examination e");
         List<Examination> results = query.getResultList();
-        Assertions.assertEquals(EXPECTED_AUCTIONS_NUMBER, results.size());
+        Assertions.assertEquals(EXPECTED_EXAMINATIONS_NUMBER, results.size());
     }
 
     @SuppressWarnings("unchecked")
@@ -46,9 +46,9 @@ public class JPAQueriesTest {
     @Test
     @TestTransaction
     public void implicitJoin() {
-        int EXPECTED_AUCTIONS_WITH_CATEGORY = 3;
+        int EXPECTED_EXAMINATIONS_WITH_COURSE = 4;
         Query query = em.createQuery("select e from Examination e where e.course.courseCode like 'CS%'");
         List<Examination> results = query.getResultList();
-        Assertions.assertEquals(EXPECTED_AUCTIONS_WITH_CATEGORY,results.size());
+        Assertions.assertEquals(EXPECTED_EXAMINATIONS_WITH_COURSE,results.size());
     }
 }

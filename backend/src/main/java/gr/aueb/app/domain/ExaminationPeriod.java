@@ -11,10 +11,6 @@ public class ExaminationPeriod {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "semester", nullable = false)
-    private Semester semester;
-
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
@@ -28,8 +24,7 @@ public class ExaminationPeriod {
 
     protected ExaminationPeriod(){};
 
-    public ExaminationPeriod(Semester semester, LocalDate startDate, Period period, AcademicYear academicYear) {
-        this.semester = semester;
+    public ExaminationPeriod(LocalDate startDate, Period period, AcademicYear academicYear) {
         this.startDate = startDate;
         this.period = period;
         this.academicYear = academicYear;
@@ -41,14 +36,6 @@ public class ExaminationPeriod {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
     }
 
     public LocalDate getStartDate() {

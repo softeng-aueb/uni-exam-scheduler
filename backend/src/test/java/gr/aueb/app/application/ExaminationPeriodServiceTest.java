@@ -23,7 +23,7 @@ public class ExaminationPeriodServiceTest {
     public void testFindAll() {
         List<ExaminationPeriod> foundExaminations = examinationPeriodService.findAll();
 
-        assertEquals(3, foundExaminations.size());
+        assertEquals(4, foundExaminations.size());
     }
 
     @Test

@@ -1,7 +1,7 @@
 delete from academicYears;
 delete from classrooms;
 delete from departments;
-delete from departmentParticipations;
+delete from courseAttendances;
 delete from examinations;
 delete from examinationPeriods;
 delete from courses;
@@ -28,9 +28,10 @@ insert into departments (id, name) values (3005, 'Marketing');
 insert into courses (id, title, course_code, department_id) values(4001, 'Intro to Programming', 'CS105', 3001);
 insert into courses (id, title, course_code, department_id) values(4002, 'Accounting and Finance 101', 'AF101', 3004);
 
-insert into examinationPeriods (id, semester, start_date, period, academicYear_id) values (5001, 'FIRST', '2023-01-01', 'WINTER', 1002);
-insert into examinationPeriods (id, semester, start_date, period, academicYear_id) values (5002, 'FOURTH', '2024-06-10', 'SPRING', 1003);
-insert into examinationPeriods (id, semester, start_date, period, academicYear_id) values (5003, 'FOURTH', '2024-09-03', 'SEPTEMBER', 1003);
+insert into examinationPeriods (id, start_date, period, academicYear_id) values (5001, '2023-01-01', 'WINTER', 1002);
+insert into examinationPeriods (id, start_date, period, academicYear_id) values (5002, '2024-06-10', 'SPRING', 1003);
+insert into examinationPeriods (id, start_date, period, academicYear_id) values (5003, '2024-09-03', 'SEPTEMBER', 1003);
+insert into examinationPeriods (id, start_date, period, academicYear_id) values (5004, '2023-09-03', 'SEPTEMBER', 1002);
 
 insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6001, 6, 'EDIP', 3001, 5001);
 insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6002, 4, 'ETEP', 3001, 5001);
@@ -64,14 +65,14 @@ insert into examinations_classrooms (examination_id, classroom_id) values (8005,
 insert into examinations_classrooms (examination_id, classroom_id) values (8005, 2004);
 insert into examinations_classrooms (examination_id, classroom_id) values (8006, 2003);
 
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9001, 120, 100, true, 4001, 3001, 5001);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9002, 30, 20, false, 4001, 3003, 5001);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9003, 50, 38, true, 4002, 3002, 5001);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9004, 40, 27, false, 4002, 3004, 5001);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9005, 20, 0, true, 4001, 3001, 5002);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9006, 20, 0, false, 4001, 3003, 5002);
-insert into departmentParticipations (id, declaration, attendance, isLeadDepartment, course_id, department_id, examinationPeriod_id) values (9007, 110, 0, true, 4002, 3005, 5002);
+insert into courseAttendances (id, attendance, course_id, examinationPeriod_id) values (9001, 200, 4001, 5001);
+insert into courseAttendances (id, attendance, course_id, examinationPeriod_id) values (9002, 250, 4002, 5001);
+insert into courseAttendances (id, attendance, course_id, examinationPeriod_id) values (9003, 138, 4001, 5004);
+insert into courseAttendances (id, attendance, course_id, examinationPeriod_id) values (9004, 127, 4002, 5004);
 
 insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10001, true, true, 8001, 7001);
 insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10002, false, false, 8003, 7004);
 insert into supervisions (id, isPresent, isLead, examination_id, supervisor_id) values (10003, false, false, 8007, 7004);
+
+insert into courseDeclarations (id, declaration, course_id, academicYear_id) values (11001, 400, 4001, 1002);
+insert into courseDeclarations (id, declaration, course_id, academicYear_id) values (11002, 450, 4002, 1002);

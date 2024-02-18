@@ -16,9 +16,8 @@ public class ExaminationPeriodTest {
 
     @Test
     public void testCreateExaminationPeriod() {
-        ExaminationPeriod examinationPeriod = new ExaminationPeriod(Semester.FIRST, LocalDate.now(), Period.WINTER, academicYear);
+        ExaminationPeriod examinationPeriod = new ExaminationPeriod(LocalDate.now(), Period.WINTER, academicYear);
 
-        assertEquals(Semester.FIRST, examinationPeriod.getSemester());
         assertEquals(LocalDate.now(), examinationPeriod.getStartDate());
         assertEquals(Period.WINTER, examinationPeriod.getPeriod());
         assertEquals(academicYear, examinationPeriod.getAcademicYear());
@@ -29,13 +28,11 @@ public class ExaminationPeriodTest {
         ExaminationPeriod examinationPeriod = new ExaminationPeriod();
 
         examinationPeriod.setId(1);
-        examinationPeriod.setSemester(Semester.FOURTH);
         examinationPeriod.setStartDate(LocalDate.now());
         examinationPeriod.setPeriod(Period.SEPTEMBER);
         examinationPeriod.setAcademicYear(academicYear);
 
         assertEquals(1, examinationPeriod.getId());
-        assertEquals(Semester.FOURTH, examinationPeriod.getSemester());
         assertEquals(LocalDate.now(), examinationPeriod.getStartDate());
         assertEquals(Period.SEPTEMBER, examinationPeriod.getPeriod());
         assertEquals(academicYear, examinationPeriod.getAcademicYear());

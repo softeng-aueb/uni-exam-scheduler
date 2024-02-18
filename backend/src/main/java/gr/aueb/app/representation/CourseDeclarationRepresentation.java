@@ -3,11 +3,9 @@ package gr.aueb.app.representation;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
-public class DepartmentParticipationRepresentation {
+public class CourseDeclarationRepresentation {
     public Integer id;
     public Integer declaration;
-    public Boolean isLeadDepartment;
     public CourseRepresentation course;
-    public DepartmentRepresentation department;
-    public ExaminationPeriodRepresentation examinationPeriod;
+    public AcademicYearRepresentation academicYear;
 }

@@ -22,9 +22,10 @@ public class Course {
 
     protected Course(){}
 
-    public Course(String title, String courseCode) {
+    public Course(String title, String courseCode, Department department) {
         this.title = title;
         this.courseCode = courseCode;
+        this.department = department;
     }
 
     public Integer getId() {

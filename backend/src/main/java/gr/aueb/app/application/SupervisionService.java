@@ -2,8 +2,6 @@ package gr.aueb.app.application;
 
 import gr.aueb.app.domain.Supervision;
 import gr.aueb.app.persistence.SupervisionRepository;
-import gr.aueb.app.representation.SupervisionMapper;
-import gr.aueb.app.representation.SupervisionRepresentation;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -17,95 +15,39 @@ public class SupervisionService {
     @Inject
     SupervisionRepository supervisionRepository;
 
-    @Inject
-    SupervisionMapper supervisionMapper;
-
-    @Transactional
-    public Supervision create(SupervisionRepresentation representation) {
-        try {
-            Supervision newSupervision = supervisionMapper.toModel(representation);
-            supervisionRepository.persist(newSupervision);
-            return newSupervision;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    @Transactional
-    public Supervision update(Integer supervisionId, SupervisionRepresentation representation) {
-        try {
-            Supervision updatedSupervision = supervisionMapper.toModel(representation);
-            updatedSupervision.setId(supervisionId);
-            supervisionRepository.getEntityManager().merge(updatedSupervision);
-            return updatedSupervision;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    @Transactional
-    public void delete(Integer supervisionId) {
-        try {
-            supervisionRepository.deleteById(supervisionId);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
     @Transactional
     public Supervision findOne(Integer supervisionId) {
-        try {
-            Supervision foundSupervision =  supervisionRepository.findById(supervisionId);
-            if(foundSupervision ==  null) throw new NotFoundException();
-            return foundSupervision;
-        } catch (Exception e) {
-            throw e;
+        Supervision foundSupervision = supervisionRepository.findById(supervisionId);
+        if(foundSupervision == null) {
+            throw new NotFoundException();
         }
+        return foundSupervision;
     }
 
     @Transactional
     public List<Supervision> findAll() {
-        try {
-            List<Supervision> foundSupervisions = supervisionRepository.listAll();
-            return foundSupervisions;
-        } catch (Exception e) {
-            throw e;
-        }
+        return supervisionRepository.listAll();
     }
 
     @Transactional
     public Supervision changePresentStatus(Integer supervisionId, Boolean isPresent) {
-        try {
-            Supervision supervision = supervisionRepository.findById(supervisionId);
-            if(supervision ==  null) throw new NotFoundException();
-            supervision.setIsPresent(isPresent);
-            supervisionRepository.getEntityManager().merge(supervision);
-            return supervision;
-        } catch (Exception e) {
-            throw e;
-        }
+        Supervision supervision = supervisionRepository.findById(supervisionId);
+        if(supervision ==  null) throw new NotFoundException();
+        supervision.setIsPresent(isPresent);
+        supervisionRepository.getEntityManager().merge(supervision);
+        return supervision;
     }
 
     @Transactional
     public Supervision changeLeadStatus(Integer supervisionId, Boolean isLead) {
-        try {
-            Supervision supervision = supervisionRepository.findById(supervisionId);
-            if(supervision ==  null) throw new NotFoundException();
-            supervision.setIsLead(isLead);
-            supervisionRepository.getEntityManager().merge(supervision);
-            return supervision;
-        } catch (Exception e) {
-            throw e;
-        }
+        Supervision supervision = supervisionRepository.findById(supervisionId);
+        if(supervision ==  null) throw new NotFoundException();
+        supervision.setIsLead(isLead);
+        return supervision;
     }
 
     @Transactional
-    public List<Supervision> findAllInSameSupervisorAndDay(Integer supevisorId, LocalDate date) {
-        try {
-            List<Supervision> supervisions = supervisionRepository.findAllInSameSupervisorAndDay(supevisorId, date);
-            return supervisions;
-        } catch (Exception e) {
-            throw e;
-        }
+    public List<Supervision> findAllInSameSupervisorAndDay(Integer supervisorId, LocalDate date) {
+        return supervisionRepository.findAllInSameSupervisorAndDay(supervisorId, date);
     }
 }

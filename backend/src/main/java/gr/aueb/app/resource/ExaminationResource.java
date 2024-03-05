@@ -6,7 +6,6 @@ import gr.aueb.app.representation.*;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
@@ -30,37 +29,29 @@ public class ExaminationResource {
     @Inject
     SupervisionMapper supervisionMapper;
 
-
     @Context
     UriInfo uriInfo;
 
     @GET
-    @Path("/{examinationPeriodId}")
-    @Transactional
-    public List<ExaminationRepresentation> finnAllInSamePeriod(@PathParam("examinationPeriodId") Integer examinationPeriodId) {
+    public List<ExaminationRepresentation> findAllInSamePeriod(@QueryParam("examinationPeriod") Integer examinationPeriodId) {
         return examinationMapper.toRepresentationList(examinationService.findAllInSamePeriod(examinationPeriodId));
     }
 
     @POST
     @Path("/{examinationId}/supervisions")
-    @Transactional
-    public Response addSupervision(@PathParam("examinationId") Integer examinationId, Integer supervisorId) {
+    public Response addSupervision(@PathParam("examinationId") Integer examinationId, SupervisorRepresentation representation) {
         // TODO check if toModel makes the validation we want
-        try {
-            Supervision addedSupervision = examinationService.addSupervision(examinationId, supervisorId);
-            URI uri = UriBuilder.fromResource(ExaminationResource.class).path(String.valueOf(addedSupervision.getExamination().getId())).build();
-            return Response.ok(uri).entity(supervisionMapper.toRepresentation(addedSupervision)).build();
-        } catch(Exception e) {
-            throw new BadRequestException();
-        }
+        Supervision addedSupervision = examinationService.addSupervision(examinationId, representation.id);
+        SupervisionRepresentation response = supervisionMapper.toRepresentation(addedSupervision);
+        URI uri = UriBuilder.fromResource(ExaminationResource.class).path(String.valueOf(response.examination.id)).build();
+        return Response.created(uri).entity(addedSupervision).build();
     }
 
     @DELETE
     @Path("/{examinationId}/supervisions/{supervisionId}")
-    @Transactional
     public Response removeSupervision(@PathParam("examinationId") Integer examinationId,
-                                      @PathParam("supervisionId") Integer supevisionId) {
-        examinationService.removeSupervision(examinationId, supevisionId);
+                                      @PathParam("supervisionId") Integer supervisionId) {
+        examinationService.removeSupervision(examinationId, supervisionId);
         return Response.noContent().build();
     }
 }

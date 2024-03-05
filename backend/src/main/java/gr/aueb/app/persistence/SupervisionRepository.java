@@ -26,4 +26,9 @@ public class SupervisionRepository implements PanacheRepositoryBase<Supervision,
         return find("select s from Supervision s where s.supervisor.id = :supervisorId and s.examination.date = :date",
                 Parameters.with("supervisorId", supervisorId).and("date", date)).list();
     }
+
+    public List<Supervision> findAllWithSameSupervisor(Integer supervisorId) {
+        return find("select s from Supervision s where s.supervisor.id = :supervisorId",
+                Parameters.with("supervisorId", supervisorId)).list();
+    }
 }

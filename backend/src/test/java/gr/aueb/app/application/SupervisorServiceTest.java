@@ -1,16 +1,18 @@
 package gr.aueb.app.application;
 
+import gr.aueb.app.domain.Department;
 import gr.aueb.app.domain.Supervisor;
 import gr.aueb.app.domain.SupervisorCategory;
-import gr.aueb.app.representation.DepartmentRepresentation;
-import gr.aueb.app.representation.SupervisorRepresentation;
+import gr.aueb.app.persistence.DepartmentRepository;
 import gr.aueb.app.persistence.SupervisorRepository;
 
 import io.quarkus.test.TestTransaction;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -25,12 +27,18 @@ public class SupervisorServiceTest {
     @Inject
     SupervisorRepository supervisorRepository;
 
+    private Department department;
+
+    @BeforeEach
+    void setup() {
+        department = new Department("CS");
+    }
+
     @Test
     @TestTransaction
     @Transactional
     public void testFindAllSupervisors() {
         List<Supervisor> foundSupervisors = supervisorService.findAll();
-        assertNotNull(foundSupervisors);
         assertEquals(6, foundSupervisors.size());
     }
 
@@ -39,28 +47,15 @@ public class SupervisorServiceTest {
     @TestTransaction
     @Transactional
     public void testCreateSupervisor() {
-        SupervisorRepresentation representation = new SupervisorRepresentation();
-        DepartmentRepresentation departmentRepresentation = new DepartmentRepresentation();
-        representation.name = "Super";
-        representation.surname = "Visor";
-        representation.supervisor = "supervisor";
-        representation.email = "supervisor@mail.com";
-        representation.telephone = "1234";
-        representation.supervisorCategory = SupervisorCategory.ETEP;
-        departmentRepresentation.id = 3002;
-        departmentRepresentation.name = "Business";
-        representation.department = departmentRepresentation;
+        Supervisor newSupervisor = new Supervisor("Super", "Visor", "supervisor", "1234", "supervisor@mail.com", SupervisorCategory.ETEP, department);
 
-        Supervisor createdSupervisor = supervisorService.create(representation);
-        List<Supervisor> foundSupervisors = supervisorService.findAll();
+        Supervisor createdSupervisor = supervisorService.create(newSupervisor);
 
         assertNotNull(createdSupervisor);
         assertNotNull(createdSupervisor.getId());
         assertEquals("Super", createdSupervisor.getName());
         assertEquals(SupervisorCategory.ETEP, createdSupervisor.getSupervisorCategory());
-        assertEquals(3002, createdSupervisor.getDepartment().getId());
-        assertEquals("Business", createdSupervisor.getDepartment().getName());
-        assertEquals(7, foundSupervisors.size());
+        assertEquals("CS", createdSupervisor.getDepartment().getName());
     }
 
     @Test
@@ -68,15 +63,8 @@ public class SupervisorServiceTest {
     @Transactional
     public void testUpdateSupervisor() {
         // Update a supervisor
-        SupervisorRepresentation updatedRepresentation = new SupervisorRepresentation();
-        // Set properties of updatedRepresentation as needed
-        updatedRepresentation.name = "UpdatedMark";
-        updatedRepresentation.surname = "White";
-        updatedRepresentation.email = "mw@email.com";
-        updatedRepresentation.telephone = "123456789";
-        updatedRepresentation.supervisor = "DR. H";
-        updatedRepresentation.supervisorCategory = SupervisorCategory.PHD;
-        Supervisor updatedSupervisor = supervisorService.update(7002, updatedRepresentation);
+        Supervisor updateSupervisor = new Supervisor("UpdatedMark", "White", "DR. H", "123456789", "mw@email.com", SupervisorCategory.PHD, department);
+        Supervisor updatedSupervisor = supervisorService.update(7002, updateSupervisor);
 
         assertNotNull(updatedSupervisor);
         assertEquals(7002, updatedSupervisor.getId());
@@ -92,7 +80,7 @@ public class SupervisorServiceTest {
         supervisorService.delete(7002);
 
         Supervisor deletedSupervisor = supervisorRepository.findById(7002);
-        List<Supervisor> foundSupervisors = supervisorService.findAll();
+        List<Supervisor> foundSupervisors = supervisorRepository.listAll();
 
         assertNull(deletedSupervisor);
         assertEquals(5, foundSupervisors.size());
@@ -108,6 +96,24 @@ public class SupervisorServiceTest {
         assertEquals(SupervisorCategory.EDIP, foundSupervisor.getSupervisorCategory());
         assertEquals("John", foundSupervisor.getName());
         assertEquals("CS", foundSupervisor.getDepartment().getName());
+    }
+
+    @Test
+    @TestTransaction
+    @Transactional
+    public void testUpdateSupervisorFailed() {
+        // Update a supervisor
+        Supervisor updateSupervisor = new Supervisor("UpdatedMark", "White", "mw@email.com", "123456789", "DR. H", SupervisorCategory.PHD, department);
+        assertThrows(NotFoundException.class, () ->
+                supervisorService.update(999, updateSupervisor));
+    }
+
+    @Test
+    @TestTransaction
+    @Transactional
+    public void testFindSupervisorFailed() {
+        assertThrows(NotFoundException.class, () ->
+                supervisorService.findOne(999));
     }
 }
 

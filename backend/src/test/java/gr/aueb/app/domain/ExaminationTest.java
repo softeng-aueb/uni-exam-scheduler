@@ -17,12 +17,14 @@ public class ExaminationTest {
     private Examination examination;
     private Course course;
     private ExaminationPeriod examinationPeriod;
+    private Department department;
 
     @BeforeEach
     void setup() {
-        course = new Course("Algorithms", "CS101");
+        department = new Department("CS");
+        course = new Course("Algorithms", "CS101", department);
         AcademicYear academicYear = new AcademicYear("2023-2024", true, new AcademicYear());
-        examinationPeriod = new ExaminationPeriod(Semester.THIRD, LocalDate.now(), Period.WINTER, academicYear);
+        examinationPeriod = new ExaminationPeriod(LocalDate.now(), Period.WINTER, academicYear);
         examination = new Examination(LocalDate.now(), LocalTime.of(11, 0), LocalTime.of(13, 0), course, new HashSet<>(), examinationPeriod);
     }
 

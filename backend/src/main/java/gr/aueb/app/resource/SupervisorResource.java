@@ -7,7 +7,6 @@ import gr.aueb.app.representation.SupervisorRepresentation;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
@@ -33,38 +32,40 @@ public class SupervisorResource {
     UriInfo uriInfo;
 
     @GET
-    @Transactional
-    public List<SupervisorRepresentation> finnAll() {
+    public List<SupervisorRepresentation> findAll() {
         return supervisorMapper.toRepresentationList(supervisorService.findAll());
     }
 
     @GET
     @Path("/{supervisorId}")
-    @Transactional
-    public SupervisorRepresentation find(@PathParam("supervisorId") Integer supervisorId) {
-        try {
-            Supervisor foundSupervisor = supervisorService.findOne(supervisorId);
-            if(foundSupervisor == null) {
-                throw new NotFoundException();
-            }
-            return supervisorMapper.toRepresentation(foundSupervisor);
-        } catch (Exception e) {
-            throw e;
-        }
+    public SupervisorRepresentation findOne(@PathParam("supervisorId") Integer supervisorId) {
+        Supervisor foundSupervisor = supervisorService.findOne(supervisorId);
+        return supervisorMapper.toRepresentation(foundSupervisor);
     }
 
 
     @POST
-    @Transactional
     public Response create(SupervisorRepresentation representation) {
         // TODO check if toModel makes the validation we want
-        try {
-            Supervisor createdSupervisor = supervisorService.create(representation);
-            URI uri = UriBuilder.fromResource(SupervisorResource.class).path(String.valueOf(createdSupervisor.getId())).build();
-            return Response.created(uri).entity(supervisorMapper.toRepresentation(createdSupervisor)).build();
-        } catch(Exception e) {
-            throw new BadRequestException();
-        }
+        Supervisor newSupervisor = supervisorMapper.toModel(representation);
+        Supervisor createdSupervisor = supervisorService.create(newSupervisor);
+        SupervisorRepresentation response = supervisorMapper.toRepresentation(createdSupervisor);
+        URI uri = UriBuilder.fromResource(SupervisorResource.class).path(String.valueOf(response.id)).build();
+        return Response.created(uri).entity(response).build();
     }
 
+    @PUT
+    @Path("/{supervisorId}")
+    public Response update(@PathParam("supervisorId") Integer supervisorId, SupervisorRepresentation representation) {
+        Supervisor updateSupervisor = supervisorMapper.toModel(representation);
+        supervisorService.update(supervisorId, updateSupervisor);
+        return Response.noContent().build();
+    }
+
+    @DELETE
+    @Path("/{supervisorId}")
+    public Response delete(@PathParam("supervisorId") Integer supervisorId) {
+        supervisorService.delete(supervisorId);
+        return Response.noContent().build();
+    }
 }

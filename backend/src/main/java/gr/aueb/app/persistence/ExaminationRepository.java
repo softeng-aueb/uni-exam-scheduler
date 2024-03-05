@@ -1,5 +1,7 @@
 package gr.aueb.app.persistence;
 
+import gr.aueb.app.domain.Classroom;
+import gr.aueb.app.domain.CourseDeclaration;
 import gr.aueb.app.domain.Examination;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -32,5 +34,15 @@ public class ExaminationRepository implements PanacheRepositoryBase<Examination,
        } catch (NoResultException ex) {
            return null;
        }
+    }
+
+    public List<Examination> findAllWithSameCourse(Integer courseId) {
+        return find("select e from Examination e where e.course.id = :courseId",
+                Parameters.with("courseId", courseId)).list();
+    }
+
+    public List<Examination> findAllWithSameClassroom(Classroom classroom) {
+        return find("select e from Examination e where :classroom MEMBER OF e.classrooms",
+                Parameters.with("classroom", classroom)).list();
     }
 }

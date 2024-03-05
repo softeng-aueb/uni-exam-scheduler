@@ -41,7 +41,7 @@ public class Examination {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
     @JoinTable(name = "examinations_classrooms",
             joinColumns = @JoinColumn(name = "examination_id"),
             inverseJoinColumns = @JoinColumn(name = "classroom_id")
@@ -192,5 +192,9 @@ public class Examination {
 
                     return isStartTimeOverlap || isEndTimeOverlap;
                 });
+    }
+
+    public void removeClassroom(Classroom classroom) {
+        this.getClassrooms().remove(classroom);
     }
 }

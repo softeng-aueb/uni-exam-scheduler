@@ -16,21 +16,11 @@ public class ExaminationPeriodService {
 
     @Transactional
     public List<ExaminationPeriod> findAll() {
-        try {
-            List<ExaminationPeriod> foundExaminationPeriods = examinationPeriodRepository.listAll();
-            return foundExaminationPeriods;
-        } catch (Exception e) {
-            throw e;
-        }
+        return examinationPeriodRepository.listAll();
     }
 
     @Transactional
     public List<ExaminationPeriod> findAllInSameYear(Integer academicYearId) {
-        try {
-            List<ExaminationPeriod> foundExaminationPeriods = examinationPeriodRepository.findAllInSameYear(academicYearId);
-            return foundExaminationPeriods;
-        } catch (Exception e) {
-            throw e;
-        }
+        return examinationPeriodRepository.findAllInSameYear(academicYearId);
     }
 }

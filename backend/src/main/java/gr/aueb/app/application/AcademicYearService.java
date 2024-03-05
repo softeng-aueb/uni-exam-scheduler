@@ -16,21 +16,11 @@ public class AcademicYearService {
 
     @Transactional
     public List<AcademicYear> findAll() {
-        try {
-            List<AcademicYear> foundAcademicYears = academicYearRepository.listAll();
-            return foundAcademicYears;
-        } catch (Exception e) {
-            throw e;
-        }
+        return academicYearRepository.listAll();
     }
 
     @Transactional
     public AcademicYear findActive() {
-        try {
-            AcademicYear activeAcademicYear = academicYearRepository.findActive();
-            return activeAcademicYear;
-        } catch (Exception e) {
-            throw e;
-        }
+        return academicYearRepository.findActive();
     }
 }

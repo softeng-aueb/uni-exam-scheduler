@@ -7,6 +7,7 @@ import io.quarkus.panache.common.Parameters;
 
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.NoResultException;
+import java.util.List;
 
 @RequestScoped
 public class CourseAttendanceRepository implements PanacheRepositoryBase<CourseAttendance, Integer> {
@@ -20,5 +21,10 @@ public class CourseAttendanceRepository implements PanacheRepositoryBase<CourseA
         } catch(NoResultException ex) {
             return null;
         }
+    }
+
+    public List<CourseAttendance> findAllWithSameCourse(Integer courseId) {
+        return find("select ca from CourseAttendance ca where ca.course.id = :courseId",
+                Parameters.with("courseId", courseId)).list();
     }
 }

@@ -6,12 +6,11 @@ import gr.aueb.app.domain.Supervisor;
 import gr.aueb.app.persistence.ExaminationRepository;
 import gr.aueb.app.persistence.SupervisionRepository;
 import gr.aueb.app.persistence.SupervisorRepository;
-import gr.aueb.app.representation.ExaminationMapper;
-import gr.aueb.app.representation.ExaminationRepresentation;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import java.util.List;
 
@@ -27,49 +26,30 @@ public class ExaminationService {
     @Inject
     SupervisorRepository supervisorRepository;
 
-    @Inject
-    ExaminationMapper examinationMapper;
 
     @Transactional
-    public Examination create(ExaminationRepresentation representation) {
-        try {
-            Examination newExamination = examinationMapper.toModel(representation);
-            examinationRepository.persist(newExamination);
-            return newExamination;
-        } catch (Exception e) {
-            throw e;
-        }
+    public Examination create(Examination newExamination) {
+        examinationRepository.persist(newExamination);
+        return newExamination;
     }
 
     @Transactional
     public Examination findOne(Integer examinationId) {
-        try {
-            Examination foundExamination = examinationRepository.findById(examinationId);
-            if(foundExamination ==  null) throw new NotFoundException();
-            return foundExamination;
-        } catch (Exception e) {
-            throw e;
+        Examination foundExamination = examinationRepository.findById(examinationId);
+        if(foundExamination == null) {
+            throw new NotFoundException();
         }
+        return foundExamination;
     }
 
     @Transactional
     public List<Examination> findAll() {
-        try {
-            List<Examination> foundExaminations = examinationRepository.listAll();
-            return foundExaminations;
-        } catch (Exception e) {
-            throw e;
-        }
+        return examinationRepository.listAll();
     }
 
     @Transactional
     public List<Examination> findAllInSamePeriod(Integer examinationPeriodId) {
-        try {
-            List<Examination> foundExaminations = examinationRepository.findAllInSamePeriod(examinationPeriodId);
-            return foundExaminations;
-        } catch (Exception e) {
-            throw e;
-        }
+        return examinationRepository.findAllInSamePeriod(examinationPeriodId);
     }
 
     @Transactional
@@ -82,9 +62,9 @@ public class ExaminationService {
 
         Supervision addedSupervision = foundExamination.addSupervision(foundSupervisor, foundSupervisions);
         if(addedSupervision == null) {
-            return null;
+            throw new BadRequestException();
         }
-        examinationRepository.getEntityManager().merge(foundExamination);
+        supervisionRepository.persist(addedSupervision);
         return addedSupervision;
     }
 
@@ -94,9 +74,9 @@ public class ExaminationService {
         if(foundExamination ==  null) throw new NotFoundException();
         Supervision foundSupervision = supervisionRepository.findById(supervisionId);
         if(foundSupervision ==  null) throw new NotFoundException();
+        if(!examinationId.equals(foundSupervision.getExamination().getId())) throw new BadRequestException();
 
         foundExamination.removeSupervision(foundSupervision);
         supervisionRepository.deleteById(supervisionId);
-        examinationRepository.getEntityManager().merge(foundExamination);
     }
 }

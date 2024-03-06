@@ -27,4 +27,12 @@ public class CourseAttendanceRepository implements PanacheRepositoryBase<CourseA
         return find("select ca from CourseAttendance ca where ca.course.id = :courseId",
                 Parameters.with("courseId", courseId)).list();
     }
+
+    public List<CourseAttendance> findAllWithDetails() {
+        return find("select ca from CourseAttendance ca " +
+                        "left join fetch ca.course course " +
+                        "left join fetch ca.examinationPeriod examinationPeriod " +
+                        "left join fetch course.department " +
+                        "left join fetch examinationPeriod.academicYear").list();
+    }
 }

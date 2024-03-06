@@ -1,0 +1,50 @@
+package gr.aueb.app.resource;
+
+import gr.aueb.app.application.CourseDeclarationService;
+import gr.aueb.app.representation.CourseDeclarationMapper;
+import gr.aueb.app.representation.CourseDeclarationRepresentation;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.io.InputStream;
+import java.util.List;
+
+import static gr.aueb.app.resource.AppUri.COURSE_DECLARATIONS;
+
+@Path(COURSE_DECLARATIONS)
+@RequestScoped
+public class CourseDeclarationResource {
+    @Inject
+    CourseDeclarationService courseDeclarationService;
+
+    @Inject
+    CourseDeclarationMapper courseDeclarationMapper;
+
+    @POST
+    @Path("/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void uploadExcel(
+            @QueryParam("academicYearId") Integer academicYearId,
+            @MultipartForm FormData formData) {
+        if (academicYearId == null) throw new BadRequestException();
+
+        try (InputStream fileInputStream = formData.file) {
+            Workbook workbook = WorkbookFactory.create(fileInputStream);
+            courseDeclarationService.upload(workbook, academicYearId);
+        } catch (Exception e) {
+            // Handle exceptions, e.g., log or return an error response
+            e.printStackTrace();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<CourseDeclarationRepresentation> findAll() {
+        return courseDeclarationMapper.toRepresentationList(courseDeclarationService.findAll());
+    }
+}

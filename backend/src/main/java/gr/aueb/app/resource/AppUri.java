@@ -7,4 +7,6 @@ public class AppUri {
     public static final String SUPERVISIONS = "/supervisions";
     public static final String COURSES = "/courses";
     public static final String CLASSROOMS = "/classrooms";
+    public static final String COURSE_ATTENDANCES = "/course_attendances";
+    public static final String COURSE_DECLARATIONS = "/course_declarations";
 }

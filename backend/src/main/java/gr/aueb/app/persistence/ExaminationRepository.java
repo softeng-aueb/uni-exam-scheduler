@@ -29,7 +29,16 @@ public class ExaminationRepository implements PanacheRepositoryBase<Examination,
 
     public List<Examination> findAllInSamePeriod(Integer examinationPeriodId) {
        try {
-           return find("select e from Examination e where e.examinationPeriod.id =:examinationPeriod",
+           return find("select DISTINCT e from Examination e " +
+                            "left join fetch e.course course " +
+                            "left join fetch e.supervisions supervisions " +
+                            "left join fetch e.classrooms " +
+                            "left join fetch e.examinationPeriod examinationPeriod " +
+                            "left join fetch course.department " +
+                            "left join fetch supervisions.supervisor supervisor " +
+                            "left join fetch supervisor.department " +
+                            "left join fetch examinationPeriod.academicYear " +
+                            "where e.examinationPeriod.id =:examinationPeriod",
                    Parameters.with("examinationPeriod", examinationPeriodId)).list();
        } catch (NoResultException ex) {
            return null;

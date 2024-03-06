@@ -28,17 +28,17 @@ public abstract class SupervisionMapper {
     @Mapping(target = "id", ignore = true)
     public abstract Supervision toModel(SupervisionRepresentation representation);
 
-    @AfterMapping
-    protected void connectToExamination(SupervisionRepresentation representation,
-                                    @MappingTarget Supervision supervision) {
-        if (representation.examination != null || representation.examination.id != null) {
-            Examination examination = examinationRepository.findById(Integer.valueOf(representation.examination.id));
-            if (examination == null) {
-                throw new RuntimeException();
-            }
-            supervision.setExamination(examination);
-        }
-    }
+//    @AfterMapping
+//    protected void connectToExamination(SupervisionRepresentation representation,
+//                                    @MappingTarget Supervision supervision) {
+//        if (representation.examination != null || representation.examination.id != null) {
+//            Examination examination = examinationRepository.findById(Integer.valueOf(representation.examination.id));
+//            if (examination == null) {
+//                throw new RuntimeException();
+//            }
+//            supervision.setExamination(examination);
+//        }
+//    }
 
     @AfterMapping
     protected void connectToSupervisor(SupervisionRepresentation representation,

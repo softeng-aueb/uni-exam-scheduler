@@ -3,12 +3,16 @@ package gr.aueb.app.resource;
 import gr.aueb.app.application.ExaminationService;
 import gr.aueb.app.domain.Supervision;
 import gr.aueb.app.representation.*;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
@@ -34,6 +38,7 @@ public class ExaminationResource {
 
     @GET
     public List<ExaminationRepresentation> findAllInSamePeriod(@QueryParam("examinationPeriod") Integer examinationPeriodId) {
+        if(examinationPeriodId == null) throw new BadRequestException();
         return examinationMapper.toRepresentationList(examinationService.findAllInSamePeriod(examinationPeriodId));
     }
 
@@ -43,8 +48,8 @@ public class ExaminationResource {
         // TODO check if toModel makes the validation we want
         Supervision addedSupervision = examinationService.addSupervision(examinationId, representation.id);
         SupervisionRepresentation response = supervisionMapper.toRepresentation(addedSupervision);
-        URI uri = UriBuilder.fromResource(ExaminationResource.class).path(String.valueOf(response.examination.id)).build();
-        return Response.created(uri).entity(addedSupervision).build();
+        URI uri = UriBuilder.fromResource(ExaminationResource.class).path(String.valueOf(examinationId)).build();
+        return Response.created(uri).entity(response).build();
     }
 
     @DELETE
@@ -53,5 +58,22 @@ public class ExaminationResource {
                                       @PathParam("supervisionId") Integer supervisionId) {
         examinationService.removeSupervision(examinationId, supervisionId);
         return Response.noContent().build();
+    }
+
+    @POST
+    @Path("/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void uploadExcel(
+            @QueryParam("examinationPeriodId") Integer examinationPeriodId,
+            @MultipartForm FormData formData) {
+        if(examinationPeriodId == null) throw new BadRequestException();
+
+        try (InputStream fileInputStream = formData.file) {
+            Workbook workbook = WorkbookFactory.create(fileInputStream);
+            examinationService.upload(workbook, examinationPeriodId);
+        } catch (Exception e) {
+            // Handle exceptions, e.g., log or return an error response
+            e.printStackTrace();
+        }
     }
 }

@@ -33,6 +33,15 @@ public class CourseRepository implements PanacheRepositoryBase<Course, Integer> 
         }
     }
 
+    public Course findCourseByCode(String courseCode) {
+        PanacheQuery<Course> query = find("select c from Course c where c.courseCode = :courseCode", Parameters.with("courseCode", courseCode).map());
+        try {
+            return query.singleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
     public void delete(Integer courseId) {
         List<CourseAttendance> courseAttendances = courseAttendanceRepository.findAllWithSameCourse(courseId);
         List<CourseDeclaration> courseDeclarations = courseDeclarationRepository.findAllWithSameCourse(courseId);

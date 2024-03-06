@@ -49,7 +49,7 @@ insert into supervisors (id, name, surname, supervisor, telephone, email, superv
 
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8001, '2023-01-03', '11:30', '13:30', 10, 4001, 5001);
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8002, '2023-01-05', '12:30', '14:30', 8, 4002, 5001);
-insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8003, '2024-06-10', '13:30', '15:30', 0, 4001, 5002);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8003, '2024-06-10', '13:30', '15:30', 3, 4001, 5002);
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8004, '2024-06-15', '14:30', '16:30', 0, 4002, 5002);
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8005, '2024-09-03', '15:30', '17:30', 0, 4001, 5003);
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8006, '2024-09-07', '16:30', '18:30', 0, 4002, 5003);

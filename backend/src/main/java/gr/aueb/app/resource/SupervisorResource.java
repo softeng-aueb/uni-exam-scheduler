@@ -5,10 +5,10 @@ import gr.aueb.app.domain.Supervisor;
 import gr.aueb.app.representation.SupervisorMapper;
 import gr.aueb.app.representation.SupervisorRepresentation;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
 
 import java.net.URI;
 import java.util.List;

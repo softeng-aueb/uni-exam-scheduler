@@ -5,11 +5,11 @@ import gr.aueb.app.domain.Supervision;
 import gr.aueb.app.representation.SupervisionMapper;
 import gr.aueb.app.representation.SupervisionRepresentation;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import static gr.aueb.app.resource.AppUri.SUPERVISIONS;
 

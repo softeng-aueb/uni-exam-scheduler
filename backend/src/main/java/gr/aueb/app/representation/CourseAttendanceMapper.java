@@ -4,10 +4,10 @@ import gr.aueb.app.domain.*;
 import gr.aueb.app.persistence.*;
 import org.mapstruct.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
-@Mapper(componentModel = "cdi",
+@Mapper(componentModel = "jakarta",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         uses = {CourseMapper.class, ExaminationPeriodMapper.class})
 public abstract class CourseAttendanceMapper {

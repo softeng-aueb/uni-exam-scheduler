@@ -5,8 +5,8 @@ import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.NoResultException;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.persistence.NoResultException;
 
 @RequestScoped
 public class SupervisionRuleRepository implements PanacheRepositoryBase<SupervisionRule, Integer> {

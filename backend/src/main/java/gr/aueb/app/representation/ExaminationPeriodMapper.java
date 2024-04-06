@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "cdi",
+@Mapper(componentModel = "jakarta",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         uses = {AcademicYearMapper.class})
 public abstract class ExaminationPeriodMapper {

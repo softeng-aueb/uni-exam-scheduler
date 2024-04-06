@@ -3,9 +3,9 @@ package gr.aueb.app.application;
 import gr.aueb.app.domain.ExaminationPeriod;
 import gr.aueb.app.persistence.ExaminationPeriodRepository;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @RequestScoped

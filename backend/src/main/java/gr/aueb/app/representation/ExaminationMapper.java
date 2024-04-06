@@ -9,7 +9,7 @@ import gr.aueb.app.persistence.ExaminationPeriodRepository;
 import gr.aueb.app.persistence.CourseRepository;
 import org.mapstruct.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Mapper(componentModel = "cdi",
+@Mapper(componentModel = "jakarta",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         uses = {ClassroomMapper.class, ExaminationPeriodMapper.class, CourseMapper.class})
 public abstract class ExaminationMapper {

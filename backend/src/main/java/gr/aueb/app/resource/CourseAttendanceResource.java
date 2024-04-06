@@ -8,11 +8,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

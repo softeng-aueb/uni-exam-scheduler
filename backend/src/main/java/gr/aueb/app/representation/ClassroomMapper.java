@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "cdi",
+@Mapper(componentModel = "jakarta",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public abstract class ClassroomMapper {
     public abstract ClassroomRepresentation toRepresentation(Classroom classroom);

@@ -1,7 +1,7 @@
 package gr.aueb.app.persistence;
 
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.NoResultException;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.persistence.NoResultException;
 
 import gr.aueb.app.domain.AcademicYear;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;

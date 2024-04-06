@@ -5,9 +5,9 @@ import gr.aueb.app.domain.Supervision;
 import io.quarkus.test.TestTransaction;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;

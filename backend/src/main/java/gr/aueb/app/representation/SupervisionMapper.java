@@ -7,10 +7,10 @@ import gr.aueb.app.persistence.ExaminationRepository;
 import gr.aueb.app.persistence.SupervisorRepository;
 import org.mapstruct.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
-@Mapper(componentModel = "cdi",
+@Mapper(componentModel = "jakarta",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         uses = {ExaminationMapper.class, SupervisorMapper.class})
 public abstract class SupervisionMapper {

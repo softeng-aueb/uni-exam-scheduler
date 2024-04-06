@@ -1,8 +1,8 @@
 package gr.aueb.app.persistence;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.NoResultException;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
 
 import gr.aueb.app.domain.*;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;

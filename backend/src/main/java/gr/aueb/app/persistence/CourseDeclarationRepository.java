@@ -34,4 +34,9 @@ public class CourseDeclarationRepository implements PanacheRepositoryBase<Course
                 "left join fetch cd.academicYear " +
                 "left join fetch course.department").list();
     }
+
+    public List<CourseDeclaration> findAllInSamePeriod(Integer examinationPeriodId) {
+        return find("select cd from CourseDeclaration cd where cd.examinationPeriod.id = :examinationPeriodId",
+                Parameters.with("examinationPeriodId", examinationPeriodId)).list();
+    }
 }

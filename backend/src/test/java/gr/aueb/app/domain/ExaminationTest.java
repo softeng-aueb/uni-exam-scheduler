@@ -83,7 +83,8 @@ public class ExaminationTest {
         Examination newExamination = new Examination();
         newExamination.setStartTime(LocalTime.of(10, 0));
         newExamination.setEndTime(LocalTime.of(12, 0));
-        Supervision overlapSupervision = new Supervision(newExamination, newSupervisor1);
+        Supervision overlapSupervision = new Supervision(newExamination);
+        overlapSupervision.setSupervisor(newSupervisor1);
         supervisions.add(overlapSupervision);
         Supervision newSupervision3 = examination.addSupervision(newSupervisor1, supervisions);
 

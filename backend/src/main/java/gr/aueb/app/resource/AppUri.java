@@ -9,4 +9,5 @@ public class AppUri {
     public static final String CLASSROOMS = "/classrooms";
     public static final String COURSE_ATTENDANCES = "/course_attendances";
     public static final String COURSE_DECLARATIONS = "/course_declarations";
+    public static final String SOLVE = "/solve";
 }

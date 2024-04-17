@@ -1,11 +1,16 @@
 package gr.aueb.app.domain;
 
 import jakarta.persistence.*;
+import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
+import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
+@PlanningEntity
 @Entity
 @Table(name = "supervisions")
 public class Supervision {
 
+    @PlanningId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -20,15 +25,20 @@ public class Supervision {
     @JoinColumn(name = "examination_id")
     private Examination examination;
 
+    @PlanningVariable
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "supervisor_id")
     private Supervisor supervisor;
 
     protected Supervision(){};
 
-    public Supervision(Examination examination, Supervisor supervisor) {
+    public Supervision(Examination examination) {
         this.examination = examination;
-        this.supervisor = supervisor;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + id + ")";
     }
 
     public Integer getId() {

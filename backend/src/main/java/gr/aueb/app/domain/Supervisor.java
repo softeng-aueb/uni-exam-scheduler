@@ -1,13 +1,13 @@
 package gr.aueb.app.domain;
 
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 
 @Entity
 @Table(name = "supervisors")
 public class Supervisor {
 
+    @PlanningId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -45,6 +45,11 @@ public class Supervisor {
         this.email = email;
         this.supervisorCategory = supervisorCategory;
         this.department = department;
+    }
+
+    @Override
+    public String toString() {
+        return surname;
     }
 
     public Integer getId() {

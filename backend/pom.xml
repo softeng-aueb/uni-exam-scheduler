@@ -15,7 +15,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.6.7</quarkus.platform.version>
+        <quarkus.platform.version>3.4.2</quarkus.platform.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
         <jacoco.version>0.8.8</jacoco.version>
         <skipITs>true</skipITs>
@@ -32,8 +32,16 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.optaplanner</groupId>
+                <artifactId>optaplanner-bom</artifactId>
+                <version>9.44.0.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -44,6 +52,14 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.optaplanner</groupId>
+            <artifactId>optaplanner-quarkus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.optaplanner</groupId>
+            <artifactId>optaplanner-quarkus-jackson</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

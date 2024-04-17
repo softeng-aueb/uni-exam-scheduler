@@ -165,7 +165,8 @@ public class Examination {
            return null;
        }
 
-        Supervision newSupervision = new Supervision(this, supervisor);
+        Supervision newSupervision = new Supervision(this);
+        newSupervision.setSupervisor(supervisor);
         this.supervisions.add(newSupervision);
         return newSupervision;
     }
@@ -184,13 +185,8 @@ public class Examination {
                     LocalTime superExamStartTime = supervision.getExamination().getStartTime();
                     LocalTime superExamEndTime = supervision.getExamination().getEndTime();
 
-                    boolean isStartTimeOverlap = (examStartTime.isBefore(superExamEndTime) || examStartTime.equals(superExamEndTime))
+                    return (examStartTime.isBefore(superExamEndTime) || examStartTime.equals(superExamEndTime))
                             && (examEndTime.isAfter(superExamStartTime) || examEndTime.equals(superExamStartTime));
-
-                    boolean isEndTimeOverlap = (examEndTime.isAfter(superExamStartTime) || examEndTime.equals(superExamStartTime))
-                            && (examStartTime.isBefore(superExamEndTime) || examStartTime.equals(superExamEndTime));
-
-                    return isStartTimeOverlap || isEndTimeOverlap;
                 });
     }
 

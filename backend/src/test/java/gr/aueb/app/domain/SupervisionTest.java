@@ -10,7 +10,7 @@ public class SupervisionTest {
 
     @BeforeEach
     void setUp() {
-        supervision = new Supervision(new Examination(), new Supervisor());
+        supervision = new Supervision(new Examination());
     }
 
     @Test
@@ -19,7 +19,7 @@ public class SupervisionTest {
         assertTrue(supervision.getIsPresent());
         assertFalse(supervision.getIsLead());
         assertNotNull(supervision.getExamination());
-        assertNotNull(supervision.getSupervisor());
+        assertNull(supervision.getSupervisor());
     }
 
     @Test

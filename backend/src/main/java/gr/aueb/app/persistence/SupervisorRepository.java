@@ -1,5 +1,6 @@
 package gr.aueb.app.persistence;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
@@ -11,7 +12,7 @@ import io.quarkus.panache.common.Parameters;
 
 import java.util.List;
 
-@RequestScoped
+@ApplicationScoped
 public class SupervisorRepository implements PanacheRepositoryBase<Supervisor, Integer> {
     @Inject
     SupervisionRepository supervisionRepository;

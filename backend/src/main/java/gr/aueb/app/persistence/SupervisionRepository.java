@@ -1,20 +1,24 @@
 package gr.aueb.app.persistence;
 
-import gr.aueb.app.domain.Examination;
 import gr.aueb.app.domain.Supervision;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.NoResultException;
 import java.time.LocalDate;
 import java.util.List;
 
-@RequestScoped
+@ApplicationScoped
 public class SupervisionRepository implements PanacheRepositoryBase<Supervision, Integer> {
     public Supervision findWithDetails(Integer id) {
-        PanacheQuery<Supervision> query = find("select sr from Supervision s left join fetch s.examination left join fetch s.supervisor where s.id = :id", Parameters.with("id", id).map());
+        PanacheQuery<Supervision> query = find("select s from Supervision s " +
+                "left join fetch s.examination examination" +
+                "left join fetch s.supervisor supervisor " +
+                "left join fetch examination.examinationPeriod " +
+                "left join fetch supervisor.department " +
+                "where s.id = :id", Parameters.with("id", id).map());
         try {
             return query.singleResult();
         } catch(NoResultException ex) {
@@ -36,4 +40,12 @@ public class SupervisionRepository implements PanacheRepositoryBase<Supervision,
         return find("select s from Supervision s where s.examination.examinationPeriod.id = :examinationPeriodId",
                 Parameters.with("examinationPeriodId", examinationPeriodId)).list();
     }
+
+    public List<Supervision> findAllWithDetails() {
+        return find("select s from Supervision s " +
+                "left join fetch s.examination " +
+                "left join fetch s.supervisor supervisor " +
+                "left join fetch supervisor.department").list();
+    }
+
 }

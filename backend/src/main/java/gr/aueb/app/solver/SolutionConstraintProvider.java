@@ -50,14 +50,14 @@ public class SolutionConstraintProvider implements ConstraintProvider {
     Constraint supervisionRuleLimit(ConstraintFactory constraintFactory) {
         // Soft constraint: Supervisor should not have more than his type limit
         return constraintFactory.forEach(Supervision.class)
-                .groupBy((supervision) -> supervision,
+                .groupBy((supervision) -> supervision.getExamination().getExaminationPeriod().getId(),
                         (supervision) -> supervision.getSupervisor(), count())
-                .filter((supervision, supervisor, count) -> {
-                    SupervisionRule rule = findSupervisionRule(supervision, supervisor);
+                .filter((examinationPeriodId, supervisor, count) -> {
+                    SupervisionRule rule = findSupervisionRule(examinationPeriodId, supervisor);
                     return rule != null && count > rule.getNumOfSupervisions();
                 })
-                .penalize(HardSoftScore.ONE_SOFT, (supervision, supervisor, count) -> {
-                    SupervisionRule rule = findSupervisionRule(supervision, supervisor);
+                .penalize(HardSoftScore.ONE_SOFT, (examinationPeriodId, supervisor, count) -> {
+                    SupervisionRule rule = findSupervisionRule(examinationPeriodId, supervisor);
                     return count - rule.getNumOfSupervisions();
                 })
                 .asConstraint("Supervisor type limit exceeded");
@@ -73,7 +73,7 @@ public class SolutionConstraintProvider implements ConstraintProvider {
                 && (s1ExamEndTime.isAfter(s2ExamStartTime) || s1ExamEndTime.equals(s2ExamStartTime));
     }
 
-    private SupervisionRule findSupervisionRule(Supervision supervision, Supervisor supervisor) {
-        return SupervisionRuleService.findSupervisionRule(supervision, supervisor);
+    private SupervisionRule findSupervisionRule(Integer examinationPeriodId, Supervisor supervisor) {
+        return SupervisionRuleService.findSupervisionRule(examinationPeriodId, supervisor);
     }
 }

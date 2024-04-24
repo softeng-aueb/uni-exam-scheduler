@@ -3,6 +3,7 @@ package gr.aueb.app.application;
 import gr.aueb.app.domain.Examination;
 import gr.aueb.app.domain.Solution;
 import gr.aueb.app.domain.Supervision;
+import gr.aueb.app.domain.Supervisor;
 import gr.aueb.app.persistence.ExaminationRepository;
 import gr.aueb.app.persistence.SupervisionRepository;
 import gr.aueb.app.persistence.SupervisorRepository;
@@ -48,9 +49,9 @@ public class SolutionService {
         }
 
         // for each examination add a function that based on criteria finds requiredSupervisors
-        // now just have 2 on each
+        // now just have 3 on each
         supervisionList = examinationList.stream()
-                .peek(examination -> examination.setRequiredSupervisors(2))
+                .peek(examination -> examination.setRequiredSupervisors(3))
                 .flatMap(examination -> {
                     List<Supervision> supervisions = new ArrayList<>();
                     for (int i = 0; i < examination.getRequiredSupervisors(); i++) {
@@ -68,28 +69,40 @@ public class SolutionService {
         setExaminationPeriodId(examinationPeriodId);
         solverManager.solveAndListen(SINGLETON_SOLUTION_ID,
                 this::findById,
-                this::save);
+                this::saveSolution,
+                this::saveBestSolution,
+                null);
     }
 
     @Transactional
     protected Solution findById(Long id) {
+        System.out.println("STARTING SOLVING.....");
         if (!SINGLETON_SOLUTION_ID.equals(id)) {
             throw new IllegalStateException("There is no solution with id (" + id + ").");
         }
-        // Occurs in a single transaction, so each initialized lesson references the same timeslot/room instance
-        // that is contained by the timeTable's timeslotList/roomList.
+
         return new Solution(
-                supervisorRepository.listAll(),
+                supervisorRepository.findAllWithDetails(),
                 supervisionList);
     }
 
-    @Transactional
-    protected void save(Solution solution) {
+    //@Transactional
+    protected void saveSolution(Solution solution) {
+        System.out.println("SAVING.....");
         for (Supervision supervision : solution.getSupervisionList()) {
             System.out.println(supervision.getSupervisor().toString());
+        }
+    }
+
+    @Transactional
+    protected void saveBestSolution(Solution solution) {
+        System.out.println("SAVING BEST.....");
+        for (Supervision supervision : solution.getSupervisionList()) {
+            System.out.println(supervision.getSupervisor().getId());
             // TODO this is awfully naive: optimistic locking causes issues if called by the SolverManager
             Supervision attachedSupervision = supervisionRepository.findById(supervision.getId());
-            attachedSupervision.setSupervisor(supervision.getSupervisor());
+            Supervisor attachedSupervisor = supervisorRepository.findById(supervision.getSupervisor().getId());
+            attachedSupervision.setSupervisor(attachedSupervisor);
         }
     }
 

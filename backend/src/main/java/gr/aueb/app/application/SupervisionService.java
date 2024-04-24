@@ -2,7 +2,6 @@ package gr.aueb.app.application;
 
 import gr.aueb.app.domain.Supervision;
 import gr.aueb.app.persistence.SupervisionRepository;
-
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -26,7 +25,7 @@ public class SupervisionService {
 
     @Transactional
     public List<Supervision> findAll() {
-        return supervisionRepository.listAll();
+        return supervisionRepository.findAllWithDetails();
     }
 
     @Transactional

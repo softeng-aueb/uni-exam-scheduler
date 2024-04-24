@@ -1,7 +1,6 @@
 package gr.aueb.app.persistence;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 
@@ -33,5 +32,10 @@ public class SupervisorRepository implements PanacheRepositoryBase<Supervisor, I
             supervisionRepository.getEntityManager().merge(supervision);
         }
         this.deleteById(supervisorId);
+    }
+
+    public List<Supervisor> findAllWithDetails() {
+        return find("select s from Supervisor s " +
+                "left join fetch s.department").list();
     }
 }

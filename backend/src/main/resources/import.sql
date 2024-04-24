@@ -27,6 +27,16 @@ insert into departments (id, name) values (3005, 'Marketing');
 
 insert into courses (id, title, course_code, department_id) values(4001, 'Intro to Programming', 'CS105', 3001);
 insert into courses (id, title, course_code, department_id) values(4002, 'Accounting and Finance 101', 'AF101', 3004);
+insert into courses (id, title, course_code, department_id) values(4003, 'Programming 2', 'CS106', 3001);
+insert into courses (id, title, course_code, department_id) values(4004, 'How to Business', 'BS101', 3002);
+insert into courses (id, title, course_code, department_id) values(4005, 'Marketing Basics', 'MA101', 3005);
+insert into courses (id, title, course_code, department_id) values(4006, 'Economics Fundamentals', 'EC101', 3003);
+insert into courses (id, title, course_code, department_id) values(4007, 'Micro-Economics', 'EC105', 3003);
+insert into courses (id, title, course_code, department_id) values(4008, 'Tax', 'AF110', 3004);
+insert into courses (id, title, course_code, department_id) values(4009, 'Data Models', 'CS201', 3001);
+insert into courses (id, title, course_code, department_id) values(4010, 'Leadership', 'BS301', 3002);
+insert into courses (id, title, course_code, department_id) values(4011, 'Business Accounting', 'AF305', 3004);
+insert into courses (id, title, course_code, department_id) values(4012, 'Advertising', 'MA201', 3005);
 
 insert into examinationPeriods (id, start_date, period, academicYear_id) values (5001, '2023-01-01', 'WINTER', 1002);
 insert into examinationPeriods (id, start_date, period, academicYear_id) values (5002, '2024-06-10', 'SPRING', 1003);
@@ -39,6 +49,12 @@ insert into supervisionRules (id, num_of_supervisions, supervisor_category, depa
 insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6004, 7, 'EDIP', 3002, 5002);
 insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6005, 6, 'ETEP', 3001, 5003);
 insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6006, 8, 'PHD', 3004, 5003);
+insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6007, 6, 'EDIP', 3001, 5003);
+insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6008, 8, 'PHD', 3001, 5003);
+insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6009, 3, 'ETEP', 3002, 5003);
+insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6010, 5, 'EDIP', 3003, 5003);
+insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6011, 1, 'EXTERNAL', 3004, 5003);
+insert into supervisionRules (id, num_of_supervisions, supervisor_category, department_id, examinationPeriod_id) values (6012, 2, 'DISPATCHED', 3005, 5003);
 
 insert into supervisors (id, name, surname, supervisor, telephone, email, supervisor_category, department_id) values (7001, 'John', 'Doe', 'Dr. K', '123456789', 'jd@email.com', 'EDIP', 3001);
 insert into supervisors (id, name, surname, supervisor, telephone, email, supervisor_category, department_id) values (7002, 'Mark', 'White', 'Dr. H', '123456789', 'mw@email.com', 'EXTERNAL', 3004);
@@ -54,6 +70,16 @@ insert into examinations (id, date, start_time, end_time, required_supervisors, 
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8005, '2024-09-03', '15:30', '17:30', 0, 4001, 5003);
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8006, '2024-09-07', '16:30', '18:30', 0, 4002, 5003);
 insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8007, '2024-06-10', '18:30', '12:30', 5, 4001, 5001);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8008, '2024-09-03', '15:30', '17:30', 0, 4003, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8009, '2024-09-07', '16:30', '18:30', 0, 4004, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8010, '2024-09-04', '15:30', '17:30', 0, 4005, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8011, '2024-09-04', '16:30', '18:30', 0, 4006, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8012, '2024-09-04', '11:30', '13:30', 0, 4007, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8013, '2024-09-05', '11:30', '13:30', 0, 4008, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8014, '2024-09-05', '14:30', '16:30', 0, 4009, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8015, '2024-09-05', '17:30', '19:30', 0, 4010, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8016, '2024-09-05', '20:30', '22:30', 0, 4011, 5003);
+insert into examinations (id, date, start_time, end_time, required_supervisors, course_id, examinationPeriod_id) values (8017, '2024-09-06', '16:30', '18:30', 0, 4012, 5003);
 
 insert into examinations_classrooms (examination_id, classroom_id) values (8001, 2001);
 insert into examinations_classrooms (examination_id, classroom_id) values (8001, 2002);

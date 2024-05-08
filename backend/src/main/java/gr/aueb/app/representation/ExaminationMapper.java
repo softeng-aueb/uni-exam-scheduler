@@ -83,7 +83,7 @@ public abstract class ExaminationMapper {
 
     @Named("mapLocalDate")
     public LocalDate mapLocalDate(String dateStr) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(dateStr, formatter);
         return localDate;
     }

@@ -49,7 +49,7 @@ public class CourseResource {
         Course newCourse = courseMapper.toModel(representation);
         Course createdCourse = courseService.create(newCourse);
         CourseRepresentation response = courseMapper.toRepresentation(createdCourse);
-        URI uri = UriBuilder.fromResource(ClassroomResource.class).path(String.valueOf(response.id)).build();
+        URI uri = UriBuilder.fromResource(CourseResource.class).path(String.valueOf(response.id)).build();
         return Response.created(uri).entity(response).build();
     }
 

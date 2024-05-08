@@ -1,9 +1,11 @@
 package gr.aueb.app.solver;
 
 import gr.aueb.app.application.SupervisionRuleService;
+import gr.aueb.app.application.SupervisorPreferenceService;
 import gr.aueb.app.domain.Supervision;
 import gr.aueb.app.domain.SupervisionRule;
 import gr.aueb.app.domain.Supervisor;
+import gr.aueb.app.domain.SupervisorPreference;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.score.stream.Constraint;
 import org.optaplanner.core.api.score.stream.ConstraintFactory;
@@ -24,6 +26,9 @@ public class SolutionConstraintProvider implements ConstraintProvider {
                 sameExaminationConflict(constraintFactory),
                 // Soft constraints
                 supervisionRuleLimit(constraintFactory),
+                supervisorDateExclusion(constraintFactory),
+                // Reward constraints
+                supervisorTimePreference(constraintFactory)
         };
     }
 
@@ -63,6 +68,28 @@ public class SolutionConstraintProvider implements ConstraintProvider {
                 .asConstraint("Supervisor type limit exceeded");
     }
 
+    Constraint supervisorDateExclusion(ConstraintFactory constraintFactory) {
+        // Soft constraint: a supervisor has set specific dates to be excluded
+        return constraintFactory.forEach(Supervision.class)
+                .filter((supervision) -> {
+                    SupervisorPreference preference = findSupervisorPreference(supervision.getSupervisor().getId(), supervision.getExamination().getExaminationPeriod().getId());
+                    return preference != null && preference.getExcludeDates().contains(supervision.getExamination().getDate());
+                })
+                .penalize(HardSoftScore.ofSoft(50))
+                .asConstraint("Supervisor Date Exclusion");
+    }
+
+    Constraint supervisorTimePreference(ConstraintFactory constraintFactory) {
+        // Reward constraint: a supervisor does not prefer to supervise at this timeline
+        return constraintFactory.forEach(Supervision.class)
+                .filter((supervision) -> {
+                    SupervisorPreference preference = findSupervisorPreference(supervision.getSupervisor().getId(), supervision.getExamination().getExaminationPeriod().getId());
+                    return preference != null && !hasOverlapGeneral(supervision.getExamination().getStartTime(), supervision.getExamination().getEndTime(), preference.getStartTime(), preference.getEndTime());
+                })
+                .reward(HardSoftScore.ofSoft(2))
+                .asConstraint("Supervisor Time Preference");
+    }
+
     boolean hasOverlap(Supervision s1, Supervision s2) {
         LocalTime s1ExamStartTime = s1.getExamination().getStartTime();
         LocalTime s1ExamEndTime = s1.getExamination().getEndTime();
@@ -73,7 +100,16 @@ public class SolutionConstraintProvider implements ConstraintProvider {
                 && (s1ExamEndTime.isAfter(s2ExamStartTime) || s1ExamEndTime.equals(s2ExamStartTime));
     }
 
+    boolean hasOverlapGeneral(LocalTime startTime1, LocalTime endTime1, LocalTime startTime2, LocalTime endTime2) {
+        return (startTime1.isBefore(endTime2) || startTime1.equals(endTime2))
+                && (endTime1.isAfter(startTime2) || endTime1.equals(startTime2));
+    }
+
     private SupervisionRule findSupervisionRule(Integer examinationPeriodId, Supervisor supervisor) {
         return SupervisionRuleService.findSupervisionRule(examinationPeriodId, supervisor);
+    }
+
+    private SupervisorPreference findSupervisorPreference(Integer supervisorId, Integer examinationPeriod) {
+        return SupervisorPreferenceService.findSpecificForSolver(supervisorId, examinationPeriod);
     }
 }

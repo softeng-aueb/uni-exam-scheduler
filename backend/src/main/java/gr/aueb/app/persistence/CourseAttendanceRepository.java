@@ -1,6 +1,8 @@
 package gr.aueb.app.persistence;
 
 import gr.aueb.app.domain.CourseAttendance;
+import gr.aueb.app.domain.Period;
+import gr.aueb.app.domain.SupervisorPreference;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
@@ -34,5 +36,21 @@ public class CourseAttendanceRepository implements PanacheRepositoryBase<CourseA
                         "left join fetch ca.examinationPeriod examinationPeriod " +
                         "left join fetch course.department " +
                         "left join fetch examinationPeriod.academicYear").list();
+    }
+
+    public CourseAttendance findSpecific(Integer courseId, Integer academicYearId, Period period) {
+        PanacheQuery<CourseAttendance> query = find("select ca from CourseAttendance ca " +
+                        "where ca.course.id = :courseId " +
+                        "and ca.examinationPeriod.period = :period " +
+                        "and ca.examinationPeriod.academicYear.id = :academicYearId",
+                Parameters.with("courseId", courseId)
+                        .and("period", period)
+                        .and("academicYearId", academicYearId)
+                        .map());
+        try {
+            return query.singleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }

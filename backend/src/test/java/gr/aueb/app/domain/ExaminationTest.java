@@ -49,7 +49,7 @@ public class ExaminationTest {
         examination.setDate(LocalDate.of(2023, 12, 10));
         examination.setStartTime(LocalTime.of(16, 30, 0));
         examination.setEndTime(LocalTime.of(18, 0, 0));
-        examination.setRequiredSupervisors(8);
+        //examination.setRequiredSupervisors(8);
         examination.setCourse(newCourse);
         examination.setExaminationPeriod(newExaminationPeriod);
         examination.setClassrooms(classroomSet);
@@ -59,7 +59,7 @@ public class ExaminationTest {
         assertEquals(LocalDate.of(2023, 12, 10), examination.getDate());
         assertEquals(LocalTime.of(16, 30, 0), examination.getStartTime());
         assertEquals(LocalTime.of(18, 0, 0), examination.getEndTime());
-        assertEquals(8, examination.getRequiredSupervisors());
+        //assertEquals(8, examination.getRequiredSupervisors());
         assertEquals(newCourse, examination.getCourse());
         assertEquals(newExaminationPeriod, examination.getExaminationPeriod());
         assertEquals(classroomSet, examination.getClassrooms());
@@ -73,7 +73,7 @@ public class ExaminationTest {
         // not enough space
         Supervision newSupervision = examination.addSupervision(newSupervisor, supervisions);
 
-        examination.setRequiredSupervisors(2);
+        //examination.setRequiredSupervisors(2);
         // supervision added
         Supervision newSupervision1 = examination.addSupervision(newSupervisor, supervisions);
         // supervisor already in

@@ -1,8 +1,13 @@
 package gr.aueb.app.resource;
 
 import gr.aueb.app.application.ExaminationService;
+import gr.aueb.app.domain.CourseAttendance;
+import gr.aueb.app.domain.Examination;
 import gr.aueb.app.domain.Supervision;
+import gr.aueb.app.persistence.CourseAttendanceRepository;
+import gr.aueb.app.persistence.ExaminationRepository;
 import gr.aueb.app.representation.*;
+import jakarta.transaction.Transactional;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -33,6 +38,12 @@ public class ExaminationResource {
     @Inject
     SupervisionMapper supervisionMapper;
 
+    @Inject
+    ExaminationRepository examinationRepository;
+
+    @Inject
+    CourseAttendanceRepository courseAttendanceRepository;
+
     @Context
     UriInfo uriInfo;
 
@@ -40,6 +51,18 @@ public class ExaminationResource {
     public List<ExaminationRepresentation> findAllInSamePeriod(@QueryParam("examinationPeriod") Integer examinationPeriodId) {
         if(examinationPeriodId == null) throw new BadRequestException();
         return examinationMapper.toRepresentationList(examinationService.findAllInSamePeriod(examinationPeriodId));
+    }
+
+
+    @GET
+    @Path("/{examinationId}/estimations")
+    @Transactional
+    public Response getEstimations(@PathParam("examinationId") Integer examinationId) {
+        Examination foundExamination = examinationRepository.findById(examinationId);
+        CourseAttendance foundAttendance = courseAttendanceRepository.findSpecific(foundExamination.getCourse().getId(), foundExamination.getExaminationPeriod().getAcademicYear().getId(), foundExamination.getExaminationPeriod().getPeriod());
+        System.out.println(foundAttendance.getAttendance());
+        System.out.println(foundExamination.getDeclaration());
+        return Response.ok().build();
     }
 
     @POST

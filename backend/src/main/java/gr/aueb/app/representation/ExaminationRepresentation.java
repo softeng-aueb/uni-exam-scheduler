@@ -11,8 +11,10 @@ public class ExaminationRepresentation {
     public String date;
     public String startTime;
     public String endTime;
-//    public Integer totalDeclaration;
-//    public Integer totalAttendance;
+    public Integer declaration;
+    public Integer estimatedAttendance;
+    public Integer estimatedSupervisors;
+    public Integer maxSupervisors;
     public List<SupervisionRepresentation> supervisions = new ArrayList<SupervisionRepresentation>();
     public CourseRepresentation course;
     public List<ClassroomRepresentation> classrooms = new ArrayList<ClassroomRepresentation>();

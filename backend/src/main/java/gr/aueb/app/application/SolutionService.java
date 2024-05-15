@@ -4,9 +4,7 @@ import gr.aueb.app.domain.Examination;
 import gr.aueb.app.domain.Solution;
 import gr.aueb.app.domain.Supervision;
 import gr.aueb.app.domain.Supervisor;
-import gr.aueb.app.persistence.ExaminationRepository;
-import gr.aueb.app.persistence.SupervisionRepository;
-import gr.aueb.app.persistence.SupervisorRepository;
+import gr.aueb.app.persistence.*;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import jakarta.inject.Inject;
@@ -36,6 +34,12 @@ public class SolutionService {
     ExaminationRepository examinationRepository;
 
     @Inject
+    CourseAttendanceRepository courseAttendanceRepository;
+
+    @Inject
+    CourseDeclarationRepository courseDeclarationRepository;
+
+    @Inject
     SolverManager<Solution, Long> solverManager;
 
     @Inject
@@ -44,17 +48,20 @@ public class SolutionService {
     @Transactional
     public void solve(Integer examinationPeriodId) {
         List <Examination> examinationList = examinationRepository.findAllInSamePeriod(examinationPeriodId);
+        for(Examination examination : examinationList) {
+            examination.setDeclaration(courseDeclarationRepository);
+            examination.setEstimatedAttendance(courseDeclarationRepository, courseAttendanceRepository);
+        }
         if(examinationList.isEmpty()) {
             throw new BadRequestException("No examinations have been uploaded");
         }
 
-        // for each examination add a function that based on criteria finds requiredSupervisors
-        // now just have 3 on each
+        // for each examination create as many supervisions as the estimatedNeeded supervisors
+        // check if estimated are more than max
         supervisionList = examinationList.stream()
-                .peek(examination -> examination.setRequiredSupervisors(3))
                 .flatMap(examination -> {
                     List<Supervision> supervisions = new ArrayList<>();
-                    for (int i = 0; i < examination.getRequiredSupervisors(); i++) {
+                    for (int i = 0; i < examination.getEstimatedSupervisors(); i++) {
                         Supervision newSupervision = new Supervision(examination);
                         supervisionRepository.persist(newSupervision);
                         supervisions.add(newSupervision);

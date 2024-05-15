@@ -27,7 +27,6 @@ public class SolutionConstraintProvider implements ConstraintProvider {
                 // Soft constraints
                 supervisionRuleLimit(constraintFactory),
                 supervisorDateExclusion(constraintFactory),
-                // Reward constraints
                 supervisorTimePreference(constraintFactory)
         };
     }
@@ -80,13 +79,13 @@ public class SolutionConstraintProvider implements ConstraintProvider {
     }
 
     Constraint supervisorTimePreference(ConstraintFactory constraintFactory) {
-        // Reward constraint: a supervisor does not prefer to supervise at this timeline
+        // Soft constraint: a supervisor does not prefer to supervise at this timeline
         return constraintFactory.forEach(Supervision.class)
                 .filter((supervision) -> {
                     SupervisorPreference preference = findSupervisorPreference(supervision.getSupervisor().getId(), supervision.getExamination().getExaminationPeriod().getId());
-                    return preference != null && !hasOverlapGeneral(supervision.getExamination().getStartTime(), supervision.getExamination().getEndTime(), preference.getStartTime(), preference.getEndTime());
+                    return preference != null && hasOverlapGeneral(supervision.getExamination().getStartTime(), supervision.getExamination().getEndTime(), preference.getStartTime(), preference.getEndTime());
                 })
-                .reward(HardSoftScore.ofSoft(2))
+                .penalize(HardSoftScore.ofSoft(2))
                 .asConstraint("Supervisor Time Preference");
     }
 

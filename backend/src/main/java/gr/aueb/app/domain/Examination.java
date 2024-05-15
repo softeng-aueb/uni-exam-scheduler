@@ -1,8 +1,9 @@
 package gr.aueb.app.domain;
 
+import gr.aueb.app.persistence.CourseAttendanceRepository;
+import gr.aueb.app.persistence.CourseDeclarationRepository;
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
@@ -25,14 +26,17 @@ public class Examination {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
-    @Column(name = "required_supervisors", nullable = false)
-    private Integer requiredSupervisors = 0;
+    @Transient
+    private Integer maxSupervisors = 0 ;
 
     @Transient
-    private Integer totalDeclaration;
+    private Integer estimatedSupervisors = 0;
 
     @Transient
-    private Integer totalAttendance;
+    private Integer declaration = 0;
+
+    @Transient
+    private Integer estimatedAttendance = 0;
 
     @OneToMany(mappedBy = "examination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Supervision> supervisions = new HashSet<>();
@@ -52,7 +56,7 @@ public class Examination {
     @JoinColumn(name = "examinationPeriod_id")
     private ExaminationPeriod examinationPeriod;
 
-    protected Examination(){};
+    protected Examination(){}
 
     public Examination(LocalDate date, LocalTime startTime, LocalTime endTime, Course course, Set<Classroom> classrooms, ExaminationPeriod examinationPeriod) {
         this.date = date;
@@ -95,14 +99,6 @@ public class Examination {
         this.endTime = endTime;
     }
 
-    public Integer getRequiredSupervisors() {
-        return requiredSupervisors;
-    }
-
-    public void setRequiredSupervisors(Integer requiredSupervisors) {
-        this.requiredSupervisors = requiredSupervisors;
-    }
-
     public Set<Supervision> getSupervisions() {
         return supervisions;
     }
@@ -135,23 +131,55 @@ public class Examination {
         this.examinationPeriod = examinationPeriod;
     }
 
-    public Integer getTotalDeclaration() {
-//        return departmentParticipations.stream()
-//                .map(DepartmentParticipation::getDeclaration)
-//                .reduce(0, Integer::sum);
-        return totalDeclaration;
+    public void setMaxSupervisors(Integer maxSupervisors) {
+        this.maxSupervisors = maxSupervisors;
     }
 
-    public Integer getTotalAttendance() {
-//        return departmentParticipations.stream()
-//                .map(DepartmentParticipation::getAttendance)
-//                .reduce(0, Integer::sum);
-        return totalAttendance;
+    public Integer getMaxSupervisors() {
+        Integer sum = 0;
+        for(Classroom classroom : this.getClassrooms()) {
+            sum += classroom.getMaxNumSupervisors();
+        }
+        return sum;
+    }
+
+    public Integer getEstimatedSupervisors() {
+        // formula: 1 Supervisor for 30 students
+        return this.estimatedAttendance/30;
+    }
+
+    public Integer getDeclaration() {
+        return declaration;
+    }
+
+    public void setDeclaration(CourseDeclarationRepository repository) {
+        CourseDeclaration courseDeclaration = repository.findSpecific(this.course.getId(), this.examinationPeriod.getAcademicYear().getId());
+        this.declaration = courseDeclaration != null ? courseDeclaration.getDeclaration() : 0;
+    }
+
+    public Integer getEstimatedAttendance() {
+        return estimatedAttendance;
+    }
+
+    public void setEstimatedAttendance(CourseDeclarationRepository courseDeclarationRepository, CourseAttendanceRepository courseAttendanceRepository) {
+        // get declaration and attendance from 2 years back
+        AcademicYear previousOneYear = this.examinationPeriod.getAcademicYear().getPreviousYear();
+        AcademicYear previousTwoYears = previousOneYear != null ? previousOneYear.getPreviousYear() : null;
+        CourseDeclaration previousOneDeclaration = previousOneYear != null ? courseDeclarationRepository.findSpecific(this.course.getId(), previousOneYear.getId()) : null;
+        CourseDeclaration previousTwoDeclaration = previousTwoYears != null ? courseDeclarationRepository.findSpecific(this.course.getId(), previousTwoYears.getId()) : null;
+        CourseAttendance previousOneAttendance = previousOneYear != null ? courseAttendanceRepository.findSpecific(this.course.getId(), previousOneYear.getId(), this.examinationPeriod.getPeriod()) : null;
+        CourseAttendance previousTwoAttendance = previousTwoYears != null ? courseAttendanceRepository.findSpecific(this.course.getId(), previousTwoYears.getId(), this.examinationPeriod.getPeriod()) : null;
+
+        // estimation formula
+        // if previousOne/TwoYear data is missing assuming that 4/5 was attended
+        Double previousOnePercentage = ( previousOneDeclaration == null || previousOneAttendance == null ) ? (double) 4/5 : (double) previousOneAttendance.getAttendance()/previousOneDeclaration.getDeclaration();
+        Double previousTwoPercentage = ( previousTwoDeclaration == null || previousTwoAttendance == null ) ? (double) 4/5 : (double) previousTwoAttendance.getAttendance()/previousTwoDeclaration.getDeclaration();
+        this.estimatedAttendance = (int) Math.round(this.declaration * (previousOnePercentage + previousTwoPercentage) / 2);
     }
 
     public Supervision addSupervision(Supervisor supervisor, List<Supervision> supervisorSupervisions) {
         // check if there are available slots
-        if (this.getRequiredSupervisors() < (this.getSupervisions().size() + 1)) {
+        if (this.getMaxSupervisors() < (this.getSupervisions().size() + 1)) {
             return null;
         }
 

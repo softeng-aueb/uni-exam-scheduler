@@ -22,7 +22,7 @@ public class ExaminationPeriod {
     @JoinColumn(name = "academicYear_id")
     private AcademicYear academicYear;
 
-    protected ExaminationPeriod(){};
+    protected ExaminationPeriod(){}
 
     public ExaminationPeriod(LocalDate startDate, Period period, AcademicYear academicYear) {
         this.startDate = startDate;

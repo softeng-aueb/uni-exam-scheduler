@@ -36,6 +36,12 @@ public class ExaminationService {
     @Inject
     ClassroomRepository classroomRepository;
 
+    @Inject
+    CourseDeclarationRepository courseDeclarationRepository;
+
+    @Inject
+    CourseAttendanceRepository courseAttendanceRepository;
+
 
     @Transactional
     public Examination create(Examination newExamination) {
@@ -59,15 +65,20 @@ public class ExaminationService {
 
     @Transactional
     public List<Examination> findAllInSamePeriod(Integer examinationPeriodId) {
-        return examinationRepository.findAllInSamePeriod(examinationPeriodId);
+        List<Examination> foundList = examinationRepository.findAllInSamePeriod(examinationPeriodId);
+        for(Examination examination : foundList) {
+            examination.setDeclaration(courseDeclarationRepository);
+            examination.setEstimatedAttendance(courseDeclarationRepository, courseAttendanceRepository);
+        }
+        return foundList;
     }
 
     @Transactional
     public Supervision addSupervision(Integer examinationId, Integer supervisorId) {
         Examination foundExamination = examinationRepository.findById(examinationId);
-        if(foundExamination ==  null) throw new NotFoundException();
+        if(foundExamination == null) throw new NotFoundException();
         Supervisor foundSupervisor = supervisorRepository.findById(supervisorId);
-        if(foundSupervisor ==  null) throw new NotFoundException();
+        if(foundSupervisor == null) throw new NotFoundException();
         List<Supervision> foundSupervisions = supervisionRepository.findAllInSameSupervisorAndDay(supervisorId, foundExamination.getDate());
 
         Supervision addedSupervision = foundExamination.addSupervision(foundSupervisor, foundSupervisions);

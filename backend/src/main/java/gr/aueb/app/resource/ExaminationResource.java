@@ -70,9 +70,9 @@ public class ExaminationResource {
     public Response addSupervision(@PathParam("examinationId") Integer examinationId, SupervisorRepresentation representation) {
         // TODO check if toModel makes the validation we want
         Supervision addedSupervision = examinationService.addSupervision(examinationId, representation.id);
-        SupervisionRepresentation response = supervisionMapper.toRepresentation(addedSupervision);
+        //SupervisionRepresentation response = supervisionMapper.toRepresentation(addedSupervision);
         URI uri = UriBuilder.fromResource(ExaminationResource.class).path(String.valueOf(examinationId)).build();
-        return Response.created(uri).entity(response).build();
+        return Response.created(uri).build();
     }
 
     @DELETE

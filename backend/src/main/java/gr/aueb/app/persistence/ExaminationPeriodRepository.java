@@ -24,7 +24,7 @@ public class ExaminationPeriodRepository implements PanacheRepositoryBase<Examin
 
     public List<ExaminationPeriod> findAllInSameYear(Integer academicYearId) {
         try {
-            return find("select ep from ExaminationPeriod ep where ep.academicYear.id =:academicYear",
+            return find("select ep from ExaminationPeriod ep left join fetch ep.academicYear where ep.academicYear.id =:academicYear",
                     Parameters.with("academicYear", academicYearId)).list();
         } catch (NoResultException ex) {
             return null;

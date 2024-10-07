@@ -11,7 +11,7 @@ public class ExaminationPeriodTest {
     AcademicYear academicYear;
     @BeforeEach
     public void setup () {
-        academicYear = new AcademicYear("2022-2023", true, null);
+        academicYear = new AcademicYear("2022-2023", null);
     }
 
     @Test

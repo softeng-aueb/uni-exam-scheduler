@@ -12,16 +12,16 @@ public class Supervisor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = true, length = 50)
     private String name;
 
-    @Column(name = "surname", nullable = false, length = 50)
+    @Column(name = "surname", nullable = true, length = 50)
     private String surname;
 
-    @Column(name = "supervisor", nullable = false, length = 50)
+    @Column(name = "supervisor", nullable = true, length = 50)
     private String supervisor;
 
-    @Column(name = "telephone", nullable = false, length = 50)
+    @Column(name = "telephone", nullable = true, length = 50)
     private String telephone;
 
     @Column(name = "email", nullable = false, length = 50)
@@ -49,7 +49,7 @@ public class Supervisor {
 
     @Override
     public String toString() {
-        return surname;
+        return email;
     }
 
     public Integer getId() {

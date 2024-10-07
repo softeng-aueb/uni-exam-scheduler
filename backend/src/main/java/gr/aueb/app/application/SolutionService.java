@@ -1,9 +1,6 @@
 package gr.aueb.app.application;
 
-import gr.aueb.app.domain.Examination;
-import gr.aueb.app.domain.Solution;
-import gr.aueb.app.domain.Supervision;
-import gr.aueb.app.domain.Supervisor;
+import gr.aueb.app.domain.*;
 import gr.aueb.app.persistence.*;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -47,13 +44,25 @@ public class SolutionService {
 
     @Transactional
     public void solve(Integer examinationPeriodId) {
-        List <Examination> examinationList = examinationRepository.findAllInSamePeriod(examinationPeriodId);
+        //
+        List<Supervision> foundSupervisions = supervisionRepository.findAllInSamePeriod(examinationPeriodId);
+        if(!foundSupervisions.isEmpty()) {
+            throw new BadRequestException("Already scheduled supervisions");
+        }
+        List<Examination> examinationList = examinationRepository.findAllInSamePeriod(examinationPeriodId);
+        if(examinationList.isEmpty()) {
+            throw new BadRequestException("No examinations have been uploaded");
+        }
+        List<CourseDeclaration> declarationList = courseDeclarationRepository.findAllInSameYear(examinationList.get(0).getExaminationPeriod().getAcademicYear().getId());
+        // in order for the calculations/solving to be correct there must be uploaded as many examinations as declarations
+        if(declarationList.isEmpty() || examinationList.size() != declarationList.size()) {
+            throw new BadRequestException("No declarations have been uploaded");
+        }
+
+        // set estimations
         for(Examination examination : examinationList) {
             examination.setDeclaration(courseDeclarationRepository);
             examination.setEstimatedAttendance(courseDeclarationRepository, courseAttendanceRepository);
-        }
-        if(examinationList.isEmpty()) {
-            throw new BadRequestException("No examinations have been uploaded");
         }
 
         // for each examination create as many supervisions as the estimatedNeeded supervisors

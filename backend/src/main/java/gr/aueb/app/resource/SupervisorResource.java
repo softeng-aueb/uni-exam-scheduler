@@ -48,7 +48,7 @@ public class SupervisorResource {
     public Response create(SupervisorRepresentation representation) {
         // TODO check if toModel makes the validation we want
         Supervisor newSupervisor = supervisorMapper.toModel(representation);
-        Supervisor createdSupervisor = supervisorService.create(newSupervisor);
+        Supervisor createdSupervisor = supervisorService.create(newSupervisor, newSupervisor.getDepartment().getId());
         SupervisorRepresentation response = supervisorMapper.toRepresentation(createdSupervisor);
         URI uri = UriBuilder.fromResource(SupervisorResource.class).path(String.valueOf(response.id)).build();
         return Response.created(uri).entity(response).build();

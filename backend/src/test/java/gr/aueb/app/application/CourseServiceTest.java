@@ -48,7 +48,7 @@ public class CourseServiceTest {
     public void testCreateCourse() {
         Course newCourse = new Course("Advanced Algorithms", "CS111", department);
 
-        Course createdCourse = courseService.create(newCourse);
+        Course createdCourse = courseService.create(newCourse, department.getId());
 
         assertNotNull(createdCourse);
         assertNotNull(createdCourse.getId());

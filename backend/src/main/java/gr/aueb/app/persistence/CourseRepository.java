@@ -1,9 +1,6 @@
 package gr.aueb.app.persistence;
 
-import gr.aueb.app.domain.Course;
-import gr.aueb.app.domain.CourseAttendance;
-import gr.aueb.app.domain.CourseDeclaration;
-import gr.aueb.app.domain.Examination;
+import gr.aueb.app.domain.*;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
@@ -59,5 +56,10 @@ public class CourseRepository implements PanacheRepositoryBase<Course, Integer> 
             examinationRepository.getEntityManager().merge(examination);
         }
         this.deleteById(courseId);
+    }
+
+    public List<Course> findAllWithDetails() {
+        return find("select c from Course c " +
+                "left join fetch c.department").list();
     }
 }

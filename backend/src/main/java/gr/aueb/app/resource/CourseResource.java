@@ -47,7 +47,7 @@ public class CourseResource {
     public Response create(CourseRepresentation representation) {
         // TODO check if toModel makes the validation we want
         Course newCourse = courseMapper.toModel(representation);
-        Course createdCourse = courseService.create(newCourse);
+        Course createdCourse = courseService.create(newCourse, newCourse.getDepartment().getId());
         CourseRepresentation response = courseMapper.toRepresentation(createdCourse);
         URI uri = UriBuilder.fromResource(CourseResource.class).path(String.valueOf(response.id)).build();
         return Response.created(uri).entity(response).build();

@@ -71,7 +71,9 @@ public class SolutionConstraintProvider implements ConstraintProvider {
         // Soft constraint: a supervisor has set specific dates to be excluded
         return constraintFactory.forEach(Supervision.class)
                 .filter((supervision) -> {
-                    SupervisorPreference preference = findSupervisorPreference(supervision.getSupervisor().getId(), supervision.getExamination().getExaminationPeriod().getId());
+                    SupervisorPreference preference = findSupervisorPreference(supervision.getSupervisor().getId(),
+                            supervision.getExamination().getExaminationPeriod().getId()
+                    );
                     return preference != null && preference.getExcludeDates().contains(supervision.getExamination().getDate());
                 })
                 .penalize(HardSoftScore.ofSoft(50))
@@ -82,8 +84,14 @@ public class SolutionConstraintProvider implements ConstraintProvider {
         // Soft constraint: a supervisor does not prefer to supervise at this timeline
         return constraintFactory.forEach(Supervision.class)
                 .filter((supervision) -> {
-                    SupervisorPreference preference = findSupervisorPreference(supervision.getSupervisor().getId(), supervision.getExamination().getExaminationPeriod().getId());
-                    return preference != null && hasOverlapGeneral(supervision.getExamination().getStartTime(), supervision.getExamination().getEndTime(), preference.getStartTime(), preference.getEndTime());
+                    SupervisorPreference preference = findSupervisorPreference(supervision.getSupervisor().getId(),
+                            supervision.getExamination().getExaminationPeriod().getId()
+                    );
+                    return preference != null && hasOverlapGeneral(supervision.getExamination().getStartTime(),
+                            supervision.getExamination().getEndTime(),
+                            preference.getStartTime(),
+                            preference.getEndTime()
+                    );
                 })
                 .penalize(HardSoftScore.ofSoft(2))
                 .asConstraint("Supervisor Time Preference");

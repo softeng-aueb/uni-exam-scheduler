@@ -21,14 +21,14 @@ public abstract class SupervisorMapper {
     @Mapping(target = "id", ignore = true)
     public abstract Supervisor toModel(SupervisorRepresentation representation);
 
-    @AfterMapping
-    protected void connectToDepartment(SupervisorRepresentation representation, @MappingTarget Supervisor supervisor) {
-        if (representation.department != null && representation.department.id != null) {
-            Department department = departmentRepository.findById(representation.department.id);
-            if (department == null) {
-                throw new RuntimeException();
-            }
-            supervisor.setDepartment(department);
-        }
-    }
+//    @AfterMapping
+//    protected void connectToDepartment(SupervisorRepresentation representation, @MappingTarget Supervisor supervisor) {
+//        if (representation.department != null && representation.department.id != null) {
+//            Department department = departmentRepository.findById(representation.department.id);
+//            if (department == null) {
+//                throw new RuntimeException();
+//            }
+//            supervisor.setDepartment(department);
+//        }
+//    }
 }

@@ -14,7 +14,7 @@ public class AcademicYear {
     private String name;
 
     @Column(name = "isActive", nullable = false)
-    private Boolean isActive;
+    private Boolean isActive = false;
 
     @OneToOne
     @JoinColumn(name = "previousYear_id")
@@ -22,9 +22,8 @@ public class AcademicYear {
 
     protected AcademicYear(){};
 
-    public AcademicYear(String name, Boolean isActive, AcademicYear previousYear) {
+    public AcademicYear(String name, AcademicYear previousYear) {
         this.name = name;
-        this.isActive = isActive;
         this.previousYear = previousYear;
     }
 
@@ -44,11 +43,11 @@ public class AcademicYear {
         this.name = name;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 

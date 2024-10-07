@@ -21,8 +21,12 @@ public class SupervisorPreference {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
-    @Column(name = "exclude_dates")
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "supervisor_preference_exclude_dates",
+            joinColumns = @JoinColumn(name = "supervisor_preference_id")
+    )
+    @Column(name = "exclude_date")
     private Set<LocalDate> excludeDates = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })

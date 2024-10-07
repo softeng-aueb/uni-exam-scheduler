@@ -1,6 +1,5 @@
 package gr.aueb.app.persistence;
 
-import gr.aueb.app.domain.CourseAttendance;
 import gr.aueb.app.domain.CourseDeclaration;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -34,6 +33,11 @@ public class CourseDeclarationRepository implements PanacheRepositoryBase<Course
                 "left join fetch cd.course course " +
                 "left join fetch cd.academicYear " +
                 "left join fetch course.department").list();
+    }
+
+    public List<CourseDeclaration> findAllInSameYear(Integer academicYearId) {
+        return find("select cd from CourseDeclaration cd where cd.academicYear.id = :academicYearId",
+                Parameters.with("academicYearId", academicYearId)).list();
     }
 
     public CourseDeclaration findSpecific(Integer courseId, Integer academicYearId) {

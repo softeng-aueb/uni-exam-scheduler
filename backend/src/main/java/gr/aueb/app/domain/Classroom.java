@@ -35,7 +35,7 @@ public class Classroom {
     public Classroom(String name, String building, Integer floor, Integer generalCapacity, Integer examCapacity, Integer covidCapacity, Integer maxNumSupervisors) {
         this.name = name;
         this.building = building;
-        this. floor = floor;
+        this.floor = floor;
         this.generalCapacity = generalCapacity;
         this.examCapacity = examCapacity;
         this.covidCapacity = covidCapacity;

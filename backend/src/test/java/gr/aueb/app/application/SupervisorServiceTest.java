@@ -49,7 +49,7 @@ public class SupervisorServiceTest {
     public void testCreateSupervisor() {
         Supervisor newSupervisor = new Supervisor("Super", "Visor", "supervisor", "1234", "supervisor@mail.com", SupervisorCategory.ETEP, department);
 
-        Supervisor createdSupervisor = supervisorService.create(newSupervisor);
+        Supervisor createdSupervisor = supervisorService.create(newSupervisor, department.getId());
 
         assertNotNull(createdSupervisor);
         assertNotNull(createdSupervisor.getId());

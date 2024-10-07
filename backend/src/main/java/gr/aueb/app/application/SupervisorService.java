@@ -1,8 +1,12 @@
 package gr.aueb.app.application;
 
+import gr.aueb.app.domain.Department;
 import gr.aueb.app.domain.Supervisor;
+import gr.aueb.app.persistence.DepartmentRepository;
 import gr.aueb.app.persistence.SupervisorRepository;
 
+import gr.aueb.app.representation.SupervisorMapper;
+import gr.aueb.app.representation.SupervisorRepresentation;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -11,11 +15,16 @@ import java.util.List;
 
 @RequestScoped
 public class SupervisorService {
+
+    @Inject
+    DepartmentRepository departmentRepository;
     @Inject
     SupervisorRepository supervisorRepository;
 
     @Transactional
-    public Supervisor create(Supervisor newSupervisor) {
+    public Supervisor create(Supervisor newSupervisor, Integer departmentId) {
+        Department foundDepartment = departmentRepository.findById(departmentId);
+        newSupervisor.setDepartment(foundDepartment);
         supervisorRepository.persist(newSupervisor);
         return newSupervisor;
     }
@@ -47,7 +56,7 @@ public class SupervisorService {
 
     @Transactional
     public List<Supervisor> findAll() {
-        return supervisorRepository.listAll();
+        return supervisorRepository.findAllWithDetails();
     }
 
 }

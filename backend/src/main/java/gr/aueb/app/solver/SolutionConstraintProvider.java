@@ -12,6 +12,7 @@ import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
 import static org.optaplanner.core.api.score.stream.ConstraintCollectors.*;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 import static org.optaplanner.core.api.score.stream.Joiners.*;
@@ -27,7 +28,8 @@ public class SolutionConstraintProvider implements ConstraintProvider {
                 // Soft constraints
                 supervisionRuleLimit(constraintFactory),
                 supervisorDateExclusion(constraintFactory),
-                supervisorTimePreference(constraintFactory)
+                supervisorTimePreference(constraintFactory),
+                atLeast10HoursBetweenTwoSupervisions(constraintFactory)
         };
     }
 
@@ -76,7 +78,7 @@ public class SolutionConstraintProvider implements ConstraintProvider {
                     );
                     return preference != null && preference.getExcludeDates().contains(supervision.getExamination().getDate());
                 })
-                .penalize(HardSoftScore.ofSoft(50))
+                .penalize(HardSoftScore.ofSoft(10000))
                 .asConstraint("Supervisor Date Exclusion");
     }
 
@@ -93,8 +95,20 @@ public class SolutionConstraintProvider implements ConstraintProvider {
                             preference.getEndTime()
                     );
                 })
-                .penalize(HardSoftScore.ofSoft(2))
+                .penalize(HardSoftScore.ofSoft(10))
                 .asConstraint("Supervisor Time Preference");
+    }
+
+    Constraint atLeast10HoursBetweenTwoSupervisions(ConstraintFactory constraintFactory) {
+        return constraintFactory.forEachUniquePair(Supervision.class, equal(Supervision::getSupervisor))
+                .filter((s1, s2) -> !s1.getId().equals(s2.getId())) // Exclude self-joins
+                .filter((s1, s2) -> !s1.getExamination().getId().equals(s2.getExamination().getId())) // different examinations
+                .filter((s1, s2) -> Duration.between(s1.getExamination().getEndTime(), s2.getExamination().getStartTime()).toHours() < 24)
+                .penalize(HardSoftScore.ONE_SOFT, (s1, s2) -> {
+                            int breakLength = (int) Duration.between(s1.getExamination().getEndTime(), s2.getExamination().getStartTime()).toMinutes();
+                            return (24 * 60) - breakLength;
+                        })
+                .asConstraint("At least 24 hours between 2 supervisions");
     }
 
     boolean hasOverlap(Supervision s1, Supervision s2) {

@@ -1,6 +1,8 @@
 package gr.aueb.app.application;
 
+import gr.aueb.app.domain.ExaminationPeriod;
 import gr.aueb.app.domain.Supervision;
+import gr.aueb.app.persistence.ExaminationRepository;
 import gr.aueb.app.persistence.SupervisionRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -48,5 +50,11 @@ public class SupervisionService {
     @Transactional
     public List<Supervision> findAllInSameSupervisorAndDay(Integer supervisorId, LocalDate date) {
         return supervisionRepository.findAllInSameSupervisorAndDay(supervisorId, date);
+    }
+
+    @Transactional
+    public void deleteAllInSamePeriod(Integer examinationPeriodId) {
+        long deleteCount = supervisionRepository.deleteAllInSamePeriod(examinationPeriodId);
+        System.out.println(deleteCount);
     }
 }

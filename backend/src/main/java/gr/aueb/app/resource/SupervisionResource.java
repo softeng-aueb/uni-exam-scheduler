@@ -38,4 +38,10 @@ public class SupervisionResource {
         supervisionService.changePresentStatus(supervisionId, representation.isPresent);
         return Response.noContent().build();
     }
+
+    @DELETE
+    public Response deleteAllInSamePeriod(@QueryParam("examinationPeriodId") Integer examinationPeriodId) {
+        supervisionService.deleteAllInSamePeriod(examinationPeriodId);
+        return Response.noContent().build();
+    }
 }

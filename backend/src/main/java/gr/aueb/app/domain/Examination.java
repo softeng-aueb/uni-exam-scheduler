@@ -145,7 +145,8 @@ public class Examination {
 
     public Integer getEstimatedSupervisors() {
         // formula: 1 Supervisor for 30 students
-        return this.estimatedAttendance/30;
+        Integer div = this.estimatedAttendance/30;
+        return div == 0 ? 1 : div;
     }
 
     public Integer getDeclaration() {

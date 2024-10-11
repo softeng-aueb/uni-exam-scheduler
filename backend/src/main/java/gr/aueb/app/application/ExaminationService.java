@@ -104,6 +104,7 @@ public class ExaminationService {
     @Transactional
     public void upload(Workbook workbook, Integer examinationPeriodId) {
         Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet
+        int totalSecondsInDay = 24 * 60 * 60;
 
         Iterator<Row> rowIterator = sheet.iterator();
         rowIterator.next(); // Skip the header row
@@ -111,9 +112,11 @@ public class ExaminationService {
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
             LocalDate date = parseDate(row.getCell(0).getNumericCellValue());
-            LocalTime startTime = LocalTime.parse(row.getCell(1).getStringCellValue());
-            LocalTime endTime = LocalTime.parse(row.getCell(2).getStringCellValue());
-            String courseCode = row.getCell(3).getStringCellValue();
+            int seconds = (int) Math.round(row.getCell(1).getNumericCellValue() * totalSecondsInDay);
+            LocalTime startTime = LocalTime.ofSecondOfDay(seconds);
+            seconds = (int) Math.round(row.getCell(2).getNumericCellValue() * totalSecondsInDay);
+            LocalTime endTime = LocalTime.ofSecondOfDay(seconds);
+            String courseCode = String.valueOf((int) row.getCell(3).getNumericCellValue());
             String classroomsString = row.getCell(4).getStringCellValue();
 
             Course course = courseRepository.findCourseByCode(courseCode);

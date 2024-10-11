@@ -36,7 +36,7 @@ public class CourseAttendanceService {
 
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
-            String courseCode = row.getCell(0).getStringCellValue();
+            String courseCode = String.valueOf((int) row.getCell(0).getNumericCellValue());
             Integer attendance = (int) row.getCell(1).getNumericCellValue();
 
             Course course = courseRepository.findCourseByCode(courseCode);

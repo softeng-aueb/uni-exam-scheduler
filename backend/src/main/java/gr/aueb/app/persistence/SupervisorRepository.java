@@ -38,4 +38,13 @@ public class SupervisorRepository implements PanacheRepositoryBase<Supervisor, I
         return find("select s from Supervisor s " +
                 "left join fetch s.department").list();
     }
+
+    public Supervisor findByEmail(String email) {
+        PanacheQuery<Supervisor> query = find("select s from Supervisor s where s.email = :email", Parameters.with("email", email).map());
+        try {
+            return query.singleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 }

@@ -55,7 +55,7 @@ public class SolutionService {
         }
         List<CourseDeclaration> declarationList = courseDeclarationRepository.findAllInSameYear(examinationList.get(0).getExaminationPeriod().getAcademicYear().getId());
         // in order for the calculations/solving to be correct there must be uploaded as many examinations as declarations
-        if(declarationList.isEmpty() || examinationList.size() != declarationList.size()) {
+        if(declarationList.isEmpty()) {
             throw new BadRequestException("No declarations have been uploaded");
         }
 
@@ -70,7 +70,9 @@ public class SolutionService {
         supervisionList = examinationList.stream()
                 .flatMap(examination -> {
                     List<Supervision> supervisions = new ArrayList<>();
-                    for (int i = 0; i < examination.getEstimatedSupervisors(); i++) {
+                    Integer maxSupervisions = examination.getEstimatedSupervisors() >= examination.getMaxSupervisors() ?
+                            examination.getMaxSupervisors() : examination.getEstimatedSupervisors();
+                    for (int i = 0; i < maxSupervisions; i++) {
                         Supervision newSupervision = new Supervision(examination);
                         supervisionRepository.persist(newSupervision);
                         supervisions.add(newSupervision);
@@ -106,7 +108,7 @@ public class SolutionService {
     protected void saveSolution(Solution solution) {
         System.out.println("SAVING.....");
         for (Supervision supervision : solution.getSupervisionList()) {
-            System.out.println(supervision.getSupervisor().toString());
+            //System.out.println(supervision.getSupervisor().toString());
         }
     }
 
@@ -114,8 +116,8 @@ public class SolutionService {
     protected void saveBestSolution(Solution solution) {
         System.out.println("SAVING BEST.....");
         for (Supervision supervision : solution.getSupervisionList()) {
-            System.out.println(supervision.getSupervisor().getId());
-            // TODO this is awfully naive: optimistic locking causes issues if called by the SolverManager
+            //System.out.println(supervision.getSupervisor().getId());
+            // TODO this is naive: optimistic locking causes issues if called by the SolverManager
             Supervision attachedSupervision = supervisionRepository.findById(supervision.getId());
             Supervisor attachedSupervisor = supervisorRepository.findById(supervision.getSupervisor().getId());
             attachedSupervision.setSupervisor(attachedSupervisor);

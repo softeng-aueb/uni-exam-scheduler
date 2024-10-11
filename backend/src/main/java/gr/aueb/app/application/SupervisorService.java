@@ -47,7 +47,7 @@ public class SupervisorService {
 
     @Transactional
     public Supervisor findOne(Integer supervisorId) {
-        Supervisor foundSupervisor = supervisorRepository.findById(supervisorId);
+        Supervisor foundSupervisor = supervisorRepository.findWithDetails(supervisorId);
         if(foundSupervisor == null) {
             throw new NotFoundException();
         }

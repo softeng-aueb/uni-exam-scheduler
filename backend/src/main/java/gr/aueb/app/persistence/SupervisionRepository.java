@@ -48,4 +48,11 @@ public class SupervisionRepository implements PanacheRepositoryBase<Supervision,
                 "left join fetch supervisor.department").list();
     }
 
+    public long deleteAllInSamePeriod(Integer examinationPeriodId) {
+        long deletedCount = delete("examination.examinationPeriod.id = ?1", examinationPeriodId);
+        getEntityManager().flush();
+        getEntityManager().clear();
+        return deletedCount;
+    }
+
 }

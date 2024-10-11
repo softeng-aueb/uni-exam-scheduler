@@ -10,7 +10,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import java.io.InputStream;
 import java.net.URI;
 
 import static gr.aueb.app.resource.AppUri.SUPERVISOR_PREFERENCES;
@@ -44,5 +48,22 @@ public class SupervisorPreferenceResource {
         SupervisorPreferenceRepresentation response = supervisorPreferenceMapper.toRepresentation(createdSupervisorPreference);
         URI uri = UriBuilder.fromResource(SupervisorPreferenceResource.class).path(String.valueOf(response.id)).build();
         return Response.created(uri).entity(response).build();
+    }
+
+    @POST
+    @Path("/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void uploadExcel(
+            @QueryParam("examinationPeriod") Integer examinationPeriodId,
+            @MultipartForm FormData formData) {
+        if(examinationPeriodId == null) throw new BadRequestException();
+
+        try (InputStream fileInputStream = formData.file) {
+            Workbook workbook = WorkbookFactory.create(fileInputStream);
+            supervisorPreferenceService.upload(workbook, examinationPeriodId);
+        } catch (Exception e) {
+            // Handle exceptions, e.g., log or return an error response
+            e.printStackTrace();
+        }
     }
 }

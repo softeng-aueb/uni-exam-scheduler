@@ -70,8 +70,7 @@ public class SolutionService {
         supervisionList = examinationList.stream()
                 .flatMap(examination -> {
                     List<Supervision> supervisions = new ArrayList<>();
-                    Integer maxSupervisions = examination.getEstimatedSupervisors() >= examination.getMaxSupervisors() ?
-                            examination.getMaxSupervisors() : examination.getEstimatedSupervisors();
+                    Integer maxSupervisions = Math.min(examination.getEstimatedSupervisors(), examination.getMaxSupervisors());
                     for (int i = 0; i < maxSupervisions; i++) {
                         Supervision newSupervision = new Supervision(examination);
                         supervisionRepository.persist(newSupervision);

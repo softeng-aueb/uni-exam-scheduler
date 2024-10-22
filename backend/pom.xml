@@ -62,6 +62,10 @@
             <artifactId>optaplanner-quarkus-jackson</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.optaplanner</groupId>
+            <artifactId>optaplanner-benchmark</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-h2</artifactId>
         </dependency>

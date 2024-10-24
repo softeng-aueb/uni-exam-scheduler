@@ -1,7 +1,6 @@
 package gr.aueb.app.representation;
 
 import gr.aueb.app.domain.Period;
-import gr.aueb.app.domain.Semester;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection

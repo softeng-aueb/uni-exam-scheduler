@@ -56,10 +56,10 @@ public class SupervisorResource {
 
     @PUT
     @Path("/{supervisorId}")
-    public Response update(@PathParam("supervisorId") Integer supervisorId, SupervisorRepresentation representation) {
+    public SupervisorRepresentation update(@PathParam("supervisorId") Integer supervisorId, SupervisorRepresentation representation) {
         Supervisor updateSupervisor = supervisorMapper.toModel(representation);
-        supervisorService.update(supervisorId, updateSupervisor);
-        return Response.noContent().build();
+        Supervisor updatedSupervisor = supervisorService.update(supervisorId, updateSupervisor);
+        return supervisorMapper.toRepresentation(updatedSupervisor);
     }
 
     @DELETE

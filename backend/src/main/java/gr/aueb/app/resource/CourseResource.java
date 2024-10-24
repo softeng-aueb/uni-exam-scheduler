@@ -55,10 +55,10 @@ public class CourseResource {
 
     @PUT
     @Path("/{courseId}")
-    public Response update(@PathParam("courseId") Integer courseId, CourseRepresentation representation) {
+    public CourseRepresentation update(@PathParam("courseId") Integer courseId, CourseRepresentation representation) {
         Course updateCourse = courseMapper.toModel(representation);
-        courseService.update(courseId, updateCourse);
-        return Response.noContent().build();
+        Course updatedCourse = courseService.update(courseId, updateCourse);
+        return courseMapper.toRepresentation(updatedCourse);
     }
 
     @DELETE

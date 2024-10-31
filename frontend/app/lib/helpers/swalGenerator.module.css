@@ -1,0 +1,52 @@
+.container {
+    z-index: 10000 !important;
+}
+
+.popup {
+    padding: 0 !important;
+    width: 29em !important;
+}
+
+.title {
+    color: rgba(0, 0, 0, 0.87) !important;
+    flex: 0 0 auto !important;
+    /*font-family: Lato, sans-serif !important;*/
+    font-size: 1.25rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.0075em !important;
+    line-height: 1.6 !important;
+    padding: 20px 24px !important;
+    text-align: left !important;
+}
+
+.htmlContainer {
+    font-weight: 500 !important;
+    margin: 0 !important;
+    padding: 0 24px 20px 24px !important;
+    text-align: left !important;
+    font-size: 16px !important;
+}
+
+.actions {
+    justify-content: flex-end !important;
+    margin: 0 !important;
+    padding: 8px !important;
+}
+
+.confirmButton, .cancelButton {
+    background-color: transparent !important;
+    border-radius: 8px !important;
+    border: none !important;
+    color: #078d95 !important;
+    cursor: pointer !important;
+    /*font-family: Lato, sans-serif !important;*/
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    line-height: 1.75 !important;
+    margin: 0 !important;
+    padding: 6px 8px !important;
+}
+
+.confirmButton:hover, .cancelButton:hover {
+    background-color: rgba(25, 118, 210, 0.04) !important;
+}

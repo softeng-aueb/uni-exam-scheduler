@@ -1,0 +1,101 @@
+{
+  "countries": {
+    "label_one": "Country",
+    "label_many": "Countries",
+    "create": "Create a Country",
+    "create_btn": "Create a Country",
+    "update": "Update a Country",
+    "update_btn": "Update a Country",
+    "delete_warning": "Are you sure want to delete this Country?",
+    "deleted_info": "Country has been deleted successfully!",
+    "deleted_not_found": "Country not found",
+    "field": {
+      "order": "Order",
+      "name": "Name",
+      "iso2": "ISO2",
+      "iso3": "ISO3"
+    }
+  },
+  "languages": {
+    "label_one": "Language",
+    "label_many": "Languages",
+    "create": "Create a Language",
+    "create_btn": "Create a Language",
+    "update": "Update a Language",
+    "update_btn": "Update a Language",
+    "delete_warning": "Are you sure want to delete this Language?",
+    "deleted_info": "Language has been deleted successfully!",
+    "deleted_not_found": "Language not found",
+    "field": {
+      "order": "Order",
+      "name": "Name",
+      "nativeName": "Native Name",
+      "code": "Code"
+    }
+  },
+  "roles": {
+    "label_one": "Role",
+    "label_many": "UserRoles",
+    "create": "Create a Role",
+    "create_btn": "Create a Role",
+    "update": "Update a Role",
+    "update_btn": "Update a Role",
+    "delete_warning": "Are you sure want to delete this Role?",
+    "deleted_info": "Role has been deleted successfully!",
+    "deleted_not_found": "Role not found",
+    "field": {
+      "order": "Order",
+      "name": "Name",
+      "permissions": "Permissions"
+    }
+  },
+  "users": {
+    "label_one": "User",
+    "label_many": "Users",
+    "create": "Create a User",
+    "create_btn": "Create a User",
+    "update": "Update a User",
+    "update_btn": "Update a User",
+    "delete_warning": "Are you sure want to delete this User?",
+    "deleted_info": "User has been deleted successfully!",
+    "deleted_not_found": "User not found",
+    "field": {
+      "order": "Order",
+      "email": "Email",
+      "username": "Username",
+      "hashed_pass": "Hashed Password"
+    }
+  },
+  "listingCategories": {
+    "label_one": "Listing Category",
+    "label_many": "Listing Categories",
+    "create": "Create a Listing Category",
+    "create_btn": "Create a Listing Category",
+    "update": "Update a Listing Category",
+    "update_btn": "Update a Listing Category",
+    "delete_warning": "Are you sure want to delete this Listing Category?",
+    "deleted_info": "Listing Category has been deleted successfully!",
+    "deleted_not_found": "Listing Category not found",
+    "field": {
+      "order": "Order",
+      "name": "Name"
+    }
+  },
+  "listings": {
+    "label_one": "Listing",
+    "label_many": "Listings",
+    "create": "Create a Listing",
+    "create_btn": "Create a Listing",
+    "update": "Update a Listing",
+    "update_btn": "Update a Listing",
+    "delete_warning": "Are you sure want to delete this Listing?",
+    "deleted_info": "Listing has been deleted successfully!",
+    "deleted_not_found": "Listing not found",
+    "field": {
+      "order": "Order",
+      "name": "Name",
+      "listing_category_id": "Listing Category ID",
+      "listing_category_name": "Listing Category"
+    }
+  }
+}

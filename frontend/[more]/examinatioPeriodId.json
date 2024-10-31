@@ -1,0 +1,205 @@
+[
+  {
+    "id": 8001,
+    "date": "2024-10-03",
+    "startTime": "11:30:00",
+    "endTime": "13:30:00",
+    "declaration": 400,
+    "maxSupervisors": 7,
+    "estimatedAttendance": 320,
+    "estimatedSupervisors": 10,
+    "course": {
+      "courseCode": "CS105",
+      "department": {
+        "id": 3001,
+        "name": "CS"
+      },
+      "id": 4001,
+      "title": "Intro to Programming"
+    },
+    "classrooms": [
+      {
+        "building": "Central",
+        "id": 2001,
+        "maxNumSupervisors": 5,
+        "name": "A21"
+      },
+      {
+        "building": "Second",
+        "id": 2002,
+        "maxNumSupervisors": 2,
+        "name": "E2"
+      }
+    ],
+    "supervisions": [
+      {
+        "id": 10001,
+        "isLead": true,
+        "isPresent": true,
+        "supervisor": {
+          "department": {
+            "id": 3001,
+            "name": "CS"
+          },
+          "email": "jd@email.com",
+          "id": 7001,
+          "name": "John",
+          "supervisor": "Dr. K",
+          "supervisorCategory": "EDIP",
+          "surname": "Doe",
+          "telephone": "123456789"
+        }
+      }
+    ],
+    "examinationPeriod": {
+      "academicYear": {
+        "id": 1002,
+        "name": "2022-2023"
+      },
+      "id": 5001,
+      "period": "WINTER",
+      "startDate": "2023-01-01"
+    }
+  },
+  {
+    "id": 8002,
+    "date": "2023-01-05",
+    "startTime": "12:30:00",
+    "endTime": "14:30:00",
+    "declaration": 450,
+    "maxSupervisors": 4,
+    "estimatedAttendance": 360,
+    "estimatedSupervisors": 12,
+    "course": {
+      "courseCode": "AF101",
+      "department": {
+        "id": 3004,
+        "name": "Accounting"
+      },
+      "id": 4002,
+      "title": "Accounting and Finance 101"
+    },
+    "classrooms": [
+      {
+        "building": "Third",
+        "id": 2004,
+        "maxNumSupervisors": 1,
+        "name": "C46"
+      },
+      {
+        "building": "Central",
+        "id": 2003,
+        "maxNumSupervisors": 3,
+        "name": "B3"
+      }
+    ],
+    "supervisions": [],
+    "examinationPeriod": {
+      "academicYear": {
+        "id": 1002,
+        "name": "2022-2023"
+      },
+      "id": 5001,
+      "period": "WINTER",
+      "startDate": "2023-01-01"
+    }
+  },
+  {
+    "id": 8003,
+    "date": "2024-08-01",
+    "startTime": "10:30:00",
+    "endTime": "12:30:00",
+    "declaration": 400,
+    "maxSupervisors": 0,
+    "estimatedAttendance": 320,
+    "estimatedSupervisors": 10,
+    "course": {
+      "courseCode": "CS105",
+      "department": {
+        "id": 3001,
+        "name": "CS"
+      },
+      "id": 4001,
+      "title": "Intro to Programming"
+    },
+    "classrooms": [],
+    "supervisions": [
+      {
+        "id": 10003,
+        "isLead": false,
+        "isPresent": false,
+        "supervisor": {
+          "department": {
+            "id": 3003,
+            "name": "Economics"
+          },
+          "email": "gb@email.com",
+          "id": 7004,
+          "name": "George",
+          "supervisor": "Dr. E",
+          "supervisorCategory": "EDIP",
+          "surname": "Black",
+          "telephone": "123456789"
+        }
+      }
+    ],
+    "examinationPeriod": {
+      "academicYear": {
+        "id": 1002,
+        "name": "2022-2023"
+      },
+      "id": 5001,
+      "period": "WINTER",
+      "startDate": "2023-01-01"
+    }
+  },
+  {
+    "id": 8003,
+    "date": "2024-10-02",
+    "startTime": "12:30:00",
+    "endTime": "14:30:00",
+    "declaration": 400,
+    "maxSupervisors": 0,
+    "estimatedAttendance": 320,
+    "estimatedSupervisors": 10,
+    "course": {
+      "courseCode": "CS105",
+      "department": {
+        "id": 3001,
+        "name": "CS"
+      },
+      "id": 4001,
+      "title": "Intro to Programming"
+    },
+    "classrooms": [],
+    "supervisions": [
+      {
+        "id": 10003,
+        "isLead": false,
+        "isPresent": false,
+        "supervisor": {
+          "department": {
+            "id": 3003,
+            "name": "Economics"
+          },
+          "email": "gb@email.com",
+          "id": 7004,
+          "name": "George",
+          "supervisor": "Dr. E",
+          "supervisorCategory": "EDIP",
+          "surname": "Black",
+          "telephone": "123456789"
+        }
+      }
+    ],
+    "examinationPeriod": {
+      "academicYear": {
+        "id": 1002,
+        "name": "2022-2023"
+      },
+      "id": 5001,
+      "period": "WINTER",
+      "startDate": "2023-01-01"
+    }
+  }
+]

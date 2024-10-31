@@ -1,0 +1,16 @@
+{
+  "web": {
+    "client_id": "683550165487-4l5stkhuaccfpi3qmcj2tmt1okkp6se0.apps.googleusercontent.com",
+    "project_id": "esap-aueb",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "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",
+    "redirect_uris": [
+      "http://localhost:3000"
+    ],
+    "javascript_origins": [
+      "http://localhost:3000"
+    ]
+  }
+}

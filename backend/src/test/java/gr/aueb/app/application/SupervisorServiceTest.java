@@ -3,7 +3,6 @@ package gr.aueb.app.application;
 import gr.aueb.app.domain.Department;
 import gr.aueb.app.domain.Supervisor;
 import gr.aueb.app.domain.SupervisorCategory;
-import gr.aueb.app.persistence.DepartmentRepository;
 import gr.aueb.app.persistence.SupervisorRepository;
 
 import io.quarkus.test.TestTransaction;
@@ -39,7 +38,7 @@ public class SupervisorServiceTest {
     @Transactional
     public void testFindAllSupervisors() {
         List<Supervisor> foundSupervisors = supervisorService.findAll();
-        assertEquals(6, foundSupervisors.size());
+        assertEquals(5, foundSupervisors.size());
     }
 
 
@@ -47,9 +46,9 @@ public class SupervisorServiceTest {
     @TestTransaction
     @Transactional
     public void testCreateSupervisor() {
-        Supervisor newSupervisor = new Supervisor("Super", "Visor", "supervisor", "1234", "supervisor@mail.com", SupervisorCategory.ETEP, department);
+        Supervisor newSupervisor = new Supervisor("Super", "Visor", "supervisor", "1234", "supervisor@mail.com", SupervisorCategory.ETEP, null);
 
-        Supervisor createdSupervisor = supervisorService.create(newSupervisor, department.getId());
+        Supervisor createdSupervisor = supervisorService.create(newSupervisor, 3001);
 
         assertNotNull(createdSupervisor);
         assertNotNull(createdSupervisor.getId());
@@ -71,6 +70,7 @@ public class SupervisorServiceTest {
         assertEquals("UpdatedMark", updatedSupervisor.getName());
         assertEquals(SupervisorCategory.PHD, updatedSupervisor.getSupervisorCategory());
         assertEquals("mw@email.com", updatedSupervisor.getEmail());
+        assertEquals("CS", updatedSupervisor.getDepartment().getName());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class SupervisorServiceTest {
         List<Supervisor> foundSupervisors = supervisorRepository.listAll();
 
         assertNull(deletedSupervisor);
-        assertEquals(5, foundSupervisors.size());
+        assertEquals(4, foundSupervisors.size());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class SupervisorServiceTest {
         assertNotNull(foundSupervisor);
         assertEquals(7001, foundSupervisor.getId());
         assertEquals(SupervisorCategory.EDIP, foundSupervisor.getSupervisorCategory());
-        assertEquals("John", foundSupervisor.getName());
+        assertEquals("ATHANASIOS", foundSupervisor.getName());
         assertEquals("CS", foundSupervisor.getDepartment().getName());
     }
 

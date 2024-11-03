@@ -4,6 +4,10 @@ import gr.aueb.app.domain.*;
 import gr.aueb.app.persistence.ExaminationRepository;
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +35,7 @@ public class ExaminationServiceTest {
     private Department department;
     private Set<Classroom> classrooms = new HashSet<>();
     private ExaminationPeriod examinationPeriod;
+    private Workbook workbook;
 
     @BeforeEach
     public void setup() {
@@ -39,6 +44,26 @@ public class ExaminationServiceTest {
         classrooms.add(new Classroom("D9", "Second", 1, 200, 120, 70, 5));
         classrooms.add(new Classroom("A5", "Central", 1, 200, 120, 70, 5));
         examinationPeriod = new ExaminationPeriod(LocalDate.of(2024, 9, 3), Period.SEPTEMBER, null);
+
+        // Create a workbook with a single sheet and header row
+        workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Examinations");
+
+        // Header row (skip this in the method)
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Date");
+        headerRow.createCell(1).setCellValue("Start Time");
+        headerRow.createCell(2).setCellValue("End Time");
+        headerRow.createCell(3).setCellValue("Course Code");
+        headerRow.createCell(4).setCellValue("Classrooms");
+
+        // Sample data row
+        Row dataRow = sheet.createRow(1);
+        dataRow.createCell(0).setCellValue(44560); // Example date in Excel format
+        dataRow.createCell(1).setCellValue(0.25); // Start time (6:00 AM)
+        dataRow.createCell(2).setCellValue(0.5);  // End time (12:00 PM)
+        dataRow.createCell(3).setCellValue(3614); // Course code
+        dataRow.createCell(4).setCellValue("A,B"); // Classrooms
     }
 
     @Test
@@ -104,7 +129,7 @@ public class ExaminationServiceTest {
         assertEquals(7002, supervision1.getSupervisor().getId());
         assertEquals(2, supervision1.getExamination().getSupervisions().size());
         assertThrows(BadRequestException.class, () ->
-                examinationService.addSupervision(8004, 7003));
+                examinationService.addSupervision(8001, 7003));
         assertThrows(NotFoundException.class, () ->
                 examinationService.addSupervision(999, 999));
         assertThrows(NotFoundException.class, () ->
@@ -132,5 +157,17 @@ public class ExaminationServiceTest {
     public void testFindOneExaminationFailed() {
         assertThrows(NotFoundException.class, () ->
                 examinationService.findOne(999));
+    }
+
+    @Test
+    @TestTransaction
+    @Transactional
+    public void testUpload() {
+        examinationService.upload(workbook, 5004);
+
+        List<Examination> uploadedExaminations = examinationRepository.findAllInSamePeriod(5004);
+        assertEquals(1, uploadedExaminations.size());
+        assertEquals(2, uploadedExaminations.get(0).getClassrooms().size());
+        assertEquals("Efarmosmenes Pithanotites", uploadedExaminations.get(0).getCourse().getTitle());
     }
 }

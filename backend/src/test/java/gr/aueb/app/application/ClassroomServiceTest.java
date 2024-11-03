@@ -29,7 +29,7 @@ public class ClassroomServiceTest {
     public void testFindAllClassrooms() {
         List<Classroom> foundClassrooms = classroomService.findAll();
         assertNotNull(foundClassrooms);
-        assertEquals(4, foundClassrooms.size());
+        assertEquals(6, foundClassrooms.size());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ClassroomServiceTest {
     public void testFindClassroom() {
         Classroom foundClassroom = classroomService.findOne(2003);
         assertNotNull(foundClassroom);
-        assertEquals("B3", foundClassroom.getName());
+        assertEquals("C", foundClassroom.getName());
         assertEquals("Central", foundClassroom.getBuilding());
     }
 
@@ -59,14 +59,14 @@ public class ClassroomServiceTest {
     @TestTransaction
     @Transactional
     public void testUpdateClassroom() {
-        Classroom updateClassroom = new Classroom("A21", "Central", 1, 200, 140, 70, 6);
+        Classroom updateClassroom = new Classroom("A1", "Central", 1, 260, 103, 70, 2);
         Classroom updatedClassroom = classroomService.update(2001, updateClassroom);
 
         assertNotNull(updateClassroom);
         assertEquals(2001, updatedClassroom.getId());
-        assertEquals("A21", updatedClassroom.getName());
-        assertEquals(140, updatedClassroom.getExamCapacity());
-        assertEquals(6, updatedClassroom.getMaxNumSupervisors());
+        assertEquals("A1", updatedClassroom.getName());
+        assertEquals(260, updatedClassroom.getGeneralCapacity());
+        assertEquals(2, updatedClassroom.getMaxNumSupervisors());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ClassroomServiceTest {
     public void testDeleteClassroom() {
         classroomService.delete(2001);
         List<Classroom> classrooms = classroomRepository.listAll();
-        assertEquals(3, classrooms.size());
+        assertEquals(5, classrooms.size());
     }
 }
 

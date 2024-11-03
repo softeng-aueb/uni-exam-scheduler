@@ -7,7 +7,6 @@ import gr.aueb.app.persistence.SupervisorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import org.apache.poi.ss.usermodel.*;
 
@@ -29,18 +28,6 @@ public class SupervisorPreferenceService {
 
     @Inject
     SupervisorRepository supervisorRepository;
-
-    @Transactional
-    public SupervisorPreference create(SupervisorPreference newSupervisorPreference, Integer supervisorId, Integer examinationPeriodId) {
-        Supervisor foundSupervisor = supervisorRepository.findById(supervisorId);
-        ExaminationPeriod foundExaminationPeriod = examinationPeriodRepository.findById(examinationPeriodId);
-        if(foundSupervisor == null || foundExaminationPeriod == null) throw new BadRequestException();
-        newSupervisorPreference.setSupervisor(foundSupervisor);
-        newSupervisorPreference.setExaminationPeriod(foundExaminationPeriod);
-        supervisorPreferenceRepository.persist(newSupervisorPreference);
-        System.out.println(newSupervisorPreference.getExaminationPeriod().getStartDate());
-        return newSupervisorPreference;
-    }
 
     @Transactional
     public SupervisorPreference findSpecific(Integer supervisorId, Integer examinationPeriodId) {

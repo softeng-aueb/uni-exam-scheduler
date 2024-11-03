@@ -38,7 +38,7 @@ public class CourseServiceTest {
     public void testFindAllCourses() {
         List<Course> foundCourses = courseService.findAll();
         assertNotNull(foundCourses);
-        assertEquals(2, foundCourses.size());
+        assertEquals(4, foundCourses.size());
     }
 
 
@@ -46,9 +46,9 @@ public class CourseServiceTest {
     @TestTransaction
     @Transactional
     public void testCreateCourse() {
-        Course newCourse = new Course("Advanced Algorithms", "CS111", department);
+        Course newCourse = new Course("Advanced Algorithms", "CS111", null);
 
-        Course createdCourse = courseService.create(newCourse, department.getId());
+        Course createdCourse = courseService.create(newCourse, 3001);
 
         assertNotNull(createdCourse);
         assertNotNull(createdCourse.getId());
@@ -61,13 +61,13 @@ public class CourseServiceTest {
     @TestTransaction
     @Transactional
     public void testUpdateCourse() {
-        Course updateCourse = new Course("Intro to Programming With C", "CS105", department);
+        Course updateCourse = new Course("Analisi kai Sxediasi Plir. Systimaton 2", "3542", department);
         Course updatedCourse = courseService.update(4001, updateCourse);
 
         assertNotNull(updatedCourse);
         assertEquals(4001, updatedCourse.getId());
-        assertEquals("Intro to Programming With C", updatedCourse.getTitle());
-        assertEquals("CS105", updatedCourse.getCourseCode());
+        assertEquals("Analisi kai Sxediasi Plir. Systimaton 2", updatedCourse.getTitle());
+        assertEquals("3542", updatedCourse.getCourseCode());
         assertEquals("CS", updatedCourse.getDepartment().getName());
     }
 
@@ -81,7 +81,7 @@ public class CourseServiceTest {
         List<Course> foundCourses = courseRepository.listAll();
 
         assertNull(deletedCourse);
-        assertEquals(1, foundCourses.size());
+        assertEquals(3, foundCourses.size());
     }
 
     @Test
@@ -91,8 +91,8 @@ public class CourseServiceTest {
         Course foundCourse = courseService.findOne(4002);
         assertNotNull(foundCourse);
         assertEquals(4002, foundCourse.getId());
-        assertEquals("AF101", foundCourse.getCourseCode());
-        assertEquals("Accounting and Finance 101", foundCourse.getTitle());
+        assertEquals("3614", foundCourse.getCourseCode());
+        assertEquals("Efarmosmenes Pithanotites", foundCourse.getTitle());
     }
 
     @Test

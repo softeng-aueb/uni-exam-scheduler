@@ -2,10 +2,7 @@ package gr.aueb.app.domain;
 
 import gr.aueb.app.persistence.CourseAttendanceRepository;
 import gr.aueb.app.persistence.CourseDeclarationRepository;
-import io.quarkus.test.TestTransaction;
-import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,12 +15,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@QuarkusTest
 public class ExaminationTest {
-    @Inject
-    CourseAttendanceRepository courseAttendanceRepository;
-    @Inject
-    CourseDeclarationRepository courseDeclarationRepository;
 
     private Examination examination;
     private Course course;
@@ -58,8 +50,6 @@ public class ExaminationTest {
     }
 
     @Test
-    @TestTransaction
-    @Transactional
     void testSettersAndGetters() {
         // transient values
         examination.setDeclaration(declaration);
@@ -132,36 +122,4 @@ public class ExaminationTest {
         assertTrue(examination.getSupervisions().isEmpty());
         assertNull(newSupervision.getExamination());
     }
-
-//    @Test
-//    void testGetTotalDeclaration() {
-//        Department newDepartment1 = new Department("CS");
-//        Department newDepartment2 = new Department("MATH");
-//        DepartmentParticipation newDepartmentParticipation1 = new DepartmentParticipation(150, true, course, newDepartment1, examinationPeriod);
-//        DepartmentParticipation newDepartmentParticipation2 = new DepartmentParticipation(80, false, course, newDepartment2, examinationPeriod);
-//        Set<DepartmentParticipation> departmentParticipationSet = new HashSet<>();
-//        departmentParticipationSet.add(newDepartmentParticipation1);
-//        departmentParticipationSet.add(newDepartmentParticipation2);
-//
-//        examination.setDepartmentParticipations(departmentParticipationSet);
-//
-//        assertEquals(230, examination.getTotalDeclaration());
-//    }
-//
-//    @Test
-//    void testGetTotalAttendance() {
-//        Department newDepartment1 = new Department("CS");
-//        Department newDepartment2 = new Department("MATH");
-//        DepartmentParticipation newDepartmentParticipation1 = new DepartmentParticipation(150, true, examination, newDepartment1);
-//        DepartmentParticipation newDepartmentParticipation2 = new DepartmentParticipation(80, false, examination, newDepartment2);
-//        newDepartmentParticipation1.setAttendance(100);
-//        newDepartmentParticipation2.setAttendance(67);
-//        Set<DepartmentParticipation> departmentParticipationSet = new HashSet<>();
-//        departmentParticipationSet.add(newDepartmentParticipation1);
-//        departmentParticipationSet.add(newDepartmentParticipation2);
-//
-//        examination.setDepartmentParticipations(departmentParticipationSet);
-//
-//        assertEquals(167, examination.getTotalAttendance());
-//    }
 }

@@ -2,6 +2,7 @@ package gr.aueb.app.application;
 
 import gr.aueb.app.domain.Supervision;
 
+import gr.aueb.app.persistence.SupervisionRepository;
 import io.quarkus.test.TestTransaction;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
@@ -19,6 +20,9 @@ public class SupervisionServiceTest {
 
     @Inject
     SupervisionService supervisionService;
+
+    @Inject
+    SupervisionRepository supervisionRepository;
 
     @Test
     @TestTransaction
@@ -84,5 +88,15 @@ public class SupervisionServiceTest {
     public void testFindOneSupervisionFailed() {
         assertThrows(NotFoundException.class, ()->
                 supervisionService.findOne(999));
+    }
+
+    @Test
+    @TestTransaction
+    @Transactional
+    public void testDeleteAllInSamePeriod() {
+        supervisionService.deleteAllInSamePeriod(5001);
+        List<Supervision> supervisions = supervisionRepository.listAll();
+
+        assertEquals(1, supervisions.size());
     }
 }

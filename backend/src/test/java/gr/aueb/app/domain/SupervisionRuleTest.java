@@ -2,18 +2,33 @@ package gr.aueb.app.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 public class SupervisionRuleTest {
+
+    private ExaminationPeriod examinationPeriod;
+    private Department department;
+    private SupervisionRule supervisionRule;
+
+    @BeforeEach
+    void setup() {
+        department = new Department("CS");
+        AcademicYear academicYear = new AcademicYear("2023-2024", new AcademicYear());
+        examinationPeriod = new ExaminationPeriod(LocalDate.now(), Period.WINTER, academicYear);
+        supervisionRule = new SupervisionRule(3, SupervisorCategory.PHD, department, examinationPeriod);
+    }
+
     @Test
     void testCreateSupervisionRule() {
-        SupervisionRule supervisionRule = new SupervisionRule(3, SupervisorCategory.PHD, new Department(), new ExaminationPeriod());
         assertNotNull(supervisionRule);
 
         assertEquals(3, supervisionRule.getNumOfSupervisions());
         assertEquals(SupervisorCategory.PHD, supervisionRule.getSupervisorCategory());
-        assertNotNull(supervisionRule.getDepartment());
-        assertNotNull(supervisionRule.getExaminationPeriod());
+        assertEquals("CS", supervisionRule.getDepartment().getName());
+        assertEquals(Period.WINTER, supervisionRule.getExaminationPeriod().getPeriod());
     }
 
     @Test

@@ -131,10 +131,6 @@ public class Examination {
         this.examinationPeriod = examinationPeriod;
     }
 
-    public void setMaxSupervisors(Integer maxSupervisors) {
-        this.maxSupervisors = maxSupervisors;
-    }
-
     public Integer getMaxSupervisors() {
         Integer sum = 0;
         for(Classroom classroom : this.getClassrooms()) {
@@ -153,8 +149,7 @@ public class Examination {
         return declaration;
     }
 
-    public void setDeclaration(CourseDeclarationRepository repository) {
-        CourseDeclaration courseDeclaration = repository.findSpecific(this.course.getId(), this.examinationPeriod.getAcademicYear().getId());
+    public void setDeclaration(CourseDeclaration courseDeclaration) {
         this.declaration = courseDeclaration != null ? courseDeclaration.getDeclaration() : 0;
     }
 
@@ -162,20 +157,10 @@ public class Examination {
         return estimatedAttendance;
     }
 
-    public void setEstimatedAttendance(CourseDeclarationRepository courseDeclarationRepository, CourseAttendanceRepository courseAttendanceRepository) {
-        // get declaration and attendance from 2 years back
-        AcademicYear previousOneYear = this.examinationPeriod.getAcademicYear().getPreviousYear();
-        AcademicYear previousTwoYears = previousOneYear != null ? previousOneYear.getPreviousYear() : null;
-        CourseDeclaration previousOneDeclaration = previousOneYear != null ? courseDeclarationRepository.findSpecific(this.course.getId(), previousOneYear.getId()) : null;
-        CourseDeclaration previousTwoDeclaration = previousTwoYears != null ? courseDeclarationRepository.findSpecific(this.course.getId(), previousTwoYears.getId()) : null;
-        CourseAttendance previousOneAttendance = previousOneYear != null ? courseAttendanceRepository.findSpecific(this.course.getId(), previousOneYear.getId(), this.examinationPeriod.getPeriod()) : null;
-        CourseAttendance previousTwoAttendance = previousTwoYears != null ? courseAttendanceRepository.findSpecific(this.course.getId(), previousTwoYears.getId(), this.examinationPeriod.getPeriod()) : null;
-
+    public void setEstimatedAttendance(Double previousPercentage) {
         // estimation formula
         // if previousOne/TwoYear data is missing assuming that 4/5 was attended
-        Double previousOnePercentage = ( previousOneDeclaration == null || previousOneAttendance == null ) ? (double) 4/5 : (double) previousOneAttendance.getAttendance()/previousOneDeclaration.getDeclaration();
-        Double previousTwoPercentage = ( previousTwoDeclaration == null || previousTwoAttendance == null ) ? (double) 4/5 : (double) previousTwoAttendance.getAttendance()/previousTwoDeclaration.getDeclaration();
-        this.estimatedAttendance = (int) Math.round(this.declaration * (previousOnePercentage + previousTwoPercentage) / 2);
+        this.estimatedAttendance = (int) Math.round(this.declaration * previousPercentage / 2);
     }
 
     public Supervision addSupervision(Supervisor supervisor, List<Supervision> supervisorSupervisions) {

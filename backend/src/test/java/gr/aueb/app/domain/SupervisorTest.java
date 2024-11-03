@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 public class SupervisorTest {
 
     private Supervisor supervisor;
+    private Department department;
 
     @BeforeEach
     void setUp() {
-        supervisor = new Supervisor("John", "Doe", "O'Reily", "123456789", "john.doe@example.com", SupervisorCategory.EDIP, new Department());
+        department = new Department("CS");
+        supervisor = new Supervisor("John", "Doe", "O'Reily", "123456789", "john.doe@example.com", SupervisorCategory.EDIP, department);
     }
 
     @Test
@@ -23,7 +25,8 @@ public class SupervisorTest {
         assertEquals("123456789", supervisor.getTelephone());
         assertEquals("john.doe@example.com", supervisor.getEmail());
         assertEquals(SupervisorCategory.EDIP, supervisor.getSupervisorCategory());
-        assertNotNull(supervisor.getDepartment());
+        assertEquals("CS", supervisor.getDepartment().getName());
+        assertEquals("john.doe@example.com", supervisor.toString());
     }
 
     @Test

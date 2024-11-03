@@ -37,10 +37,10 @@ public class ExaminationService {
     ClassroomRepository classroomRepository;
 
     @Inject
-    CourseDeclarationRepository courseDeclarationRepository;
+    CourseDeclarationService courseDeclarationService;
 
     @Inject
-    CourseAttendanceRepository courseAttendanceRepository;
+    CourseAttendanceService courseAttendanceService;
 
 
     @Transactional
@@ -67,8 +67,10 @@ public class ExaminationService {
     public List<Examination> findAllInSamePeriod(Integer examinationPeriodId) {
         List<Examination> foundList = examinationRepository.findAllInSamePeriod(examinationPeriodId);
         for(Examination examination : foundList) {
-            examination.setDeclaration(courseDeclarationRepository);
-            examination.setEstimatedAttendance(courseDeclarationRepository, courseAttendanceRepository);
+            CourseDeclaration courseDeclaration = courseDeclarationService.findSpecific(examination.getCourse().getId(), examination.getExaminationPeriod().getAcademicYear().getId());
+            examination.setDeclaration(courseDeclaration);
+            Double previousPercentage = getPreviousPercentage(examination);
+            examination.setEstimatedAttendance(previousPercentage);
         }
         return foundList;
     }
@@ -144,5 +146,21 @@ public class ExaminationService {
         Instant instant = Instant.ofEpochMilli(javaDate.getTime());
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
         return zonedDateTime.toLocalDate();
+    }
+
+    private Double getPreviousPercentage(Examination examination) {
+        // get declaration and attendance from 2 years back
+        AcademicYear previousOneYear = examination.getExaminationPeriod().getAcademicYear().getPreviousYear();
+        AcademicYear previousTwoYears = previousOneYear != null ? previousOneYear.getPreviousYear() : null;
+        CourseDeclaration previousOneDeclaration = previousOneYear != null ? courseDeclarationService.findSpecific(examination.getCourse().getId(), previousOneYear.getId()) : null;
+        CourseDeclaration previousTwoDeclaration = previousTwoYears != null ? courseDeclarationService.findSpecific(examination.getCourse().getId(), previousTwoYears.getId()) : null;
+        CourseAttendance previousOneAttendance = previousOneYear != null ? courseAttendanceService.findSpecific(examination.getCourse().getId(), previousOneYear.getId(), examination.getExaminationPeriod().getPeriod()) : null;
+        CourseAttendance previousTwoAttendance = previousTwoYears != null ? courseAttendanceService.findSpecific(examination.getCourse().getId(), previousTwoYears.getId(), examination.getExaminationPeriod().getPeriod()) : null;
+
+        // estimation formula
+        // if previousOne/TwoYear data is missing assuming that 4/5 was attended
+        Double previousOnePercentage = ( previousOneDeclaration == null || previousOneAttendance == null ) ? (double) 4/5 : (double) previousOneAttendance.getAttendance()/previousOneDeclaration.getDeclaration();
+        Double previousTwoPercentage = ( previousTwoDeclaration == null || previousTwoAttendance == null ) ? (double) 4/5 : (double) previousTwoAttendance.getAttendance()/previousTwoDeclaration.getDeclaration();
+        return previousOnePercentage + previousTwoPercentage;
     }
 }

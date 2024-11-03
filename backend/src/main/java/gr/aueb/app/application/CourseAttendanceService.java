@@ -3,6 +3,7 @@ package gr.aueb.app.application;
 import gr.aueb.app.domain.Course;
 import gr.aueb.app.domain.CourseAttendance;
 import gr.aueb.app.domain.ExaminationPeriod;
+import gr.aueb.app.domain.Period;
 import gr.aueb.app.persistence.CourseAttendanceRepository;
 import gr.aueb.app.persistence.CourseRepository;
 import gr.aueb.app.persistence.ExaminationPeriodRepository;
@@ -50,5 +51,10 @@ public class CourseAttendanceService {
     @Transactional
     public List<CourseAttendance> findAll() {
         return courseAttendanceRepository.findAllWithDetails();
+    }
+
+    @Transactional
+    public CourseAttendance findSpecific(Integer courseId, Integer academicYearId, Period period) {
+        return courseAttendanceRepository.findSpecific(courseId, academicYearId, period);
     }
 }

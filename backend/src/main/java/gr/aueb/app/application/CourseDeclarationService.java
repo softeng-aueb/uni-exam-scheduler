@@ -47,4 +47,14 @@ public class CourseDeclarationService {
     public List<CourseDeclaration> findAll() {
         return courseDeclarationRepository.findAllWithDetails();
     }
+
+    @Transactional
+    public CourseDeclaration findSpecific(Integer courseId, Integer academicYearId) {
+        return courseDeclarationRepository.findSpecific(courseId, academicYearId);
+    }
+
+    @Transactional
+    public List<CourseDeclaration> findAllInSameYear(Integer academicYearId) {
+        return courseDeclarationRepository.findAllInSameYear(academicYearId);
+    }
 }

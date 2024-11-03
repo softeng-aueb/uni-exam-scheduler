@@ -31,10 +31,10 @@ public class SolutionService {
     ExaminationRepository examinationRepository;
 
     @Inject
-    CourseAttendanceRepository courseAttendanceRepository;
+    CourseDeclarationService courseDeclarationService;
 
     @Inject
-    CourseDeclarationRepository courseDeclarationRepository;
+    CourseAttendanceService courseAttendanceService;
 
     @Inject
     SolverManager<Solution, Long> solverManager;
@@ -53,7 +53,7 @@ public class SolutionService {
         if(examinationList.isEmpty()) {
             throw new BadRequestException("No examinations have been uploaded");
         }
-        List<CourseDeclaration> declarationList = courseDeclarationRepository.findAllInSameYear(examinationList.get(0).getExaminationPeriod().getAcademicYear().getId());
+        List<CourseDeclaration> declarationList = courseDeclarationService.findAllInSameYear(examinationList.get(0).getExaminationPeriod().getAcademicYear().getId());
         // in order for the calculations/solving to be correct there must be uploaded as many examinations as declarations
         if(declarationList.isEmpty()) {
             throw new BadRequestException("No declarations have been uploaded");
@@ -61,8 +61,10 @@ public class SolutionService {
 
         // set estimations
         for(Examination examination : examinationList) {
-            examination.setDeclaration(courseDeclarationRepository);
-            examination.setEstimatedAttendance(courseDeclarationRepository, courseAttendanceRepository);
+            CourseDeclaration courseDeclaration = courseDeclarationService.findSpecific(examination.getCourse().getId(), examination.getExaminationPeriod().getAcademicYear().getId());
+            examination.setDeclaration(courseDeclaration);
+            Double previousPercentage = getPreviousPercentage(examination);
+            examination.setEstimatedAttendance(previousPercentage);
         }
 
         // for each examination create as many supervisions as the estimatedNeeded supervisors
@@ -129,5 +131,21 @@ public class SolutionService {
 
     public SolverStatus getSolverStatus() {
         return solverManager.getSolverStatus(SINGLETON_SOLUTION_ID);
+    }
+
+    private Double getPreviousPercentage(Examination examination) {
+        // get declaration and attendance from 2 years back
+        AcademicYear previousOneYear = examination.getExaminationPeriod().getAcademicYear().getPreviousYear();
+        AcademicYear previousTwoYears = previousOneYear != null ? previousOneYear.getPreviousYear() : null;
+        CourseDeclaration previousOneDeclaration = previousOneYear != null ? courseDeclarationService.findSpecific(examination.getCourse().getId(), previousOneYear.getId()) : null;
+        CourseDeclaration previousTwoDeclaration = previousTwoYears != null ? courseDeclarationService.findSpecific(examination.getCourse().getId(), previousTwoYears.getId()) : null;
+        CourseAttendance previousOneAttendance = previousOneYear != null ? courseAttendanceService.findSpecific(examination.getCourse().getId(), previousOneYear.getId(), examination.getExaminationPeriod().getPeriod()) : null;
+        CourseAttendance previousTwoAttendance = previousTwoYears != null ? courseAttendanceService.findSpecific(examination.getCourse().getId(), previousTwoYears.getId(), examination.getExaminationPeriod().getPeriod()) : null;
+
+        // estimation formula
+        // if previousOne/TwoYear data is missing assuming that 4/5 was attended
+        Double previousOnePercentage = ( previousOneDeclaration == null || previousOneAttendance == null ) ? (double) 4/5 : (double) previousOneAttendance.getAttendance()/previousOneDeclaration.getDeclaration();
+        Double previousTwoPercentage = ( previousTwoDeclaration == null || previousTwoAttendance == null ) ? (double) 4/5 : (double) previousTwoAttendance.getAttendance()/previousTwoDeclaration.getDeclaration();
+        return previousOnePercentage + previousTwoPercentage;
     }
 }

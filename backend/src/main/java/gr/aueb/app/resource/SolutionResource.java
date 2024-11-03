@@ -24,12 +24,13 @@ public class SolutionResource {
     @Context
     UriInfo uriInfo;
 
-    @POST
+    @GET
     @Path("/{examinationPeriodId}")
     public Response solve(@PathParam("examinationPeriodId") Integer examinationPeriodId) {
         solutionService.solve(examinationPeriodId);
         //return supervisionMapper.toRepresentationList(supervisions);
-        return Response.ok().build();
+        String jsonResponse = "{\"status\": \"Success\"}";
+        return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
     }
 
     @GET

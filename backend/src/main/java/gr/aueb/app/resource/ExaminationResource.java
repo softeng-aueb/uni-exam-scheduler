@@ -86,7 +86,7 @@ public class ExaminationResource {
     @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void uploadExcel(
+    public Response uploadExcel(
             @QueryParam("examinationPeriodId") Integer examinationPeriodId,
             @MultipartForm FormData formData) {
         if(examinationPeriodId == null) throw new BadRequestException();
@@ -94,9 +94,12 @@ public class ExaminationResource {
         try (InputStream fileInputStream = formData.file) {
             Workbook workbook = WorkbookFactory.create(fileInputStream);
             examinationService.upload(workbook, examinationPeriodId);
+            String jsonResponse = "{\"status\": \"Success\"}";
+            return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             // Handle exceptions, e.g., log or return an error response
             e.printStackTrace();
+            return Response.serverError().build();
         }
     }
 }

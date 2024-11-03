@@ -3,6 +3,7 @@ package gr.aueb.app.resource;
 import gr.aueb.app.application.CourseDeclarationService;
 import gr.aueb.app.representation.CourseDeclarationMapper;
 import gr.aueb.app.representation.CourseDeclarationRepresentation;
+import jakarta.ws.rs.core.Response;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -28,7 +29,7 @@ public class CourseDeclarationResource {
     @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void uploadExcel(
+    public Response uploadExcel(
             @QueryParam("academicYearId") Integer academicYearId,
             @MultipartForm FormData formData) {
         if (academicYearId == null) throw new BadRequestException();
@@ -36,9 +37,12 @@ public class CourseDeclarationResource {
         try (InputStream fileInputStream = formData.file) {
             Workbook workbook = WorkbookFactory.create(fileInputStream);
             courseDeclarationService.upload(workbook, academicYearId);
+            String jsonResponse = "{\"status\": \"Success\"}";
+            return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             // Handle exceptions, e.g., log or return an error response
             e.printStackTrace();
+            return Response.serverError().build();
         }
     }
 

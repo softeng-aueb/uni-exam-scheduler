@@ -1,11 +1,14 @@
 package gr.aueb.app.persistence;
 
+import gr.aueb.app.domain.Supervision;
 import gr.aueb.app.domain.SupervisorPreference;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.NoResultException;
+
+import java.util.List;
 
 @ApplicationScoped
 public class SupervisorPreferenceRepository implements PanacheRepositoryBase<SupervisorPreference, Integer> {
@@ -19,5 +22,10 @@ public class SupervisorPreferenceRepository implements PanacheRepositoryBase<Sup
         } catch (NoResultException ex) {
             return null;
         }
+    }
+
+    public List<SupervisorPreference> findAllWithSameSupervisor(Integer supervisorId) {
+        return find("select sp from SupervisorPreference sp where sp.supervisor.id = :supervisorId",
+                Parameters.with("supervisorId", supervisorId)).list();
     }
 }

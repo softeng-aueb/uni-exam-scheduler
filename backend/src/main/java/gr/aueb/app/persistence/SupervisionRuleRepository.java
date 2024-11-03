@@ -11,15 +11,6 @@ import jakarta.persistence.NoResultException;
 
 @ApplicationScoped
 public class SupervisionRuleRepository implements PanacheRepositoryBase<SupervisionRule, Integer> {
-    public SupervisionRule findWithDetails(Integer id) {
-        PanacheQuery<SupervisionRule> query = find("select sr from SupervisionRule sr left join fetch sr.department left join fetch sr.examinationPeriod where sr.id = :id", Parameters.with("id", id).map());
-        try {
-            return query.singleResult();
-        } catch(NoResultException ex) {
-            return null;
-        }
-    }
-
     public SupervisionRule findSpecific(Integer examinationPeriodId, Integer departmentId, SupervisorCategory category) {
         PanacheQuery<SupervisionRule> query = find("select sr from SupervisionRule sr where sr.examinationPeriod.id = :examinationPeriodId and sr.department.id = :departmentId and sr.supervisorCategory = :category",
                 Parameters.with("examinationPeriodId", examinationPeriodId)

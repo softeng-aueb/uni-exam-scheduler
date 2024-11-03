@@ -21,15 +21,6 @@ public class CourseRepository implements PanacheRepositoryBase<Course, Integer> 
     @Inject
     ExaminationRepository examinationRepository;
 
-    public Course findWithDetails(Integer id) {
-        PanacheQuery<Course> query = find("select c from Course c left join fetch c.department where c.id = :id", Parameters.with("id", id).map());
-        try {
-            return query.singleResult();
-        } catch (NoResultException ex) {
-            return null;
-        }
-    }
-
     public Course findCourseByCode(String courseCode) {
         PanacheQuery<Course> query = find("select c from Course c where c.courseCode = :courseCode", Parameters.with("courseCode", courseCode).map());
         try {

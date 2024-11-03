@@ -16,6 +16,9 @@ public class SupervisorRepository implements PanacheRepositoryBase<Supervisor, I
     @Inject
     SupervisionRepository supervisionRepository;
 
+    @Inject
+    SupervisorPreferenceRepository supervisorPreferenceRepository;
+
     public Supervisor findWithDetails(Integer id) {
         PanacheQuery<Supervisor> query = find("select s from Supervisor s left join fetch s.department where s.id = :id", Parameters.with("id", id).map());
         try {
@@ -30,6 +33,11 @@ public class SupervisorRepository implements PanacheRepositoryBase<Supervisor, I
         for (Supervision supervision : supervisions) {
             supervision.setSupervisor(null);
             supervisionRepository.getEntityManager().merge(supervision);
+        }
+        List<SupervisorPreference> supervisorPreferences = supervisorPreferenceRepository.findAllWithSameSupervisor(supervisorId);
+        for (SupervisorPreference supervisorPreference : supervisorPreferences) {
+            supervisorPreference.setSupervisor(null);
+            supervisionRepository.getEntityManager().merge(supervisorPreference);
         }
         this.deleteById(supervisorId);
     }

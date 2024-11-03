@@ -39,18 +39,6 @@ public class SupervisorPreferenceResource {
     }
 
     @POST
-    public Response create(@QueryParam("supervisorId") Integer supervisorId,
-                           @QueryParam("examinationPeriodId") Integer examinationPeriodId,
-                           SupervisorPreferenceRepresentation representation) {
-        SupervisorPreference newSupervisorPreference = supervisorPreferenceMapper.toModel(representation);
-        if (newSupervisorPreference == null) throw new BadRequestException();
-        SupervisorPreference createdSupervisorPreference = supervisorPreferenceService.create(newSupervisorPreference, supervisorId, examinationPeriodId);
-        SupervisorPreferenceRepresentation response = supervisorPreferenceMapper.toRepresentation(createdSupervisorPreference);
-        URI uri = UriBuilder.fromResource(SupervisorPreferenceResource.class).path(String.valueOf(response.id)).build();
-        return Response.created(uri).entity(response).build();
-    }
-
-    @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadExcel(

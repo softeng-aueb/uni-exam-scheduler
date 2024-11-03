@@ -12,20 +12,6 @@ import java.util.List;
 
 @ApplicationScoped
 public class SupervisionRepository implements PanacheRepositoryBase<Supervision, Integer> {
-    public Supervision findWithDetails(Integer id) {
-        PanacheQuery<Supervision> query = find("select s from Supervision s " +
-                "left join fetch s.examination examination" +
-                "left join fetch s.supervisor supervisor " +
-                "left join fetch examination.examinationPeriod " +
-                "left join fetch supervisor.department " +
-                "where s.id = :id", Parameters.with("id", id).map());
-        try {
-            return query.singleResult();
-        } catch(NoResultException ex) {
-            return null;
-        }
-    }
-
     public List<Supervision> findAllInSameSupervisorAndDay(Integer supervisorId, LocalDate date) {
         return find("select s from Supervision s where s.supervisor.id = :supervisorId and s.examination.date = :date",
                 Parameters.with("supervisorId", supervisorId).and("date", date)).list();

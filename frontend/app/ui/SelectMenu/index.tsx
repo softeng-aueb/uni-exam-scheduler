@@ -14,14 +14,14 @@ type SelectProps = {
   id?: string;
 }
 export default function SelectMenu({
-  handleChange,
-  label,
-  name,
-  value,
-  data,
-  hasError,
-  id,
-}: SelectProps) {
+                                     handleChange,
+                                     label,
+                                     name,
+                                     value,
+                                     data,
+                                     hasError,
+                                     id,
+                                   }: SelectProps) {
   return (
     <FormControl variant="standard" sx={{ m: 1, width: "100%" }}>
       <InputLabel

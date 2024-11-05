@@ -1,14 +1,14 @@
 {
-  "countries": {
-    "label_one": "Country",
-    "label_many": "Countries",
-    "create": "Create a Country",
-    "create_btn": "Create a Country",
-    "update": "Update a Country",
-    "update_btn": "Update a Country",
-    "delete_warning": "Are you sure want to delete this Country?",
-    "deleted_info": "Country has been deleted successfully!",
-    "deleted_not_found": "Country not found",
+  "courses": {
+    "label_one": "Course",
+    "label_many": "Courses",
+    "create": "Create a Course",
+    "create_btn": "Create a Course",
+    "update": "Update a Course",
+    "update_btn": "Update a Course",
+    "delete_warning": "Are you sure want to delete this Course?",
+    "deleted_info": "Course has been deleted successfully!",
+    "deleted_not_found": "Course not found",
     "field": {
       "order": "Order",
       "name": "Name",
@@ -16,16 +16,16 @@
       "iso3": "ISO3"
     }
   },
-  "languages": {
-    "label_one": "Language",
-    "label_many": "Languages",
-    "create": "Create a Language",
-    "create_btn": "Create a Language",
-    "update": "Update a Language",
-    "update_btn": "Update a Language",
-    "delete_warning": "Are you sure want to delete this Language?",
-    "deleted_info": "Language has been deleted successfully!",
-    "deleted_not_found": "Language not found",
+  "departments": {
+    "label_one": "Department",
+    "label_many": "Departments",
+    "create": "Create a Department",
+    "create_btn": "Create a Department",
+    "update": "Update a Department",
+    "update_btn": "Update a Department",
+    "delete_warning": "Are you sure want to delete this Department?",
+    "deleted_info": "Department has been deleted successfully!",
+    "deleted_not_found": "Department not found",
     "field": {
       "order": "Order",
       "name": "Name",
@@ -66,36 +66,36 @@
       "hashed_pass": "Hashed Password"
     }
   },
-  "listingCategories": {
-    "label_one": "Listing Category",
-    "label_many": "Listing Categories",
-    "create": "Create a Listing Category",
-    "create_btn": "Create a Listing Category",
-    "update": "Update a Listing Category",
-    "update_btn": "Update a Listing Category",
-    "delete_warning": "Are you sure want to delete this Listing Category?",
-    "deleted_info": "Listing Category has been deleted successfully!",
-    "deleted_not_found": "Listing Category not found",
+  "supervisors": {
+    "label_one": "Supervisor",
+    "label_many": "Supervisors",
+    "create": "Create a Supervisor",
+    "create_btn": "Create a Supervisor",
+    "update": "Update a Supervisor",
+    "update_btn": "Update a Supervisor",
+    "delete_warning": "Are you sure want to delete this Supervisor?",
+    "deleted_info": "Supervisor has been deleted successfully!",
+    "deleted_not_found": "Supervisor not found",
     "field": {
       "order": "Order",
       "name": "Name"
     }
   },
-  "listings": {
-    "label_one": "Listing",
-    "label_many": "Listings",
-    "create": "Create a Listing",
-    "create_btn": "Create a Listing",
-    "update": "Update a Listing",
-    "update_btn": "Update a Listing",
-    "delete_warning": "Are you sure want to delete this Listing?",
-    "deleted_info": "Listing has been deleted successfully!",
-    "deleted_not_found": "Listing not found",
+  "classrooms": {
+    "label_one": "Classroom",
+    "label_many": "Classrooms",
+    "create": "Create a Classroom",
+    "create_btn": "Create a Classroom",
+    "update": "Update a Classroom",
+    "update_btn": "Update a Classroom",
+    "delete_warning": "Are you sure want to delete this Classroom?",
+    "deleted_info": "Classroom has been deleted successfully!",
+    "deleted_not_found": "Classroom not found",
     "field": {
       "order": "Order",
       "name": "Name",
-      "listing_category_id": "Listing Category ID",
-      "listing_category_name": "Listing Category"
+      "supervisor_id": "Supervisor ID",
+      "supervisor_name": "Supervisor"
     }
   }
 }

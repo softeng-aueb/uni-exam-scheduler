@@ -67,18 +67,18 @@ export async function getUsersWithRoles(query: any): Promise<any> {
   const { db } = await connectToDatabase();
 
   const users = await db
-      .collection("Users")
-      .aggregate([{
-        $match: query,
-      }, {
-        $lookup: {
-          from: "UserRoles",
-          localField: "roles",
-          foreignField: "name",
-          as: "UserRoles",
-        },
-      }])
-      .toArray();
+    .collection("Users")
+    .aggregate([{
+      $match: query,
+    }, {
+      $lookup: {
+        from: "UserRoles",
+        localField: "roles",
+        foreignField: "name",
+        as: "UserRoles",
+      },
+    }])
+    .toArray();
 
   const user = users.length > 0 ? users?.[0] : null;
 
@@ -150,9 +150,9 @@ export async function editUser(userId: any, userData: any): Promise<DbOperations
     }
 
     const data = await db.collection("Users").findOneAndUpdate(
-        { _id: new ObjectId(userId) },
-        { $set: userData },
-        { returnNewDocument: true },
+      { _id: new ObjectId(userId) },
+      { $set: userData },
+      { returnNewDocument: true },
     );
 
     return dbSuccessRes(data);

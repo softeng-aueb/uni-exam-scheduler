@@ -1,114 +1,160 @@
-"use client";
-
 import React, { useCallback, useEffect, useState } from "react";
-
-// MUI
-import { Card, CardContent, Container, Grid } from "@mui/material";
-
-// FullCalendar
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-
-// Components
+import { Button, Card, CardContent, Container, Box, Modal, Typography } from "@mui/material";
 import Layout from "@/app/ui/layout";
-import Spinner from "@/app/ui/Spinner";
-import ViewModalCalendarEvents from "../../../ui/CRUDViewModals/CalendarEvents";
-import { fetchCalendarEvents } from "@/app/lib/dbOperations/collections/CalendarEvents";
+import { deleteSupervision, readAcademicYears, readExaminationPeriod, readExaminationPeriodById, solveExaminationPeriod } from "@/app/lib/dbOperations";
+import SelectComponent from "@/app/ui/Form/SelectComponent";
+import ExaminationTable from "./ExaminationTable"; 
+import { successAlert, warningAlert } from "@/app/lib/helpers/swalGenerator";
 
 export default function CalendarEventsComponent({ lng }: any) {
-  const [defaultView, setDefaultView] = useState("dayGridMonth");
-  const [eventData, setEventData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [viewModalData, setViewModalData] = useState("");
-  const [viewModalTitle, setViewModalTitle] = useState("");
-
-  const handleCloseModal = () => setModalOpen(false);
+  const [selectedYear, setSelectedYear] = useState("");
+  const [yearForSelect, setYearForSelect] = useState<any>([]);
+  const [examForSelect, setExamForSelect] = useState<any>([]);
+  const [examPeriod, setExamPeriod] = useState<any>("");
+  const [tableData, setTableData] = useState<any>([]); 
 
   useEffect(() => {
     async function init() {
       setLoading(true);
-      const { data: schedules } = await fetchCalendarEvents();
-      const formattedData = formatCalendarData(schedules);
-      setEventData(formattedData);
+      const academicYears = await readAcademicYears();
+      const formattedYears = academicYears
+        ?.map((year) => ({ label: year.name, value: year.id }))
+        .sort((a, b) => b.label.localeCompare(a.label));
+
+      setYearForSelect(formattedYears);
       setLoading(false);
     }
 
     init();
   }, []);
 
-  const handleEventClick = (clickInfo: any) => {
-    const title = clickInfo.event.title;
-    const data = clickInfo.event.extendedProps.obj;
+  useEffect(() => {
+    if (selectedYear) {
+      (async () => {
+        try {
+          const examPeriod = await readExaminationPeriod(selectedYear);
+          const formattedYears = examPeriod
+            ?.map((p) => ({ label: p.period, value: p.id }))
+            .sort((a, b) => b.label.localeCompare(a.label));
+          setExamForSelect(formattedYears);
 
-    setViewModalTitle(title);
-    setViewModalData(data);
-    setModalOpen(true);
-  };
+        } catch (error) {
+          console.error("Error fetching examination period:", error);
+        }
+      })();
+    }
+  }, [selectedYear]);
 
-  const updateData = useCallback((values: any) => {
-    setEventData(eventData.map((d: any) => d.obj.id === values.id ? {
-      ...d,
-      title: values.title,
-      [d.obj.supervisions]: values.supervisions,
-    } : d));
-  }, [eventData]);
+  useEffect(() => {
+    if (examPeriod) {
+      (async () => {
+        try {
+          const examPeriods = await readExaminationPeriodById(examPeriod);
+          setTableData(examPeriods)
+        } catch (error) {
+          console.error("Error fetching examination period:", error);
+        }
+      })();
+    }
+  }, [examPeriod]);
 
-  const formatCalendarData = (data: any) => {
-    const formattedData: any = [];
-    data?.forEach((schedule: any) => {
-      const title = `${schedule?.course?.title} [${schedule?.course?.courseCode}]`;
-      const start = new Date(`${schedule.date} ${schedule.startTime}`);
-      const end = new Date(`${schedule.date} ${schedule.endTime}`);
-      const color = "#aee8a3";
-      const textColor = "#3da729";
+  const handleSolve = useCallback(async()=>{
+        setModalOpen(true);
+        setTimeout(() => {
+        setModalOpen(false);
+        }, 30000); // 30 sec
+    try {
+      const resp = await solveExaminationPeriod(examPeriod);
+      console.log("++ :", resp)
+      setTableData(resp)
+    } catch (error) {
+      console.error("Error solving examination period:", error);
+      setModalOpen(false);
+    }
+  },[tableData])
 
-      formattedData.push({ title, start, end, color, textColor, obj: schedule });
-    });
-    return formattedData;
+  const handleClearSupervisor = async () => {
+   if(examPeriod){
+    try{
+      const resp = await deleteSupervision(examPeriod);
+      successAlert("Success", "Supervision deleted successfully!")
+    }catch(e){
+      warningAlert("Something went wrong!")
+    }
+   }
   };
 
   return (
     <Layout>
       <Container disableGutters maxWidth="xl">
-        <Card sx={{ width: "100%", marginBottom: 4 }}>
+        <Card sx={{ width: "100%", marginBottom: 4 }} variant="outlined">
           <CardContent>
-            <Grid container spacing={2}>
-              <Grid item lg={12}>
-                {loading && <Spinner/>}
-                {eventData?.length > 0 && <FullCalendar
-                  headerToolbar={{
-                    left: "prev,today,next",
-                    center: "title",
-                    right: "timeGridDay,timeGridWeek,dayGridMonth",
-                  }}
-                  expandRows={true}
-                  plugins={[dayGridPlugin, timeGridPlugin]}
-                  initialView={defaultView}
-                  allDaySlot={false}
-                  contentHeight="auto"
-                  firstDay={1}
-                  events={eventData}
-                  eventClick={handleEventClick}
-                  eventTimeFormat={{
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  }}
-                />}
-              </Grid>
-            </Grid>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Box display="flex" gap={2}>
+                <SelectComponent
+                  id="yearForSelect"
+                  placeHolder={"Select Academic Year"}
+                  onSelect={(e: any) => setSelectedYear(e.target.value)}
+                  value={selectedYear}
+                  containerStyle={{ width: 200 }}
+                  menuItems={yearForSelect}
+                />
+                <SelectComponent
+                  id="examPeriod"
+                  placeHolder={"Select Exam Period"}
+                  onSelect={(e: any) => setExamPeriod(e.target.value)}
+                  value={examPeriod}
+                  containerStyle={{ width: 200 }}
+                  menuItems={examForSelect}
+                />
+                <Button variant="contained" onClick={handleSolve}>
+                  Solve
+                </Button>
+              </Box>
+              <Button variant="contained" color="error" onClick={handleClearSupervisor}>
+                Clear Supervisions
+              </Button>
+            </Box>
           </CardContent>
         </Card>
+
+        {/* Examination Table */}
+        <Card sx={{ width: "100%" }} variant="outlined">
+          <CardContent>
+            <ExaminationTable data={tableData} />
+          </CardContent>
+        </Card>
+
+        {/* Modal */}
+        <Modal
+          open={modalOpen}
+          onClose={() => {}}
+          BackdropProps={{ onClick: () => {} }} 
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              bgcolor: "background.paper",
+              borderRadius: 1,
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            <Typography variant="h6" component="h2">
+              SCHEDULING... Please Wait
+            </Typography>
+          </Box>
+        </Modal>
       </Container>
-      <ViewModalCalendarEvents
-        open={modalOpen}
-        handleClose={handleCloseModal}
-        title={viewModalTitle}
-        data={viewModalData}
-        updateData={updateData}
-      />
     </Layout>
   );
 }

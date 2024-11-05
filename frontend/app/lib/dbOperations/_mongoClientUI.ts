@@ -28,7 +28,7 @@ export async function connectToDatabase() {
 
   // Connect to cluster
   const client = new mongoDB.MongoClient(
-      MONGODB_URI,
+    MONGODB_URI,
     options as mongoDB.MongoClientOptions,
   );
   await client.connect();

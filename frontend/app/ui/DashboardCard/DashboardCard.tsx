@@ -25,7 +25,14 @@ import {
 // Interface
 import { IDashboardCardsProps } from "../../lib/dbOperations/schemas/ComponentsInterfaces";
 import IconBox from "../IconBox";
-import { CustomFigureKey, CustomFigureValue, CustomSubtitle, CustomSubtitleLarge, CustomSubtitleSmall, CustomTitle } from "../TypographyBox";
+import {
+  CustomFigureKey,
+  CustomFigureValue,
+  CustomSubtitle,
+  CustomSubtitleLarge,
+  CustomSubtitleSmall,
+  CustomTitle
+} from "../TypographyBox";
 
 export default function DashboardCard(props: IDashboardCardsProps) {
   const {
@@ -49,64 +56,64 @@ export default function DashboardCard(props: IDashboardCardsProps) {
         <Box sx={{ display: "flex" }}>
 
           {/* Icon */}
-          {icon && <IconBox icon={icon}/> }
+          {icon && <IconBox icon={icon}/>}
 
           <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '1rem', width: '80%' }}>
-      {/* Title with titleLink */}
-      {title && titleLink && (
-        <Link href={titleLink} passHref legacyBehavior>
-          <a style={{ cursor: 'pointer', textDecoration: 'none' }}>
-            <CustomTitle noWrap onClick={() => router.push(titleLink)}>
-              {title}
-            </CustomTitle>
-          </a>
-        </Link>
-      )}
+            {/* Title with titleLink */}
+            {title && titleLink && (
+              <Link href={titleLink} passHref legacyBehavior>
+                <a style={{ cursor: 'pointer', textDecoration: 'none' }}>
+                  <CustomTitle noWrap onClick={() => router.push(titleLink)}>
+                    {title}
+                  </CustomTitle>
+                </a>
+              </Link>
+            )}
 
-      {/* Title without titleLink */}
-      {title && !titleLink && (
-        <CustomTitle noWrap>
-          {title}
-        </CustomTitle>
-      )}
+            {/* Title without titleLink */}
+            {title && !titleLink && (
+              <CustomTitle noWrap>
+                {title}
+              </CustomTitle>
+            )}
 
-      {/* Subtitle */}
-      {subtitle && (
-        <CustomSubtitle noWrap>
-          {subtitle}
-        </CustomSubtitle>
-      )}
+            {/* Subtitle */}
+            {subtitle && (
+              <CustomSubtitle noWrap>
+                {subtitle}
+              </CustomSubtitle>
+            )}
 
-      {/* Subtitle Large */}
-      {subtitleLarge && (
-        <CustomSubtitleLarge noWrap>
-          {subtitleLarge}
-        </CustomSubtitleLarge>
-      )}
+            {/* Subtitle Large */}
+            {subtitleLarge && (
+              <CustomSubtitleLarge noWrap>
+                {subtitleLarge}
+              </CustomSubtitleLarge>
+            )}
 
-      {/* Subtitle Small */}
-      {subtitleSmall && (
-        <CustomSubtitleSmall noWrap>
-          {subtitleSmall}
-        </CustomSubtitleSmall>
-      )}
+            {/* Subtitle Small */}
+            {subtitleSmall && (
+              <CustomSubtitleSmall noWrap>
+                {subtitleSmall}
+              </CustomSubtitleSmall>
+            )}
 
-      {/* Figures */}
-      {figures &&
-        figures.map(({ key, val }, index) => (
-          <Box key={index} sx={{ display: 'flex', width: '100%' }}>
-            <CustomFigureKey noWrap>
-              {key}
-            </CustomFigureKey>
-            <CustomFigureValue>
-              {val}
-            </CustomFigureValue>
+            {/* Figures */}
+            {figures &&
+              figures.map(({ key, val }, index) => (
+                <Box key={index} sx={{ display: 'flex', width: '100%' }}>
+                  <CustomFigureKey noWrap>
+                    {key}
+                  </CustomFigureKey>
+                  <CustomFigureValue>
+                    {val}
+                  </CustomFigureValue>
+                </Box>
+              ))}
+
+            {/* Element */}
+            {element}
           </Box>
-        ))}
-
-      {/* Element */}
-      {element}
-    </Box>
 
         </Box>
 

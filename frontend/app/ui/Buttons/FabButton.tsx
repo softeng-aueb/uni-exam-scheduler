@@ -13,15 +13,15 @@ export type FabButtonTypes = {
 };
 
 export default function FabButton({
-  expanded,
-  label,
-  onClick,
-  href,
-  children,
-  inputStyles,
-  color,
-  disabled,
-}: FabButtonTypes) {
+                                    expanded,
+                                    label,
+                                    onClick,
+                                    href,
+                                    children,
+                                    inputStyles,
+                                    color,
+                                    disabled,
+                                  }: FabButtonTypes) {
   return (
     <Fab
       aria-controls="basic-menu"

@@ -13,17 +13,17 @@ import { cookieName, getOptions, languages } from "./settings";
 const runsOnServerSide = typeof window === "undefined";
 
 i18next
-    .use(initReactI18next)
-    .use(LanguageDetector)
-    .use(resourcesToBackend((language: any, namespace: any) => import(`./locales/${language}/translation.json`)))
-    .init({
-      ...getOptions(),
-      lng: undefined, // let detect the language on client side
-      detection: {
-        order: ["path", "htmlTag", "cookie", "navigator"],
-      },
-      preload: runsOnServerSide ? languages : [],
-    });
+  .use(initReactI18next)
+  .use(LanguageDetector)
+  .use(resourcesToBackend((language: any, namespace: any) => import(`./locales/${language}/translation.json`)))
+  .init({
+    ...getOptions(),
+    lng: undefined, // let detect the language on client side
+    detection: {
+      order: ["path", "htmlTag", "cookie", "navigator"],
+    },
+    preload: runsOnServerSide ? languages : [],
+  });
 
 export function useTranslation(lng: any, ns?: any, options?: any) {
   const [cookies, setCookie] = useCookies([cookieName]);

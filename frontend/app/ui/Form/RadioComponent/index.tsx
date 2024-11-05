@@ -13,12 +13,12 @@ type RadioProps = {
   id?: string;
 }
 export default function RadioComponent({
-  label,
-  value,
-  onTypeSelect,
-  options,
-  id,
-}: RadioProps) {
+                                         label,
+                                         value,
+                                         onTypeSelect,
+                                         options,
+                                         id,
+                                       }: RadioProps) {
   return (
     <FormControl>
       {label && (

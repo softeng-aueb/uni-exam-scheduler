@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 // MUI
 import { Container, Grid } from "@mui/material";
@@ -10,17 +10,10 @@ import Breadcrumb from "@/app/ui/Breadcrumb";
 import DashboardCard from "@/app/ui/DashboardCard/DashboardCard";
 import FolderIcon from "@/app/ui/Icons/Folder";
 import Layout from "@/app/ui/layout";
-import { getConfigStats } from "../../lib/dbOperations/collections/stats";
 
 // helper
 
 export default function AdminComponent() {
-  const [countries, setCountries] = useState<any>("");
-  const [languages, setLanguages] = useState<any>("");
-  const [listings, setListings] = useState<any>("");
-  const [listingCategories, setListingCategories] = useState<any>("");
-  const [roles, setRoles] = useState<any>("");
-  const [users, setUsers] = useState<any>("");
 
   // Breadcrumb data
   const breadcrumbList = [
@@ -36,69 +29,38 @@ export default function AdminComponent() {
 
   const links = [
     {
-      title: "Countries",
-      subtitle: "Manage Countries",
-      count: countries,
-      url: "/admin/countries",
+      title: "Courses",
+      subtitle: "Manage Courses",
+      url: "/admin/courses",
     },
     {
-      title: "Languages",
-      subtitle: "Manage Languages",
-      count: languages,
-      url: "/admin/languages",
+      title: "Departments",
+      subtitle: "Manage Departments",
+      url: "/admin/departments",
     },
     {
-      title: "UserRoles",
-      subtitle: "Manage UserRoles",
-      count: roles,
-      url: "/admin/user-roles",
+      title: "Supervisors",
+      subtitle: "Manage Supervisors",
+      url: "/admin/supervisors",
     },
     {
-      title: "Users",
-      subtitle: "Manage Users and their UserRoles",
-      count: users,
-      url: "/admin/users",
+      title: "Classrooms",
+      subtitle: "Manage Classrooms",
+      url: "/admin/classrooms",
     },
     {
-      title: "ListingCategories",
-      subtitle: "Manage ListingCategories",
-      count: listingCategories,
-      url: "/admin/listing-categories",
+      title: "Academic Year",
+      subtitle: "Manage Academic Year",
+      url: "/admin/academic-year",
     },
     {
-      title: "Listings",
-      subtitle: "Manage Listings",
-      count: listings,
-      url: "/admin/listings",
+      title: "Examination Period",
+      subtitle: "Manage Examination Period",
+      url: "/admin/examination-period",
     },
+
   ];
 
-  useEffect(() => {
-    (async () => {
-      const [
-        { data: countries },
-        { data: languages },
-        { data: listingCategories },
-        { data: listings },
-        { data: roles },
-        { data: users },
-      ] = await Promise.all([
-        getConfigStats("Countries", {}),
-        getConfigStats("Languages", {}),
-        getConfigStats("ListingCategories", {}),
-        getConfigStats("Listings", {}),
-        getConfigStats("UserRoles", {}),
-        getConfigStats("Users", {}),
-      ]);
-
-      setCountries(countries);
-      setLanguages(languages);
-      setListingCategories(listingCategories);
-      setListings(listings);
-      setRoles(roles);
-      setUsers(users);
-    })();
-  }, [countries]);
   return (
     <Layout>
       <Container disableGutters maxWidth="xl">
@@ -110,7 +72,6 @@ export default function AdminComponent() {
                 icon={<FolderIcon/>}
                 title={link.title}
                 titleLink={link.url}
-                subtitle={link?.count}
                 figures={[{ "key": link.subtitle, "val": null }]}
               />
             </Grid>

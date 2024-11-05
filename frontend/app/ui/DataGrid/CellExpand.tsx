@@ -28,7 +28,7 @@ const getProps = (props: IGridCellExpandProps): IGridCellExpandProps => {
 };
 
 const GridCellExpand = React.memo(function GridCellExpand(
-    props: IGridCellExpandProps,
+  props: IGridCellExpandProps,
 ) {
   const { width, value, shouldUsePre } = getProps(props);
 

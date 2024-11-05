@@ -21,9 +21,9 @@ export type WarningAlertProps = {
 type Props = { elementId: string, returnProps: WarningAlertProps };
 
 export default function ReturnButton({
-  elementId = "",
-  returnProps,
-}: Props) {
+                                       elementId = "",
+                                       returnProps,
+                                     }: Props) {
   const [open, setOpen] = useState(false);
 
   const shouldWarn = "shouldWarn" in returnProps && returnProps.shouldWarn === true;
@@ -72,28 +72,28 @@ export default function ReturnButton({
 
   const renderDialog = () => {
     return (shouldWarn && <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">
-        {returnProps.title}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {returnProps.message}
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose(false)}>Disagree</Button>
-        <NextLink href={returnProps.uri} passHref>
-          <Button onClick={handleClose(true)} autoFocus>
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {returnProps.title}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {returnProps.message}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose(false)}>Disagree</Button>
+          <NextLink href={returnProps.uri} passHref>
+            <Button onClick={handleClose(true)} autoFocus>
               Agree
-          </Button>
-        </NextLink>
-      </DialogActions>
-    </Dialog>
+            </Button>
+          </NextLink>
+        </DialogActions>
+      </Dialog>
     );
   };
 

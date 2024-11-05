@@ -24,9 +24,9 @@ const handleContinue = async (values: any, payload: any, id: any) => {
 
 const onAction = (values: any, payload: any) => {
   const { data, frontendFunc } = payload;
-  const isUpdate = data.some((d: any) => (d.hasOwnProperty("_id") ? d._id === values._id : d.hasOwnProperty("id") ? d.id === values.id : false));
+  const isUpdate = data.some((d: any) => (d.hasOwnProperty("id") ? d.id === values.id : false));
   if (isUpdate) {
-    const updated = data.map((d: any) => d._id === values._id ? { ...d, ...values } : d);
+    const updated = data.map((d: any) => d.id === values.id ? { ...d, ...values } : d);
     frontendFunc(updated);
   } else {
     frontendFunc([...data, values]);
@@ -39,8 +39,8 @@ const onDelete = async (row: any, payload: any) => {
   const value = await warningAlert(`Are you sure want to DELETE this ${entityNameSingular}?`);
   if (value) {
     try {
-      await apiFunc(row._id);
-      frontendFunc(data.filter((val: any) => val._id !== row._id));
+      await apiFunc(row.id);
+      frontendFunc(data.filter((val: any) => val.id !== row.id));
       await successAlert("Deleted", `${entityNameSingular} has been deleted successfully!`);
     } catch (ex: any) {
       if (ex.response && ex.response.status === 404) {

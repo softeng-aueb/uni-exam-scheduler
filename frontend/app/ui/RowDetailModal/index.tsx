@@ -25,10 +25,10 @@ const style = {
 };
 
 export default function RowDetailModal({
-  open,
-  handleClose,
-  rowData,
-}: Props) {
+                                         open,
+                                         handleClose,
+                                         rowData,
+                                       }: Props) {
   return (
     <Modal
       open={open}

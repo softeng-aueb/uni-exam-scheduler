@@ -87,12 +87,12 @@ export const RemoveButton = ({ handleRemove }: { handleRemove: () => void }) => 
       onClick={handleRemove}
       sx={{ marginRight: "0.5rem" }}
     ><RemoveIcon sx={{
-        fontSize: "1rem",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-      }}/></RemoveBtn>
+      fontSize: "1rem",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+    }}/></RemoveBtn>
   );
 };
 

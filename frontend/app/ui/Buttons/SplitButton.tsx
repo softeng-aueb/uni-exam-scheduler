@@ -56,8 +56,8 @@ export default function SplitButton({ id, options, onClickSubmit, warning, style
   };
 
   const handleMenuItemClick = (
-      event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-      index: number,
+    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    index: number,
   ) => {
     setSelectedIndex(index);
     setOpen(false);

@@ -33,12 +33,13 @@ export async function readSupervisors(): Promise<any> {
   }
 }
 
-export async function deleteSupervisor(examId: string, supervisorId:string): Promise<any> {
-  const deleteSupervisorUrl = `${process.env.BACKEND_URL}/examinations/${examId}/supervisions/${supervisorId}`
+export async function deleteSupervisor(supervisorId:string): Promise<any> {
+  const deleteSupervisorUrl = `${url}/${supervisorId}`
   try {
     const { data: deletedResp } = await axios.delete(deleteSupervisorUrl);
     return deletedResp;
   } catch (e: any) {
+    console.log(e)
     return { status: "Failed" }
   }
 }

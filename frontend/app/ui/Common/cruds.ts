@@ -25,6 +25,9 @@ const handleContinue = async (values: any, payload: any, id: any) => {
 const onAction = (values: any, payload: any) => {
   const { data, frontendFunc } = payload;
   const isUpdate = data.some((d: any) => (d.hasOwnProperty("id") ? d.id === values.id : false));
+  console.log("== Is Update :", isUpdate)
+  console.log("== Is Update Data :", data)
+  console.log("== Is Update Vals :", values)
   if (isUpdate) {
     const updated = data.map((d: any) => d.id === values.id ? { ...d, ...values } : d);
     frontendFunc(updated);

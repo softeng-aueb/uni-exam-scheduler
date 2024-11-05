@@ -19,32 +19,22 @@ import moment from "moment";
 
 const PERIODS = [
   { label: "WINTER", value: "WINTER" },
-  { label: "SUMMER", value: "SUMMER" },
+  { label: "SPRING", value: "SPRING" },
+  { label: "SEPTEMBER", value: "SEPTEMBER" },
 ]
 export default function CreateEditModalExaminationPeriod(props: any) {
-  const { open, handleClose, data, setData, lng } = props;
+  const { open, handleClose, data, pageData, selectedYear, setData, lng } = props;
 
-  const [yearForSelect, setYearForSelect] = useState([]);
   const { t } = useTranslation(lng);
-
-  useEffect(() => {
-    const formattedYears = data?.map((year) => ({ label: year.name, value: year.name }))
-      .sort((a, b) => b.value.localeCompare(a.value));
-
-    setYearForSelect(formattedYears);
-  }, [data]);
 
   const initialValues = {
     period: "",
-    previousYear: "",
+    academicYear: "",
     startDate: ""
   };
 
   const validationSchema = yup.object({
     period: yup.string().trim().required("period is required"),
-    previousYear: yup
-      .string()
-      .required("previous year is required"),
     startDate: yup.string().trim().required("start date is required"),
   });
 
@@ -54,18 +44,19 @@ export default function CreateEditModalExaminationPeriod(props: any) {
 
   const handleContinue = async (values: any) => {
     const clonedVals = { ...values };
-    const previousYear = data.find((d) => d.name === values.previousYear);
-    clonedVals.previousYear = previousYear;
+    const previousYear = pageData.find((d)=>d.name === selectedYear.label);
+    clonedVals.academicYear = previousYear;
     const payload = {
       frontendFunc: setData,
       data,
     };
+
     try {
-      const resp = await createExaminationPeriod(values);
+      const resp = await createExaminationPeriod(clonedVals);
       if (resp?.id) {
-        values.id = resp?.id;
+        clonedVals.id = resp?.id;
       }
-      onAction(values, payload);
+      onAction(clonedVals, payload);
       handleClose();
     } catch (e: any) {
       console.log(e);
@@ -95,17 +86,7 @@ export default function CreateEditModalExaminationPeriod(props: any) {
                 />
 
               </Grid>
-              <Grid item xs={12}>
-                <SelectComponent
-                  menuItems={yearForSelect}
-                  value={values.previousYear}
-                  onSelect={handleChange("previousYear")}
-                  placeHolder={t("examination.previous_year")}
-                  hasError={!!errors.previousYear}
-                  errorMessage={errors.previousYear as string}
-                />
-
-              </Grid>
+             
               <Grid item xs={12}>
                 <DatePickerComponent
                   value={moment(values.startDate).format("YYYY-MM-DD")}
@@ -124,7 +105,6 @@ export default function CreateEditModalExaminationPeriod(props: any) {
               <Grid item xs={12} sm={6}>
                 <Button
                   type="submit"
-                  onClick={() => handleSubmit()}
                   disabled={false}
                   variant="contained"
                 >

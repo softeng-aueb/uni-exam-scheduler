@@ -9,31 +9,74 @@ export const config = {
   matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)"],
 };
 
-export function middleware(req: any) {
+export function middleware(request: any) {
   // Skip for public assets
   const PUBLIC_FILE = /\.(.*)$/;
-  if (req.nextUrl.pathname.startsWith("/_next") || PUBLIC_FILE.test(req.nextUrl.pathname)) {
+  if (request.nextUrl.pathname.startsWith("/_next") || PUBLIC_FILE.test(request.nextUrl.pathname)) {
     return;
   }
 
   // Get locale
   let lng;
-  if (req.cookies.has(cookieName)) lng = acceptLanguage.get(req.cookies.get(cookieName).value);
-  if (!lng) lng = acceptLanguage.get(req.headers.get("Accept-Language"));
+  if (request.cookies.has(cookieName)) lng = acceptLanguage.get(request.cookies.get(cookieName).value);
+  if (!lng) lng = acceptLanguage.get(request.headers.get("Accept-Language"));
   if (!lng) lng = fallbackLng;
 
   // Redirect if lng in path is not supported
-  if (!languages.some((loc: any) => req.nextUrl.pathname.startsWith(`/${loc}`)) && !req.nextUrl.pathname.startsWith("/_next")) {
-    return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url));
+  if (!languages.some((loc: any) => request.nextUrl.pathname.startsWith(`/${loc}`)) && !request.nextUrl.pathname.startsWith("/_next")) {
+    return NextResponse.redirect(new URL(`/${lng}${request.nextUrl.pathname}${request.nextUrl.search}`, request.url));
   }
 
-  if (req.headers.has("referer")) {
-    const refererUrl = new URL(req.headers.get("referer"));
+  if (request.headers.has("referer")) {
+    const refererUrl = new URL(request.headers.get("referer"));
     const lngInReferer = languages.find((l: any) => refererUrl.pathname.startsWith(`/${l}`));
     const response = NextResponse.next();
     if (lngInReferer) response.cookies.set(cookieName, lngInReferer);
     return response;
   }
 
-  return NextResponse.next();
+  /* ================================================================================================================ */
+  /* BASIC AUTH - START                                                                                               */
+  /* ================================================================================================================ */
+
+  // Getting the Pup IP from the request
+  const basicAuth = request.headers.get("authorization");
+  const ip = request.ip;
+  const url = request.nextUrl;
+
+  // console.log("Middleware IP:", ip);
+
+  // Bypass the basic auth on a certain env variable and Pub IP
+  if (process.env.BASIC_AUTH === "YES") {
+    if (basicAuth) {
+      const authValue = basicAuth.split(" ")[1];
+      const [user, pwd] = atob(authValue).split(":");
+
+      const validUser = process.env.BASIC_AUTH_USER;
+      const validPassWord = process.env.BASIC_AUTH_PASSWORD;
+
+      if (user === validUser && pwd === validPassWord) {
+        return NextResponse.next();
+      }
+    }
+    url.pathname = "/api/basicauth";
+
+    return NextResponse.rewrite(url);
+  }
+
+  /* ================================================================================================================ */
+  /* BASIC AUTH - END                                                                                                 */
+  /* ================================================================================================================ */
+
+  // Add a new header "x-current-path" which passes the path to downstream components
+  const requestHeaders = new Headers(request.headers);
+  const xCurrentPath = request.nextUrl.pathname?.replace(`/${lng}/`, "")?.replaceAll("/", "-");
+  requestHeaders.set("x-current-path", xCurrentPath);
+
+  return NextResponse.next({
+    headers: requestHeaders,
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }

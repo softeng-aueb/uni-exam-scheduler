@@ -47,44 +47,56 @@ export default function CalendarEventsComponent({ lng }: any) {
     }
   }, [selectedYear]);
 
-  useEffect(() => {
+  const fetchTableData = useCallback(async () => {
     if (examPeriod) {
-      (async () => {
-        try {
-          const examPeriods = await readExaminationPeriodById(examPeriod);
-          setTableData(examPeriods)
-        } catch (error) {
-          console.error("Error fetching examination period:", error);
-        }
-      })();
+      try {
+        const examPeriods = await readExaminationPeriodById(examPeriod);
+        setTableData(examPeriods);
+      } catch (error) {
+        console.error("Error fetching examination period:", error);
+      }
     }
   }, [examPeriod]);
-
-  const handleSolve = useCallback(async()=>{
-        setModalOpen(true);
-        setTimeout(() => {
-        setModalOpen(false);
-        }, 30000); // 30 sec
+  
+  useEffect(() => {
+    fetchTableData();
+  }, [fetchTableData]);
+  
+  const handleSolve = useCallback(async () => {
+    setModalOpen(true);
+    
     try {
       const resp = await solveExaminationPeriod(examPeriod);
-      console.log("++ :", resp)
-      setTableData(resp)
+
+      // Set a timeout to fetch fresh data after 30 seconds
+      setTimeout(async () => {
+        await fetchTableData();
+        setModalOpen(false);
+      }, 30000); // 30 sec
+  
     } catch (error) {
       console.error("Error solving examination period:", error);
       setModalOpen(false);
     }
-  },[tableData])
+  }, [examPeriod, fetchTableData]);
+  
 
   const handleClearSupervisor = async () => {
-   if(examPeriod){
-    try{
-      const resp = await deleteSupervision(examPeriod);
-      successAlert("Success", "Supervision deleted successfully!")
-    }catch(e){
-      warningAlert("Something went wrong!")
+    if (examPeriod) {
+      try {
+        await deleteSupervision(examPeriod);
+        successAlert("Success", "Supervision deleted successfully!");
+        
+        // Refetch the table data after deletion
+        await fetchTableData();
+        
+      } catch (e) {
+        warningAlert("Something went wrong!");
+        console.error("Error deleting supervision:", e);
+      }
     }
-   }
   };
+  
 
   return (
     <Layout>

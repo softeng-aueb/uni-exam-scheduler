@@ -57,7 +57,7 @@ export default function CreateEditModalAcademicYear(props: any) {
       data,
     };
     try {
-      const resp = await createAcademicYear(values);
+      const resp = await createAcademicYear(clonedVals);
       if (resp?.id) {
         values.id = resp?.id;
       }

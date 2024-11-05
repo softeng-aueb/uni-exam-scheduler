@@ -32,7 +32,7 @@ export default function ExaminationPeriodComponent({ lng, pageData }: any) {
 
   const [addEditModalOpen, setAddEditModalOpen] = useState(false);
   const [data, setData] = useState<any>([]);
-  const [yearForSelect, setYearForSelect] = useState<any>({});
+  const [yearForSelect, setYearForSelect] = useState<any>([]);
   const [selectedYear, setSelectedYear] = useState<any>("");
 
   useEffect(() => {
@@ -50,6 +50,7 @@ export default function ExaminationPeriodComponent({ lng, pageData }: any) {
       (async () => {
         try {
           const examPeriod = await readExaminationPeriod(selectedYear);
+          console.log("===++ :", examPeriod)
           setData(examPeriod);
         } catch (error) {
           console.error("Error fetching examination period:", error);
@@ -106,6 +107,9 @@ export default function ExaminationPeriodComponent({ lng, pageData }: any) {
       </Box>
     );
   };
+
+  const yearLabel = yearForSelect?.find((y)=>y.value === selectedYear)
+
   return (
     <Layout>
       <Container disableGutters maxWidth="xl">
@@ -127,7 +131,9 @@ export default function ExaminationPeriodComponent({ lng, pageData }: any) {
       <CreateEditModalExaminationPeriod
         open={addEditModalOpen}
         handleClose={handleModalClose}
-        data={pageData}
+        data={data}
+        pageData={pageData}
+        selectedYear={yearLabel}
         setData={setData}
         lng={lng}
       />

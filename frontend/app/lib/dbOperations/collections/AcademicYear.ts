@@ -7,9 +7,11 @@ const url = `${process.env.BACKEND_URL}/academic_years`
 export async function createAcademicYear(data: any): Promise<any> {
   try {
     const { data: createdResp } = await axios.post(url, data);
+    console.log("=== Created resp +++ == :", createdResp)
     return createdResp;
 
   } catch (e: any) {
+    console.log("== Errorrrr == :", e)
     return { status: "Failed" }
   }
 }
@@ -26,10 +28,8 @@ export async function readAcademicYear(id: any): Promise<any> {
 export async function readAcademicYears(): Promise<any> {
   try {
     const { data: academicYears } = await axios.get(url);
-    console.log("====== Academic Yearsss === :", academicYears)
     return academicYears;
   } catch (e: any) {
-    console.log(">>>>> :", e)
     return { status: "Failed" }
   }
 }

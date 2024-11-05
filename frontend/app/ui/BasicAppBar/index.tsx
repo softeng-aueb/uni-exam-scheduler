@@ -91,9 +91,7 @@ export default function BasicAppBar() {
             <MenuItem href="/admin" onClick={handleCloseNavMenu}>
               <Typography textAlign="center">Admin</Typography>
             </MenuItem>
-            <MenuItem href="/calendar-events" onClick={handleCloseNavMenu}>
-              <Typography textAlign="center">Calendar</Typography>
-            </MenuItem>
+          
             <MenuItem href="/upload" onClick={handleCloseNavMenu}>
               <Typography textAlign="center">Uploads</Typography>
             </MenuItem>
@@ -122,9 +120,7 @@ export default function BasicAppBar() {
           <Button href="/admin" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
             Admin
           </Button>
-          <Button href="/calendar-events" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-            Calendar
-          </Button>
+       
           <Button href="/upload" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
             Uploads
           </Button>

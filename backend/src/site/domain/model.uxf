@@ -1,0 +1,120 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>Relation</id><coordinates><x>320</x><y>20</y><w>180</w><h>130</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..1
+r1=previousYear
+group=group-0</panel_attributes><additional_attributes>90;50;90;10;10;10;10;110;60;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>70</y><w>130</w><h>70</h></coordinates><panel_attributes>AcademicYear
+--
+name: string
+isActive: boolean
+group=group-0</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>620</x><y>170</y><w>170</w><h>80</h></coordinates><panel_attributes> ExaminationPeriod
+--
+startDate: Date
+period: Period</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>500</x><y>110</y><w>140</w><h>110</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=3
+includes</panel_attributes><additional_attributes>10;10;120;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1090</x><y>150</y><w>140</w><h>100</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+Period
+--
+WINTER
+SPRING
+SEPTEMBER
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>10</x><y>340</y><w>240</w><h>120</h></coordinates><panel_attributes>Supervisor
+--
+name: string
+surname: string
+supervisor: string
+telephone: string
+email: string
+supervisorCategory: SupervisorCategory
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1090</x><y>10</y><w>140</w><h>130</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+SupervisorCategory
+--
+EDIP
+ETEP
+PHD
+DISPACHED
+EXTERNAL
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>640</x><y>350</y><w>160</w><h>130</h></coordinates><panel_attributes>Examination
+--
+date: Date
+startTime: Time
+endTime: Time
+/maxSupervisors: int/
+/estimatedSupervisors: int/
+/declaration: int/
+/attendance: int/</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>880</x><y>140</y><w>160</w><h>140</h></coordinates><panel_attributes>Classroom
+--
+name: string
+building: string
+floor: int
+generalCapacity: int
+examCapacity: int
+covidCapacity: int
+maxNumSupervisors: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>270</y><w>200</w><h>140</h></coordinates><panel_attributes>lt=-
+m1=*
+m2=1..*</panel_attributes><additional_attributes>10;110;160;110;160;10</additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>240</y><w>40</w><h>130</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>330</x><y>360</y><w>180</w><h>70</h></coordinates><panel_attributes>Supervision
+--
+isPresent: boolean
+isLead: boolean
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>500</x><y>390</y><w>160</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>140;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>400</y><w>110</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>640</x><y>710</y><w>150</w><h>90</h></coordinates><panel_attributes>Course
+--
+title: string
+courseCode: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>470</y><w>40</w><h>260</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;240;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>980</x><y>740</y><w>150</w><h>60</h></coordinates><panel_attributes>Department
+--
+name: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>780</x><y>780</y><w>220</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>200;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>260</x><y>220</y><w>240</w><h>70</h></coordinates><panel_attributes>SupervisionRule
+--
+numOfSupervisions: int
+supervisorCategory: SupervisorCategory
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>220</y><w>150</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=*
+m2=1
+refers to</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>20</x><y>120</y><w>150</w><h>80</h></coordinates><panel_attributes>Department
+--
+name: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>80</x><y>190</y><w>40</w><h>170</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>190</y><w>150</w><h>100</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*
+sets</panel_attributes><additional_attributes>10;10;10;70;130;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>620</y><w>170</w><h>60</h></coordinates><panel_attributes> ExaminationPeriod
+--
+startDate: Date
+period: Period</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>330</x><y>790</y><w>160</w><h>50</h></coordinates><panel_attributes>CourseDeclaration
+--
+declaration: int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>480</x><y>780</y><w>180</w><h>60</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>160;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>40</x><y>720</y><w>180</w><h>130</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..1
+r1=previousYear
+group=group-2</panel_attributes><additional_attributes>90;50;90;10;10;10;10;110;60;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>100</x><y>770</y><w>130</w><h>70</h></coordinates><panel_attributes>AcademicYear
+--
+name: string
+isActive: boolean
+group=group-2</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>220</x><y>810</y><w>130</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>320</x><y>630</y><w>160</w><h>50</h></coordinates><panel_attributes>CourseAttendance
+--
+attendance: int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>650</y><w>110</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>660</y><w>190</w><h>110</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>170;90;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>490</y><w>160</w><h>80</h></coordinates><panel_attributes>SupervisorPreference
+--
+startTime: Time
+endTime: Time
+excludeDates: [Date]</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>450</y><w>160</w><h>110</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;10;80;140;80</additional_attributes></element><element><id>Relation</id><coordinates><x>140</x><y>540</y><w>190</w><h>100</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;80;10;10;170;10</additional_attributes></element></diagram>

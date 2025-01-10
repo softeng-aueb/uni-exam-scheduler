@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35">
+    <defs>
+        <style>
+            .cls-2,.cls-3{fill:none}.cls-3{stroke:#2b2d2f;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px}
+        </style>
+    </defs>
+    <g
+            id="add_role_button"
+            transform="translate(-353 -512)"
+    >
+        <g
+                id="Rectangle_20322"
+                transform="rotate(-90 450 97)"
+                style="fill:rgba(210,210,210,.08);stroke:rgba(210,210,210,.3)"
+        >
+            <rect width="35" height="35" rx="8" style="stroke:none"/>
+            <rect class="cls-2" x=".5" y=".5" width="34" height="34" rx="7.5"/>
+        </g>
+        <g
+                id="Group_56944"
+                transform="translate(358 518)"
+        >
+            <path
+                    id="Path_39"
+                    class="cls-2"
+                    d="M0 0h24v24H0z"
+            />
+            <path
+                    id="Line_7"
+                    class="cls-3"
+                    transform="translate(12.426 5)"
+                    d="M0 0v14"
+            />
+            <path
+                    id="Line_8"
+                    class="cls-3"
+                    transform="translate(5.426 12)"
+                    d="M0 0h14"
+            />
+        </g>
+    </g>
+</svg>

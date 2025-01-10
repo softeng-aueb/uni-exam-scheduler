@@ -1,0 +1,42 @@
+[
+  {
+    "building": "Central",
+    "covidCapacity": 70,
+    "examCapacity": 120,
+    "floor": 1,
+    "generalCapacity": 200,
+    "id": 2001,
+    "maxNumSupervisors": 5,
+    "name": "A21"
+  },
+  {
+    "building": "Second",
+    "covidCapacity": 25,
+    "examCapacity": 40,
+    "floor": 5,
+    "generalCapacity": 70,
+    "id": 2002,
+    "maxNumSupervisors": 2,
+    "name": "E2"
+  },
+  {
+    "building": "Central",
+    "covidCapacity": 30,
+    "examCapacity": 65,
+    "floor": 2,
+    "generalCapacity": 115,
+    "id": 2003,
+    "maxNumSupervisors": 3,
+    "name": "B3"
+  },
+  {
+    "building": "Third",
+    "covidCapacity": 20,
+    "examCapacity": 30,
+    "floor": 3,
+    "generalCapacity": 50,
+    "id": 2004,
+    "maxNumSupervisors": 1,
+    "name": "C46"
+  }
+]

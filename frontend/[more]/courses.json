@@ -1,0 +1,110 @@
+[
+  {
+    "courseCode": "CS105",
+    "department": {
+      "id": 3001,
+      "name": "CS"
+    },
+    "id": 4001,
+    "title": "Intro to Programming"
+  },
+  {
+    "courseCode": "AF101",
+    "department": {
+      "id": 3004,
+      "name": "Accounting"
+    },
+    "id": 4002,
+    "title": "Accounting and Finance 101"
+  },
+  {
+    "courseCode": "CS106",
+    "department": {
+      "id": 3001,
+      "name": "CS"
+    },
+    "id": 4003,
+    "title": "Programming 2"
+  },
+  {
+    "courseCode": "BS101",
+    "department": {
+      "id": 3002,
+      "name": "Business"
+    },
+    "id": 4004,
+    "title": "How to Business"
+  },
+  {
+    "courseCode": "MA101",
+    "department": {
+      "id": 3005,
+      "name": "Marketing"
+    },
+    "id": 4005,
+    "title": "Marketing Basics"
+  },
+  {
+    "courseCode": "EC101",
+    "department": {
+      "id": 3003,
+      "name": "Economics"
+    },
+    "id": 4006,
+    "title": "Economics Fundamentals"
+  },
+  {
+    "courseCode": "EC105",
+    "department": {
+      "id": 3003,
+      "name": "Economics"
+    },
+    "id": 4007,
+    "title": "Micro-Economics"
+  },
+  {
+    "courseCode": "AF110",
+    "department": {
+      "id": 3004,
+      "name": "Accounting"
+    },
+    "id": 4008,
+    "title": "Tax"
+  },
+  {
+    "courseCode": "CS201",
+    "department": {
+      "id": 3001,
+      "name": "CS"
+    },
+    "id": 4009,
+    "title": "Data Models"
+  },
+  {
+    "courseCode": "BS301",
+    "department": {
+      "id": 3002,
+      "name": "Business"
+    },
+    "id": 4010,
+    "title": "Leadership"
+  },
+  {
+    "courseCode": "AF305",
+    "department": {
+      "id": 3004,
+      "name": "Accounting"
+    },
+    "id": 4011,
+    "title": "Business Accounting"
+  },
+  {
+    "courseCode": "MA201",
+    "department": {
+      "id": 3005,
+      "name": "Marketing"
+    },
+    "id": 4012,
+    "title": "Advertising"
+  }
+]

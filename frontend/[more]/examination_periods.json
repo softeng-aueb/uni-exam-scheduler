@@ -1,0 +1,32 @@
+[
+  {
+    "academicYear": {
+      "id": 1002,
+      "isActive": false,
+      "name": "2022-2023",
+      "previousYear": {
+        "id": 1001,
+        "isActive": false,
+        "name": "2021-2022"
+      }
+    },
+    "id": 5001,
+    "period": "WINTER",
+    "startDate": "2023-01-01"
+  },
+  {
+    "academicYear": {
+      "id": 1002,
+      "isActive": false,
+      "name": "2022-2023",
+      "previousYear": {
+        "id": 1001,
+        "isActive": false,
+        "name": "2021-2022"
+      }
+    },
+    "id": 5004,
+    "period": "SEPTEMBER",
+    "startDate": "2023-09-03"
+  }
+]

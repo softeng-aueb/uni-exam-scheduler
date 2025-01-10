@@ -1,0 +1,132 @@
+{
+  "courses": {
+    "label_one": "Course",
+    "label_many": "Courses",
+    "create": "Create a Course",
+    "create_btn": "Create a Course",
+    "update": "Update a Course",
+    "update_btn": "Update a Course",
+    "delete_warning": "Are you sure want to delete this Course?",
+    "deleted_info": "Course has been deleted successfully!",
+    "deleted_not_found": "Course not found",
+    "field": {
+      "id": "ID",
+      "title": "Title",
+      "code": "Course Code",
+      "department": "Department"
+    }
+  },
+  "departments": {
+    "label_one": "Department",
+    "label_many": "Departments",
+    "create": "Create a Department",
+    "create_btn": "Create a Department",
+    "update": "Update a Department",
+    "update_btn": "Update a Department",
+    "delete_warning": "Are you sure want to delete this Department?",
+    "deleted_info": "Department has been deleted successfully!",
+    "deleted_not_found": "Department not found",
+    "field": {
+      "order": "Order",
+      "name": "Name",
+      "id": "ID",
+      "nativeName": "Native Name",
+      "code": "Code"
+    }
+  },
+  "roles": {
+    "label_one": "Role",
+    "label_many": "UserRoles",
+    "create": "Create a Role",
+    "create_btn": "Create a Role",
+    "update": "Update a Role",
+    "update_btn": "Update a Role",
+    "delete_warning": "Are you sure want to delete this Role?",
+    "deleted_info": "Role has been deleted successfully!",
+    "deleted_not_found": "Role not found",
+    "field": {
+      "order": "Order",
+      "name": "Name",
+      "permissions": "Permissions"
+    }
+  },
+  "users": {
+    "label_one": "User",
+    "label_many": "Users",
+    "create": "Create a User",
+    "create_btn": "Create a User",
+    "update": "Update a User",
+    "update_btn": "Update a User",
+    "delete_warning": "Are you sure want to delete this User?",
+    "deleted_info": "User has been deleted successfully!",
+    "deleted_not_found": "User not found",
+    "field": {
+      "order": "Order",
+      "email": "Email",
+      "username": "Username",
+      "hashed_pass": "Hashed Password"
+    }
+  },
+  "supervisors": {
+    "label_one": "Supervisor",
+    "label_many": "Supervisors",
+    "create": "Create a Supervisor",
+    "create_btn": "Create a Supervisor",
+    "update": "Update a Supervisor",
+    "update_btn": "Update a Supervisor",
+    "delete_warning": "Are you sure want to delete this Supervisor?",
+    "deleted_info": "Supervisor has been deleted successfully!",
+    "deleted_not_found": "Supervisor not found",
+    "field": {
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "supervisor_category": "Supervisor Category",
+      "telephone": "Telephone",
+      "supervisor": "Supervisor",
+      "surname": "Surname"
+    }
+  },
+  "classrooms": {
+    "label_one": "Classroom",
+    "label_many": "Classrooms",
+    "create": "Create a Classroom",
+    "create_btn": "Create a Classroom",
+    "update": "Update a Classroom",
+    "update_btn": "Update a Classroom",
+    "delete_warning": "Are you sure want to delete this Classroom?",
+    "deleted_info": "Classroom has been deleted successfully!",
+    "deleted_not_found": "Classroom not found",
+    "field": {
+      "id": "ID",
+      "name": "Name",
+      "building": "Building",
+      "floor": "Floor",
+      "covid_capacity": "Covid Capacity",
+      "exam_capacity": "Exam Capacity",
+      "general_capacity": "General Capacity",
+      "max_num_supervisors": "Max num supervisors"
+    }
+  },
+  "academic": {
+    "label_one": "Academic Year",
+    "label_many": "Academic Years",
+    "create": "Create an Academic Year",
+    "create_btn": "Create an Academic Year",
+    "field": {
+      "name": "Name"
+    }
+  },
+  "examination": {
+    "label_one": "Examination Period",
+    "label_many": "Examination Periods",
+    "create": "Create an Examination Period",
+    "create_btn": "Create an Examination Period",
+    "previous_year": "Previous Year",
+    "field": {
+      "name": "Name",
+      "start_date": "Start Date",
+      "period": "Period"
+    }
+  }
+}

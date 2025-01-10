@@ -1,0 +1,126 @@
+<plannerBenchmark>
+    <benchmarkDirectory>optaplanner-benchmarks</benchmarkDirectory>
+
+    <!-- 20 seconds warm-up time applied to all solvers -->
+    <warmUpSecondsSpentLimit>30</warmUpSecondsSpentLimit>
+
+    <solverBenchmark>
+        <name>First Fit</name>
+        <solver>
+            <solutionClass>gr.aueb.app.domain.Solution</solutionClass>
+            <entityClass>gr.aueb.app.domain.Supervision</entityClass>
+            <scoreDirectorFactory>
+                <constraintProviderClass>gr.aueb.app.solver.SolutionConstraintProvider</constraintProviderClass>
+            </scoreDirectorFactory>
+            <termination>
+                <minutesSpentLimit>1</minutesSpentLimit>
+            </termination>
+            <constructionHeuristic>
+                <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
+            </constructionHeuristic>
+        </solver>
+    </solverBenchmark>
+
+<!--    <solverBenchmark>-->
+<!--        <name>First Fit Decreasing</name>-->
+<!--        <solver>-->
+<!--            <solutionClass>gr.aueb.app.domain.Solution</solutionClass>-->
+<!--            <entityClass>gr.aueb.app.domain.Supervision</entityClass>-->
+<!--            <scoreDirectorFactory>-->
+<!--                <constraintProviderClass>gr.aueb.app.solver.SolutionConstraintProvider</constraintProviderClass>-->
+<!--            </scoreDirectorFactory>-->
+<!--            <termination>-->
+<!--                <spentLimit>1m</spentLimit>-->
+<!--            </termination>-->
+<!--            <constructionHeuristic>-->
+<!--                <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>-->
+<!--            </constructionHeuristic>-->
+<!--        </solver>-->
+<!--    </solverBenchmark>-->
+
+    <solverBenchmark>
+        <name>Tabu Search</name>
+        <solver>
+            <solutionClass>gr.aueb.app.domain.Solution</solutionClass>
+            <entityClass>gr.aueb.app.domain.Supervision</entityClass>
+            <scoreDirectorFactory>
+                <constraintProviderClass>gr.aueb.app.solver.SolutionConstraintProvider</constraintProviderClass>
+            </scoreDirectorFactory>
+            <termination>
+                <minutesSpentLimit>1</minutesSpentLimit>
+            </termination>
+            <constructionHeuristic>
+                <constructionHeuristicType>FIRST_FIT</constructionHeuristicType> <!-- Initialization -->
+            </constructionHeuristic>
+            <localSearch>
+                <localSearchType>TABU_SEARCH</localSearchType>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Hill Climbing</name>
+        <solver>
+            <solutionClass>gr.aueb.app.domain.Solution</solutionClass>
+            <entityClass>gr.aueb.app.domain.Supervision</entityClass>
+            <scoreDirectorFactory>
+                <constraintProviderClass>gr.aueb.app.solver.SolutionConstraintProvider</constraintProviderClass>
+            </scoreDirectorFactory>
+            <termination>
+                <minutesSpentLimit>1</minutesSpentLimit>
+            </termination>
+            <constructionHeuristic>
+                <constructionHeuristicType>FIRST_FIT</constructionHeuristicType> <!-- Initialization -->
+            </constructionHeuristic>
+            <localSearch>
+                <localSearchType>HILL_CLIMBING</localSearchType>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Late Acceptance</name>
+        <solver>
+            <solutionClass>gr.aueb.app.domain.Solution</solutionClass>
+            <entityClass>gr.aueb.app.domain.Supervision</entityClass>
+            <scoreDirectorFactory>
+                <constraintProviderClass>gr.aueb.app.solver.SolutionConstraintProvider</constraintProviderClass>
+            </scoreDirectorFactory>
+            <termination>
+                <minutesSpentLimit>1</minutesSpentLimit>
+            </termination>
+            <constructionHeuristic>
+                <constructionHeuristicType>FIRST_FIT</constructionHeuristicType> <!-- Initialization -->
+            </constructionHeuristic>
+            <localSearch>
+                <localSearchType>LATE_ACCEPTANCE</localSearchType>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Simulated Annealing</name>
+        <solver>
+            <solutionClass>gr.aueb.app.domain.Solution</solutionClass>
+            <entityClass>gr.aueb.app.domain.Supervision</entityClass>
+            <scoreDirectorFactory>
+                <constraintProviderClass>gr.aueb.app.solver.SolutionConstraintProvider</constraintProviderClass>
+            </scoreDirectorFactory>
+
+            <termination>
+                <minutesSpentLimit>1</minutesSpentLimit>
+            </termination>
+            <constructionHeuristic>
+                <constructionHeuristicType>FIRST_FIT</constructionHeuristicType> <!-- Initialization -->
+            </constructionHeuristic>
+            <localSearch>
+                <!--                    <localSearchType>SIMULATED_ANNEALING</localSearchType>-->
+                <!-- Set the starting temperature for Simulated Annealing -->
+                <acceptor>
+                    <simulatedAnnealingStartingTemperature>10hard/1000soft</simulatedAnnealingStartingTemperature>
+                </acceptor>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+</plannerBenchmark>

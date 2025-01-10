@@ -1,0 +1,80 @@
+[
+  {
+    "department": {
+      "id": 3001,
+      "name": "CS"
+    },
+    "email": "jd@email.com",
+    "id": 7001,
+    "name": "John",
+    "supervisor": "Dr. K",
+    "supervisorCategory": "EDIP",
+    "surname": "Doe",
+    "telephone": "123456789"
+  },
+  {
+    "department": {
+      "id": 3004,
+      "name": "Accounting"
+    },
+    "email": "mw@email.com",
+    "id": 7002,
+    "name": "Mark",
+    "supervisor": "Dr. H",
+    "supervisorCategory": "EXTERNAL",
+    "surname": "White",
+    "telephone": "123456789"
+  },
+  {
+    "department": {
+      "id": 3005,
+      "name": "Marketing"
+    },
+    "email": "bb@email.com",
+    "id": 7003,
+    "name": "Bill",
+    "supervisor": "Dr. J",
+    "supervisorCategory": "DISPATCHED",
+    "surname": "Brown",
+    "telephone": "123456789"
+  },
+  {
+    "department": {
+      "id": 3003,
+      "name": "Economics"
+    },
+    "email": "gb@email.com",
+    "id": 7004,
+    "name": "George",
+    "supervisor": "Dr. E",
+    "supervisorCategory": "EDIP",
+    "surname": "Black",
+    "telephone": "123456789"
+  },
+  {
+    "department": {
+      "id": 3002,
+      "name": "Business"
+    },
+    "email": "ps@email.com",
+    "id": 7005,
+    "name": "Phin",
+    "supervisor": "Dr. L",
+    "supervisorCategory": "ETEP",
+    "surname": "Stark",
+    "telephone": "123456789"
+  },
+  {
+    "department": {
+      "id": 3001,
+      "name": "CS"
+    },
+    "email": "dp@email.com",
+    "id": 7006,
+    "name": "Dennis",
+    "supervisor": "Dr. M",
+    "supervisorCategory": "PHD",
+    "surname": "Parker",
+    "telephone": "123456789"
+  }
+]

@@ -13,8 +13,10 @@ async function fetchData() {
   return classrooms;
 }
 
-export default async function ClassroomsPage({ params: { lng } }: any) {
+export default async function ClassroomsPage({ params}: any) {
   const classrooms = await fetchData();
+  const {lng} = await params;
+
   return (
     <ClassroomsComponent lng={lng} pageData={classrooms}/>
   );

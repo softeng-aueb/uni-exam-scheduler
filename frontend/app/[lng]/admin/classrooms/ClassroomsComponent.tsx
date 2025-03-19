@@ -29,6 +29,7 @@ const spinnerArea = "read-classrooms";
 export default function ClassroomsComponent({ lng, pageData }: any) {
 
   const { t } = useTranslation(lng);
+  console.log(`****DEBUG***** : ${lng}`)
 
   const [addEditModalOpen, setAddEditModalOpen] = useState(false);
   const [data, setData] = useState<any>([]);

@@ -13,8 +13,10 @@ async function fetchData() {
   return departments;
 }
 
-export default async function DepartmentsPage({ params: { lng } }: any) {
+export default async function DepartmentsPage({ params}: any) {
   const departments = await fetchData();
+  const {lng} = await params;
+  
   return (
     <DepartmentsComponent lng={lng} pageData={departments}/>
   );

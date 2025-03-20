@@ -13,8 +13,9 @@ async function fetchData() {
   return courses;
 }
 
-export default async function CoursesPage({ params: { lng } }: any) {
+export default async function CoursesPage({ params}: any) {
   const courses = await fetchData();
+  const {lng} = await params;
 
   return (
     <CoursesComponent lng={lng} pageData={courses}/>

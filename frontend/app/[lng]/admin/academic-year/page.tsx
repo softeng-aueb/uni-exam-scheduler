@@ -14,9 +14,9 @@ async function fetchData() {
   return academicYears;
 }
 
-export default async function AcademicYearPage({ params: { lng } }: any) {
+export default async function AcademicYearPage({ params}: any) {
   const academicYears = await fetchData();
-
+  const {lng} = await params;
   return (
     <AcademicYearComponent lng={lng} pageData={academicYears}/>
   );

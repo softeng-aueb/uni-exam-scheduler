@@ -15,8 +15,9 @@ async function fetchData() {
   return academicYears;
 }
 
-export default async function ExaminationPeriodPage({ params: { lng } }: any) {
+export default async function ExaminationPeriodPage({ params}: any) {
   const academicYears = await fetchData();
+  const {lng} = await params;
   return (
     <ExaminationPeriodComponent lng={lng} pageData={academicYears}/>
   );

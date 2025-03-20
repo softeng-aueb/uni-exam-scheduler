@@ -11,6 +11,8 @@ export default function Page() {
 
   const router: any = useRouter();
 
+  console.log(`Session id: ${session}`)
+
   useEffect(() => {
     console.log(`${new Date().toISOString()} > page.tsx > useEffect > status: ${JSON.stringify(status)}`);
 

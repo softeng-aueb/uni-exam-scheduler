@@ -1,5 +1,3 @@
-import { setCookie } from "cookies-next";
-
 import { validatePassword } from "@/app/lib/auth";
 import { getUser } from "./authService";
 
@@ -12,16 +10,23 @@ async function authenticate(credentials) {
   //    .object({ email: z.string().email(), password: z.string().min(6) })
   //    .safeParse(credentials);
 
+
+  console.log(`Authenticating with credentials: ${credentials.email}`)
+
   if (credentials) {
     const { email, password } = credentials;
     const query = { $or: [{ email }, { username: email }] };
     const user = await getUser(query);
 
+    console.log(`Retrieved user: ${user.name}`)
+    
     if (!user) return null;
-    const passwordMatch = await validatePassword(user, password);
-    if (passwordMatch) {
-      setCookie("currentProject", user?.projects[0]);
 
+    user.hashed_pass = user.password
+
+    const passwordMatch = await validatePassword(user, password);
+    
+    if (passwordMatch) {
       return user;
     }
   }

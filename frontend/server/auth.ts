@@ -20,6 +20,8 @@ export const authOptions: NextAuthOptions = {
         // return true;
       }
 
+      console.log('signin')
+
       return true;
     },
     async jwt({ token, user, account }) {
@@ -49,6 +51,7 @@ export const authOptions: NextAuthOptions = {
       if (account?.accessToken) {
         token.accessToken = account.accessToken;
       }
+      console.log(`jwt: ${token}`)
       return token;
     },
     async session({ session, token }: { session: any; token: any }) {
@@ -57,6 +60,7 @@ export const authOptions: NextAuthOptions = {
       session.email = token.email;
       session.is_admin = token.is_admin;
       session.roles = token.roles;
+      console.log('session')
       return session;
     },
   },

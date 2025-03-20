@@ -84,6 +84,7 @@ export default function Login() {
                 fullWidth
                 name="email"
                 label="Email"
+                autoComplete="username"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 error={formik.touched.email && Boolean(formik.errors.email)}
@@ -97,6 +98,7 @@ export default function Login() {
                 type={showPassword ? "text" : "password"}
                 fullWidth
                 name="password"
+                autoComplete="password"
                 label="Password"
                 value={formik.values.password}
                 onChange={formik.handleChange}

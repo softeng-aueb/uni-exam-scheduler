@@ -35,6 +35,7 @@ export default function CalendarEventsComponent({ lng }: any) {
       (async () => {
         try {
           const examPeriod = await readExaminationPeriod(selectedYear);
+          
           const formattedYears = examPeriod
             ?.map((p) => ({ label: p.period, value: p.id }))
             .sort((a, b) => b.label.localeCompare(a.label));

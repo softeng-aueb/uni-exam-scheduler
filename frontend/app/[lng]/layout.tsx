@@ -22,12 +22,12 @@ export default async function RootLayout({ children, params }: { children: React
   const { lng } = await params
   
   return (
-    <AppProvider>
+     <AppProvider>
       <html lang={lng} dir={dir(lng)}>
       <body>
       {children}
       </body>
       </html>
-    </AppProvider>
+     </AppProvider>
   );
 }

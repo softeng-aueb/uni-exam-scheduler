@@ -3,7 +3,7 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 
 // MUI
-import Grid from "@mui/material/Grid";
+import {Grid as Grid} from "@mui/material";
 import Button from "@mui/material/Button";
 
 // Components
@@ -89,7 +89,7 @@ export default function CreateEditModalExaminationPeriod(props: any) {
              
               <Grid item xs={12}>
                 <DatePickerComponent
-                  value={moment(values.startDate).format("YYYY-MM-DD")}
+                  value={moment(values.startDate)}
                   label="Start Date"
                   onChange={(val: any) => {
                     const formattedDate = moment(val).format("YYYY-MM-DD");
